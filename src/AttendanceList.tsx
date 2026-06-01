@@ -1,10 +1,12 @@
+import type {handleModalAction} from "./types/Types.ts"
 interface props {
-  setIsModalOpen: (value: boolean) => any
+  handleModalAction: handleModalAction
 }
 
-function AttendanceList({ setIsModalOpen } : props) {
+function AttendanceList({ handleModalAction } : props) {
 const handleAddNew = () => {
-  setIsModalOpen(true)
+  handleModalAction.setModalComponent("addAttendee")
+  handleModalAction.setIsModalOpen(true)
 }
   return (
     <div className="w-full h-full flex justify-evenly items-center ">

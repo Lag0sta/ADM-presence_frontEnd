@@ -6,19 +6,21 @@ import Modal from './Modal.tsx'
 
 function App() {
   const [component, setComponent] = useState("home")
+  const [modalComponent, setModalComponent] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const date = new Date()
-  const month = date.getMonth() + 1
-  console.log("month :", month)
+
+  const handleModalAction = {isModalOpen, setIsModalOpen, modalComponent, setModalComponent}
+
   return (
     <div className='h-screen grid grid-rows-[1fr_3fr_2fr]  '>
       <header className='bg-gray-900 text-white'>
-        <Header setComponent={setComponent} />
+        <Header handleModalAction={handleModalAction}
+                setComponent={setComponent} />
       </header>
 
       <main className='bg-gray-100'>
         <MainComp component={component}
-                  setIsModalOpen={setIsModalOpen} />
+                  handleModalAction={handleModalAction} />
       </main>
 
       <footer className='bg-[#FFCB00]'>
@@ -26,7 +28,7 @@ function App() {
       </footer>
 
       {isModalOpen &&
-        <Modal setIsModalOpen={setIsModalOpen}/>
+        <Modal handleModalAction={handleModalAction} setComponent={setComponent}/>
       }
 
 

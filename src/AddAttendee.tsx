@@ -15,7 +15,9 @@ function AddAttendee() {
     } else if (payed === "oui") {
       payementStatus = true
     }
-    NewRegistrantRequest({ apellido, name, subscription, payementStatus, amount2Pay });
+    
+    const newRData = { apellido, name, subscription, payementStatus, amount2Pay } 
+    NewRegistrantRequest(newRData);
   };
 
   console.log("subscription", subscription)

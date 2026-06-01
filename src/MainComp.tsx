@@ -2,23 +2,26 @@ import CheckAttendance from "./CheckAttendance.tsx";
 import AttendanceList from "./AttendanceList.tsx"
 import Home from "./Home"
 
+import type {handleModalAction} from "./types/Types.ts"
+
 interface props {
     component: string;
-    setIsModalOpen: (value: boolean) => void;
+    handleModalAction:handleModalAction
 }
 
-function MainComp({ component, setIsModalOpen } : props) {
+function MainComp({ component,     handleModalAction:handleModalAction
+ } : props) {
 
   return (
     <div className="w-full h-full flex justify-evenly items-center ">
       {component === "home" && 
-        <Home/>
+        <Home handleModalAction={handleModalAction}/>
       }
       {component === "checkAttendance" &&
         <CheckAttendance/>
       }
       {component === "attendanceList" &&
-      <AttendanceList setIsModalOpen={setIsModalOpen}/>
+      <AttendanceList handleModalAction={handleModalAction}/>
   }
     </div>
   )
