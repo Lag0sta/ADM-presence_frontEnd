@@ -1,13 +1,16 @@
-import AddAttendee from "./AddAttendee";
+import ModalAddStudent from "./ModalAddStudent.tsx";
+import ModalNewSubscription from "./ModalNewSubscription.tsx";
 import SignIn from "./SignIn";
-import UserModal from "./UserModal";
+import ModalUser from "./ModalUser.tsx";
 import type { handleModalAction } from "./types/Types.ts"
 
 interface props {
   handleModalAction: handleModalAction
   setComponent: (value: string) => void;
+  setStudentSubscription: (value: any) => void;
+  studentSubscription: any;
 }
-function Modal({ handleModalAction, setComponent }: props) {
+function Modal({ handleModalAction, setComponent, studentSubscription, setStudentSubscription }: props) {
 
   const handleCloseModal = () => {
     handleModalAction.setIsModalOpen(false);
@@ -27,13 +30,17 @@ function Modal({ handleModalAction, setComponent }: props) {
             </svg>
           </div>
           {handleModalAction.modalComponent === "addAttendee" &&
-            <AddAttendee />
+            <ModalAddStudent />
+          }
+          {handleModalAction.modalComponent === "newSubscription" &&
+            <ModalNewSubscription setStudentSubscription={setStudentSubscription}
+                                  studentSubscription={studentSubscription}/>
           }
           {handleModalAction.modalComponent === "signIn" &&
             <SignIn handleModalAction={handleModalAction}/>
           }
           {handleModalAction.modalComponent === "userModal" &&
-          <UserModal handleModalAction={handleModalAction}
+          <ModalUser handleModalAction={handleModalAction}
           setComponent={setComponent}/>
           }
         </div>

@@ -1,23 +1,38 @@
 import { useState } from "react";
-import { NewRegistrantRequest } from "./utils/registrantAction";
+import { useAppDispatch } from "./store/hooks.js";
+import { NewRegistrantRequest, getStudentsRequest } from "./utils/StudentAction.js";
+import { getStudents } from "./store/reducers/student.js";
 
-function AddAttendee() {
+function ModalAddStudent() {
   const [apellido, setApellido] = useState("");
   const [name, setName] = useState("");
   const [subscription, setSubscription] = useState("");
   const [payed, setPayed] = useState("");
   const [amount2Pay, setAmount2Pay] = useState(0);
-  let payementStatus : boolean;
+  let payementStatus: boolean;
 
-  const handleAdd = () => {
-    if (payed === "non") {
-      payementStatus = false
-    } else if (payed === "oui") {
-      payementStatus = true
+  const dispatch = useAppDispatch();
+  
+  const handleAdd = async () => {
+    try {
+      if (payed === "non") {
+        payementStatus = false
+      } else if (payed === "oui") {
+        payementStatus = true
+      }
+
+      const newRData = { apellido, name, subscription, payementStatus, amount2Pay }
+      const response = await NewRegistrantRequest(newRData);
+
+      if (!response) return;
+
+      const response2 = await getStudentsRequest()
+
+      dispatch(getStudents(response2.data));
+
+    }catch (error) {
+      console.error("Error during adding new registrant:", error);
     }
-    
-    const newRData = { apellido, name, subscription, payementStatus, amount2Pay } 
-    NewRegistrantRequest(newRData);
   };
 
   console.log("subscription", subscription)
@@ -46,54 +61,52 @@ function AddAttendee() {
           />
         </div>
         <div className="flex flex-col">
-          <label className="mt-2  text-lg font-semibold"
-            htmlFor="Abonnement"
+          <div className="mt-2  text-lg font-semibold"
           >
             Type d'abonnement :
-          </label>
-          <label>
+          </div>
+          <div>
             <input type="radio"
               name="subscription"
               value="trimestriel"
               checked={subscription === "trimestriel"}
               onChange={(e) => setSubscription(e.target.value)} />
             Abonnement Trimestriel
-          </label>
+          </div>
 
-          <label>
+          <div>
             <input type="radio"
               name="subscription"
               value="carte"
               checked={subscription === "carte"}
               onChange={(e) => setSubscription(e.target.value)} />
             Carte de 10
-          </label>
+          </div>
           {subscription &&
             <div className="flex flex-col my-2">
               <div className="flex flex-col">
-                <label className="text-lg font-semibold mt-2 "
-                  htmlFor="Abonnement"
+                <div className="text-lg font-semibold mt-2 "
                 >
                   Payé ?
-                </label>
+                </div>
                 <div className="w-fit">
-                <label className="mx-1">
-                  <input type="radio"
-                    name="payed?"
-                    value="oui"
-                    checked={payed === "oui"}
-                    onChange={(e) => setPayed(e.target.value)} />
-                  Oui
-                </label>
+                  <div className="mx-1">
+                    <input type="radio"
+                      name="payed?"
+                      value="oui"
+                      checked={payed === "oui"}
+                      onChange={(e) => setPayed(e.target.value)} />
+                    Oui
+                  </div>
 
-                <label className="mx-1">
-                  <input type="radio"
-                    name="payed ? "
-                    value="non"
-                    checked={payed === "non"}
-                    onChange={(e) => setPayed(e.target.value)} />
-                  Non
-                </label>
+                  <div className="mx-1">
+                    <input type="radio"
+                      name="payed ? "
+                      value="non"
+                      checked={payed === "non"}
+                      onChange={(e) => setPayed(e.target.value)} />
+                    Non
+                  </div>
                 </div>
               </div>
 
@@ -118,4 +131,4 @@ function AddAttendee() {
   )
 }
 
-export default AddAttendee
+export default ModalAddStudent

@@ -10,7 +10,7 @@ interface props {
   setComponent: (value: string) => void;
 }
 
-function UserModal({handleModalAction, setComponent} : props) {
+function ModalUser({handleModalAction, setComponent} : props) {
 
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth.value);
@@ -43,4 +43,4 @@ function UserModal({handleModalAction, setComponent} : props) {
   )
 }
 
-export default UserModal
+export default ModalUser

@@ -5,7 +5,7 @@ export async function signInRequest(signInData: signInData) {
     const { apellido, email, password } = signInData
 
     try {
-        const newRegistrant = await fetch(`http://localhost:4000/auths/SignIn`, {
+        const signIn = await fetch(`${API_URL}/auths/SignIn`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -14,7 +14,7 @@ export async function signInRequest(signInData: signInData) {
                 password: password,
             })
         })
-        const response = await newRegistrant.json()
+        const response = await signIn.json()
         console.log("response", response)
 
         return response
@@ -27,7 +27,7 @@ export async function logOutRequest(logOutData: logOutData) {
     const { apellido, token } = logOutData
 
     try {
-        const newRegistrant = await fetch(`http://localhost:4000/auths/logOut`, {
+        const logOut = await fetch(`${API_URL}/auths/logOut`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -35,7 +35,7 @@ export async function logOutRequest(logOutData: logOutData) {
                 token: token,
             })
         })
-        const response = await newRegistrant.json()
+        const response = await logOut.json()
         console.log("response", response)
 
         return response

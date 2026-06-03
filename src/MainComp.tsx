@@ -7,9 +7,10 @@ import type {handleModalAction} from "./types/Types.ts"
 interface props {
     component: string;
     handleModalAction:handleModalAction
+    setStudentSubscription: (value: any) => void;
 }
 
-function MainComp({ component,     handleModalAction:handleModalAction
+function MainComp({ component, handleModalAction, setStudentSubscription
  } : props) {
 
   return (
@@ -21,7 +22,8 @@ function MainComp({ component,     handleModalAction:handleModalAction
         <CheckAttendance/>
       }
       {component === "attendanceList" &&
-      <AttendanceList handleModalAction={handleModalAction}/>
+      <AttendanceList handleModalAction={handleModalAction}
+       setStudentSubscription={setStudentSubscription}/>
   }
     </div>
   )

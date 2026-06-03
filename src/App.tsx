@@ -8,7 +8,7 @@ function App() {
   const [component, setComponent] = useState("home")
   const [modalComponent, setModalComponent] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
-
+  const [studentSubscription, setStudentSubscription] = useState("")
   const handleModalAction = {isModalOpen, setIsModalOpen, modalComponent, setModalComponent}
 
   return (
@@ -20,7 +20,8 @@ function App() {
 
       <main className='bg-gray-100'>
         <MainComp component={component}
-                  handleModalAction={handleModalAction} />
+                  handleModalAction={handleModalAction}
+                  setStudentSubscription={setStudentSubscription} />
       </main>
 
       <footer className='bg-[#FFCB00]'>
@@ -28,7 +29,10 @@ function App() {
       </footer>
 
       {isModalOpen &&
-        <Modal handleModalAction={handleModalAction} setComponent={setComponent}/>
+        <Modal handleModalAction={handleModalAction} 
+               setComponent={setComponent}
+               studentSubscription={studentSubscription}
+               setStudentSubscription={setStudentSubscription}/>
       }
 
 
