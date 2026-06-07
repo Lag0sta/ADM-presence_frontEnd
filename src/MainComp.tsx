@@ -1,4 +1,4 @@
-import CheckAttendance from "./CheckAttendance.tsx";
+import Attendance from "./Attendance.tsx";
 import AttendanceList from "./AttendanceList.tsx"
 import Home from "./Home"
 
@@ -19,7 +19,7 @@ function MainComp({ component, handleModalAction, setStudentSubscription
         <Home handleModalAction={handleModalAction}/>
       }
       {component === "checkAttendance" &&
-        <CheckAttendance/>
+        <Attendance/>
       }
       {component === "attendanceList" &&
       <AttendanceList handleModalAction={handleModalAction}

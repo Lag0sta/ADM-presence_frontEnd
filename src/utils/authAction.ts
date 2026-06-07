@@ -14,6 +14,8 @@ export async function signInRequest(signInData: signInData) {
                 password: password,
             })
         })
+
+        
         const response = await signIn.json()
         console.log("response", response)
 

@@ -12,7 +12,7 @@ function App() {
   const handleModalAction = {isModalOpen, setIsModalOpen, modalComponent, setModalComponent}
 
   return (
-    <div className='h-screen grid grid-rows-[1fr_3fr_2fr]  '>
+    <div className='h-screen grid grid-rows-[1fr_5fr_]  '>
       <header className='bg-gray-900 text-white'>
         <Header handleModalAction={handleModalAction}
                 setComponent={setComponent} />
@@ -24,9 +24,6 @@ function App() {
                   setStudentSubscription={setStudentSubscription} />
       </main>
 
-      <footer className='bg-[#FFCB00]'>
-        FOOTER
-      </footer>
 
       {isModalOpen &&
         <Modal handleModalAction={handleModalAction} 
