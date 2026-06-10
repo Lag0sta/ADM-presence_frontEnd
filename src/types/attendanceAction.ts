@@ -3,6 +3,12 @@ export interface newAData {
     token: string;
 }
 
+export interface addSAData{
+    attendanceID: string;
+    studentID: string[];
+    token: string;
+}
+
 export interface dSData {
     attendanceId: string;
     studentId: string;

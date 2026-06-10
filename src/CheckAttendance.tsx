@@ -1,14 +1,43 @@
-import { useAppSelector } from "./store/hooks.js";
-import { useState } from "react";
+import { useAppSelector, useAppDispatch } from "./store/hooks.js";
+import { useState, useEffect, useMemo } from "react";
 
-import { NewAttendanceRequest } from "./utils/AttendanceAction.js";
+import { NewAttendanceRequest, addStudentAttendanceRequest, getAttendancesRequest } from "./utils/AttendanceAction.js"
+
+import { getAttendances } from "./store/reducers/attendance.js";
 
 function CheckAttendance() {
   const user = useAppSelector((state) => state.auth.value);
   const students: any[] = useAppSelector((state) => state.student.value);
+  const attendances: any[] = useAppSelector((state) => state.attendance.value);
   const [checkedUsers, setCheckedUsers] = useState<string[]>([]);
+  const [testStudents, setTestStudents] = useState<string[]>([]);
+  const [attendedStudent, setAttendedStudent] = useState<string[]>([]);
 
-  console.log("Checked students", checkedUsers);
+  const dispatch = useAppDispatch();
+
+ const latestAttendance = useMemo(() => {
+  return [...attendances]
+    .sort((a, b) => b.attendanceDay.localeCompare(a.attendanceDay))[0];
+}, [attendances]);
+
+useEffect(() => {
+  setAttendedStudent(
+    latestAttendance?.students?.map((s: any) => s._id) ?? []
+  );
+}, [latestAttendance]);
+
+ useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const response = await getAttendancesRequest();
+        dispatch(getAttendances(response.data.sort((a : any, b : any) => b.attendanceDay.localeCompare(a.attendanceDay))));
+      } catch (error) {
+        console.error("Error data fetch:", error);
+      }
+    }
+    loadHistory()
+  }, []);
+
   const handleCheckboxChange = (studentId: string) => {
     if (checkedUsers.includes(studentId)) {
       setCheckedUsers(checkedUsers.filter((id) => id !== studentId));
@@ -16,14 +45,43 @@ function CheckAttendance() {
       setCheckedUsers([...checkedUsers, studentId]);
     }
   };
+  console.log("date",);
 
   const handleSave = async () => {
-    const newAData = { students: checkedUsers, token: user.token };
 
+    //enregistrer la date de la derniere fiche
+    const attendanceDate = latestAttendance?.attendanceDay
+
+    //date du jour en Belgique sous format AAAA/MM/JJ
+    const date = new Date().toLocaleDateString("sv-SE", {
+      timeZone: "Europe/Brussels",
+    });
+    const newAData = { students: checkedUsers, token: user.token };
+    const addSAData = { attendanceID: latestAttendance?._id, studentID: checkedUsers, token: user.token };
     try {
-      const response = await NewAttendanceRequest(newAData);
-      console.log("response Attendance", response);
-      setCheckedUsers([])
+
+      if (date !== attendanceDate) {
+        const response = await NewAttendanceRequest(newAData);
+        console.log("response new MF attendance", response);
+
+        const newA = []
+        newA.push(response.data)
+        setTestStudents(response.data.students)
+        dispatch(getAttendances(newA))
+        setCheckedUsers([])
+        return
+      }
+
+      if (date === attendanceDate) {
+        const response = await addStudentAttendanceRequest(addSAData);
+        setTestStudents([...testStudents, ...response.data.students]); 
+                const newA = [response.data];
+
+        dispatch(getAttendances(newA))
+        console.log('same date', response)
+        setCheckedUsers([])
+        return
+      }
 
     } catch (error) {
       console.error("Error during sign in:", error);
@@ -65,6 +123,7 @@ function CheckAttendance() {
             </div>
             <input
               type="checkbox"
+              disabled={attendedStudent.includes(student._id) || testStudents.includes(student._id)}
               checked={checkedUsers.includes(student._id)}
               onChange={() => handleCheckboxChange(student._id)}
             />

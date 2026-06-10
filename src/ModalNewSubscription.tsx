@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "./store/hooks.js";
-import {  NewSubscriptionRequest, getStudentsRequest } from "./utils/StudentAction.js";
+import {  NewSubscriptionRequest, getStudentsRequest } from "./utils/studentAction.js";
 import { getStudents } from "./store/reducers/student.js";
 
 interface props {

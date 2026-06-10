@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { getStudents } from "./store/reducers/student.js";
-import { getStudentsRequest } from "./utils/StudentAction.js";
+import { getStudentsRequest } from "./utils/studentAction.js";
 
 import type { handleModalAction } from "./types/Types.ts"
 

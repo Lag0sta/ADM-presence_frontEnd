@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   value: [{
     _id: "",
-    date: "",
+    attendanceDay: "",
+    createdAt: "",
     students: [{
       apellido: "",
       name: "",
@@ -18,6 +19,26 @@ const attendanceSlice = createSlice({
   reducers: {
     getAttendances: (state, action) => {
       state.value = action.payload
+        console.log("PAYLOAD REDUX:", action.payload);
+
+    },
+
+    addStudentAttendance: (state, action) => {
+      const { attendanceId, studentInfo } = action.payload;
+
+      const attendance = state.value.find(
+        a => a._id === attendanceId
+      );
+
+      if (attendance) {
+        const alreadyExists = attendance.students.some(
+          student => student._id === studentInfo._id
+        );
+
+        if (!alreadyExists) {
+          attendance.students.push(studentInfo);
+        }
+      }
     },
 
 
@@ -46,5 +67,5 @@ const attendanceSlice = createSlice({
   },
 });
 
-export const { getAttendances, deleteStudenteAttendance, deleteDateAttendance  } = attendanceSlice.actions;
+export const { getAttendances, deleteStudenteAttendance, deleteDateAttendance } = attendanceSlice.actions;
 export default attendanceSlice.reducer;

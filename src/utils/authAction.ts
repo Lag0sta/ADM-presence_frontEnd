@@ -17,7 +17,7 @@ export async function signInRequest(signInData: signInData) {
 
         
         const response = await signIn.json()
-        console.log("response", response)
+        console.log("responseSignIn", response)
 
         return response
     } catch (error) {
@@ -38,7 +38,7 @@ export async function logOutRequest(logOutData: logOutData) {
             })
         })
         const response = await logOut.json()
-        console.log("response", response)
+        console.log("responseLogOut", response)
 
         return response
     } catch (error) {

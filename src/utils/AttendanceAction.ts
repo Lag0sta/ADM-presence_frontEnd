@@ -1,4 +1,4 @@
-import type { newAData, dSData, dDData } from "../types/attendanceAction";
+import type { newAData, addSAData, dSData, dDData } from "../types/attendanceAction";
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
 
@@ -6,6 +6,8 @@ export async function getAttendancesRequest() {
     try {
         const getAttendances = await fetch(`${API_URL}/attendances/`)
         const response = await getAttendances.json()
+
+        console.log("attendanceResponse", response)
 
         return response
     } catch (error) {
@@ -26,7 +28,30 @@ export async function NewAttendanceRequest(newAData: newAData) {
             })
         })
         const response = await newAttendance.json()
-        console.log("response", response)
+        console.log("responseNewAttendance", response)
+
+        return response
+
+    } catch (error) {
+        return error
+    }
+}
+
+export async function addStudentAttendanceRequest(addSAData: addSAData) {
+    const { attendanceID, studentID, token } = addSAData
+
+    try {
+        const addStudentAttendance = await fetch(`${API_URL}/attendances/updateAttendance`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                attendanceID: attendanceID,
+                students: studentID,
+                token: token,
+            })
+        })
+        const response = await addStudentAttendance.json()
+        console.log("responseNewAttendance", response)
 
         return response
 

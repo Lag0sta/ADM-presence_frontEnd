@@ -11,12 +11,14 @@ function AttendanceHistory() {
   const attendances: any[] = useAppSelector((state) => state.attendance.value);
   const dispatch = useAppDispatch()
 
+console.log('attendancesNOW', attendances)
+
   useEffect(() => {
     const loadHistory = async () => {
       try {
         const response = await getAttendancesRequest();
-        console.log("responseNow", response);
-        dispatch(getAttendances(response.data));
+        console.log("responseloadHistory", response);
+        dispatch(getAttendances(response.data.sort((a : any, b : any) => b.attendanceDay.localeCompare(a.attendanceDay))));
       } catch (error) {
         console.error("Error data fetch:", error);
       }
@@ -57,9 +59,7 @@ function AttendanceHistory() {
         <div key={attendance._id} className="w-[45%] flex flex-col">
           <div className="flex justify-between items-center">
             <span className="w-fit px-6 py-1 bg-[#FFCB00] text-gray-800 text-lg rounded-t-lg font-bold">
-              Date: {new Date(attendance.date)
-                .toLocaleDateString("fr-FR", { timeZone: "UTC" })
-                .replaceAll("/", "-")}
+              Date: {attendance.attendanceDay.split("-").reverse().join("-")}
             </span>
 
           </div>
@@ -69,7 +69,7 @@ function AttendanceHistory() {
             </span>
           </div>
           {attendance.students.map((student: any) => (
-            <div key={student._id}
+            <div key={`${attendance._id}-${student._id ?? student}`}
               className=" grid grid-cols-[1fr_1fr_1fr] border-b-2 border-x-2 border-[#FFCB00]"
             >
               <div className="ml-2 flex justify-start ">
