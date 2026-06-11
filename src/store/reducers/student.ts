@@ -1,32 +1,52 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  value: [{
-      _id: "",
-      apellido: "",
-      name: "",
-      subscription: "",
-      endDate: "",
-      pointsLeft: 0,
-      payementStatus: "",
-      amount2Pay: 0
-  }]
+type SubscriptionType =
+  | {
+      plan: "trimestriel";
+      startDate: string;
+      endDate: string;
+      paymentStatus: boolean;
+      amount2Pay: number;
+      pointsLeft?: never;
+    }
+  | {
+      plan: "carte";
+      pointsLeft: number;
+      paymentStatus: boolean;
+      amount2Pay: number;
+      startDate?: never;
+      endDate?: never;
+    };
+
+interface Student {
+  _id: string;
+  apellido: string;
+  name: string;
+  subscription: SubscriptionType;
+}
+
+interface StudentState {
+  value: Student[];
+}
+
+const initialState: StudentState = {
+  value: []
 };
 
 const studentSlice = createSlice({
   name: "student",
   initialState,
   reducers: {
-    getStudents: (state,  action) => {
+    getStudents: (state, action) => {
       state.value = action.payload
     },
-    
+
     //Supprime les informations d'authentification.
     clearStudents: (state) => {
-        state.value = initialState.value
+      state.value = initialState.value
     },
   },
 });
 
-export const {getStudents, clearStudents } = studentSlice.actions;
+export const { getStudents, clearStudents } = studentSlice.actions;
 export default studentSlice.reducer;

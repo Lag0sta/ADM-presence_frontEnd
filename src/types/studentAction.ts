@@ -2,7 +2,7 @@ export interface newSData {
     apellido: string;
     name: string;
     subscription: string;
-    payementStatus: boolean;
+    paymentStatus: boolean;
     amount2Pay: number;
 }
 
@@ -10,6 +10,6 @@ export interface newSubData {
     studentID: string;
     token: string;
     subscription: string;
-    payementStatus: boolean;
+    paymentStatus: boolean;
     amount2Pay: number;
 }

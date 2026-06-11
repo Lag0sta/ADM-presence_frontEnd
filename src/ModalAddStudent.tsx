@@ -9,19 +9,19 @@ function ModalAddStudent() {
   const [subscription, setSubscription] = useState("");
   const [payed, setPayed] = useState("");
   const [amount2Pay, setAmount2Pay] = useState(0);
-  let payementStatus: boolean;
+  let paymentStatus: boolean;
 
   const dispatch = useAppDispatch();
   
   const handleAdd = async () => {
     try {
       if (payed === "non") {
-        payementStatus = false
+        paymentStatus = false
       } else if (payed === "oui") {
-        payementStatus = true
+        paymentStatus = true
       }
 
-      const newRData = { apellido, name, subscription, payementStatus, amount2Pay }
+      const newRData = { apellido, name, subscription, paymentStatus, amount2Pay }
       const response = await NewRegistrantRequest(newRData);
 
       if (!response) return;

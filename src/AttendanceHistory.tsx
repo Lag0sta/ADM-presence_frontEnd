@@ -1,8 +1,7 @@
 import { useAppSelector, useAppDispatch } from "./store/hooks.js";
 import { useEffect } from "react";
 
-import { deleteStudentRequest, deleteDateRequest } from "./utils/AttendanceAction.js";
-import { getAttendancesRequest } from "./utils/AttendanceAction.js";
+import { deleteStudentRequest, deleteDateRequest, getAttendancesRequest } from "./utils/attendanceAction.js";
 import { getAttendances, deleteStudenteAttendance, deleteDateAttendance } from "./store/reducers/attendance.js";
 
 function AttendanceHistory() {
@@ -12,7 +11,7 @@ function AttendanceHistory() {
   const dispatch = useAppDispatch()
 
 console.log('attendancesNOW', attendances)
-
+console.log('userNOW', user)
   useEffect(() => {
     const loadHistory = async () => {
       try {

@@ -1,7 +1,4 @@
-import { useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "./store/hooks";
-import { getStudents } from "./store/reducers/student.js";
-import { getStudentsRequest } from "./utils/studentAction.js";
+import { useAppSelector } from "./store/hooks";
 
 import type { handleModalAction } from "./types/Types.ts"
 
@@ -11,7 +8,6 @@ interface props {
 function Home({ handleModalAction }: props) {
 
   const auth = useAppSelector((state) => state.auth.value);
-  const dispatch = useAppDispatch();
 
   const handleSignIn = () => {
     handleModalAction.setIsModalOpen(true)
@@ -19,20 +15,6 @@ function Home({ handleModalAction }: props) {
     console.log("Sign In clicked")
   }
 
-  useEffect(() => {
-    if (!auth.token) return
-    const initStudents = async () => {
-      try {
-        const students = await getStudentsRequest();
-        console.log("Students fetched:", students);
-        dispatch(getStudents(students.data));
-
-      } catch (error) {
-        console.error("Error fetching students:", error);
-      }
-    }
-    initStudents();
-  }, [auth.token]);
 
   return (
     <div className="w-full h-full flex justify-evenly items-center ">

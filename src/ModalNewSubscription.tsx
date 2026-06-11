@@ -16,25 +16,29 @@ function ModalNewSubscription({setStudentSubscription, studentSubscription} : pr
   const [amount2Pay, setAmount2Pay] = useState(0);
   const apellido = studentSubscription.apellido || ""
   const name = studentSubscription.name || ""
-  let payementStatus: boolean;
-console.log("appelido :", studentSubscription.apellido)
+  let paymentStatus: boolean;
+console.log("theStudentsalright? :", studentSubscription)
   const dispatch = useAppDispatch();
 
   const handleNewSubscription = async () => {
+    console.log("the MFCLICK !")
     try {
       if (payed === "non") {
-        payementStatus = false
+        paymentStatus = false
       } else if (payed === "oui") {
-        payementStatus = true
+        paymentStatus = true
       }
 
-      const newSubData = { studentID : studentSubscription._id, token : user.token, subscription, payementStatus, amount2Pay }
-      const response = await NewSubscriptionRequest(newSubData);
+      const newSubData = { studentID : studentSubscription._id, token : user.token, subscription, paymentStatus, amount2Pay }
 
+      console.log("newSubData", newSubData)
+
+      const response = await NewSubscriptionRequest(newSubData);
+      console.log("give us the answer !", response)
       if (!response) return;
 
       const response2 = await getStudentsRequest()
-
+      console.log("response2", response2.data)
       dispatch(getStudents(response2.data));
       setStudentSubscription({})      
 

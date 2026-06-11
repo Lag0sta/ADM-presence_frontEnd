@@ -1,12 +1,36 @@
-  import { useAppSelector } from "./store/hooks.js";
+    import { useEffect } from "react";
+
+  import { useAppSelector, useAppDispatch } from "./store/hooks.js";
   import type { handleModalAction } from "./types/Types.ts"
+
+  import { getStudentsRequest } from "./utils/studentAction.js";
+  import { getStudents } from "./store/reducers/student.js";
+
   interface props {
     handleModalAction: handleModalAction
     setStudentSubscription: (value: any) => void;
   }
 
   function AttendanceList({ handleModalAction, setStudentSubscription }: props) {
+    const auth = useAppSelector((state) => state.auth.value);
     const students: any[] = useAppSelector((state) => state.student.value);
+    const dispatch = useAppDispatch();
+    console.log("studentsPresent yeah :", students);
+
+    useEffect(() => {
+        if (!auth.token) return
+        const initStudents = async () => {
+          try {
+            const students = await getStudentsRequest();
+            console.log("Students fetched:", students);
+            dispatch(getStudents(students.data));
+    
+          } catch (error) {
+            console.error("Error fetching students:", error);
+          }
+        }
+        initStudents();
+      }, [auth.token]);
 
     const handleAddNew = () => {
       handleModalAction.setModalComponent("addAttendee")
@@ -64,8 +88,8 @@
                 <span className="pl-1">{student.name}</span>
               </div>
               <div className="flex justify-center items-center">
-                {student.subscription ? (
-                  <span>{student.subscription}</span>
+                {student.subscription?.plan ? (
+                  <span>{student.subscription?.plan}</span>
                 ) : (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer hover:text-[#FFCB00]"
                     onClick={() => handleNewSubscription(student)}
@@ -74,25 +98,25 @@
                   </svg>
                 )}
               </div>
-              {student.subscription !== "trimestriel" ? (
+              {student.subscription?.plan !== "trimestriel" ? (
                 <div className="flex justify-center items-center bg-gray-400" />
               ) : (
                 <div className="flex justify-center items-center">
-            z      <span>{new Date(student.endDate)
+                  <span>{new Date(student.subscription?.endDate)
                     .toLocaleDateString("fr-FR", { timeZone: "UTC" })
                     .replaceAll("/", "-")}
                   </span>
                 </div>
               )}
-              {student.subscription !== "carte" ? (
+              {student.subscription?.plan !== "carte" ? (
                 <div className="flex justify-center items-center bg-gray-400" />
               ) : (
                 <div className="flex justify-center items-center">
-                  <span >{student.pointsLeft}</span>
+                  <span >{student.subscription?.pointsLeft}</span>
                 </div>
               )}
               <div className="flex justify-center items-center">
-                <span className="pl-4">{student.amount2Pay}</span>
+                <span className="pl-4">{student.subscription?.amount2Pay} €</span>
               </div>
             </div>
           ))}

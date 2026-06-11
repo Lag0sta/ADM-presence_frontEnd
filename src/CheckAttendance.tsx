@@ -1,7 +1,7 @@
 import { useAppSelector, useAppDispatch } from "./store/hooks.js";
 import { useState, useEffect, useMemo } from "react";
 
-import { NewAttendanceRequest, addStudentAttendanceRequest, getAttendancesRequest } from "./utils/AttendanceAction.js"
+import { NewAttendanceRequest, addStudentAttendanceRequest, getAttendancesRequest } from "./utils/attendanceAction.js"
 
 import { getAttendances } from "./store/reducers/attendance.js";
 
@@ -15,22 +15,22 @@ function CheckAttendance() {
 
   const dispatch = useAppDispatch();
 
- const latestAttendance = useMemo(() => {
-  return [...attendances]
-    .sort((a, b) => b.attendanceDay.localeCompare(a.attendanceDay))[0];
-}, [attendances]);
+  const latestAttendance = useMemo(() => {
+    return [...attendances]
+      .sort((a, b) => b.attendanceDay.localeCompare(a.attendanceDay))[0];
+  }, [attendances]);
 
-useEffect(() => {
-  setAttendedStudent(
-    latestAttendance?.students?.map((s: any) => s._id) ?? []
-  );
-}, [latestAttendance]);
+  useEffect(() => {
+    setAttendedStudent(
+      latestAttendance?.students?.map((s: any) => s._id) ?? []
+    );
+  }, [latestAttendance]);
 
- useEffect(() => {
+  useEffect(() => {
     const loadHistory = async () => {
       try {
         const response = await getAttendancesRequest();
-        dispatch(getAttendances(response.data.sort((a : any, b : any) => b.attendanceDay.localeCompare(a.attendanceDay))));
+        dispatch(getAttendances(response.data.sort((a: any, b: any) => b.attendanceDay.localeCompare(a.attendanceDay))));
       } catch (error) {
         console.error("Error data fetch:", error);
       }
@@ -74,8 +74,8 @@ useEffect(() => {
 
       if (date === attendanceDate) {
         const response = await addStudentAttendanceRequest(addSAData);
-        setTestStudents([...testStudents, ...response.data.students]); 
-                const newA = [response.data];
+        setTestStudents([...testStudents, ...response.data.students]);
+        const newA = [response.data];
 
         dispatch(getAttendances(newA))
         console.log('same date', response)
@@ -111,8 +111,8 @@ useEffect(() => {
               <span className="pl-1">{student.name}</span>
             </div>
             <div className="flex justify-center items-center">
-              {student.subscription ? (
-                <span>{student.subscription}</span>
+              {student.subscription?.plan ? (
+                <span>{student.subscription.plan}</span>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer hover:text-[#FFCB00]"
                 // onClick={() => handleNewSubscription(student)}
@@ -123,7 +123,10 @@ useEffect(() => {
             </div>
             <input
               type="checkbox"
-              disabled={attendedStudent.includes(student._id) || testStudents.includes(student._id)}
+              disabled={
+                (attendedStudent ?? []).includes(student._id) ||
+                (testStudents ?? []).includes(student._id)
+              }
               checked={checkedUsers.includes(student._id)}
               onChange={() => handleCheckboxChange(student._id)}
             />

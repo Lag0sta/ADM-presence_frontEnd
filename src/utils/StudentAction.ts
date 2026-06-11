@@ -14,7 +14,7 @@ export async function getStudentsRequest() {
 }
 
 export async function NewRegistrantRequest( newSData : newSData) {
-    const { apellido, name, subscription, payementStatus, amount2Pay } = newSData
+    const { apellido, name, subscription, paymentStatus, amount2Pay } = newSData
     
     try {
         const newRegistrant = await fetch(`${API_URL}/students/addNewStudent`, {
@@ -23,13 +23,13 @@ export async function NewRegistrantRequest( newSData : newSData) {
             body: JSON.stringify({
                 apellido: apellido,
                 name: name,
-                subscription: subscription,
-                payementStatus: payementStatus,
+                subscriptionType: subscription,
+                paymentStatus: paymentStatus,
                 amount2Pay: amount2Pay
             })
         })
         const response = await newRegistrant.json()
-        console.log("response", response)
+        console.log("responseOG", response)
 
         return response
 
@@ -39,7 +39,7 @@ export async function NewRegistrantRequest( newSData : newSData) {
 }
 
 export async function NewSubscriptionRequest( newSubData : newSubData) {
-    const { studentID, token, subscription, payementStatus, amount2Pay } = newSubData
+    const { studentID, token, subscription, paymentStatus, amount2Pay } = newSubData
     
     try {
         const newRegistrant = await fetch(`${API_URL}/students/newSubscription`, {
@@ -48,13 +48,13 @@ export async function NewSubscriptionRequest( newSubData : newSubData) {
             body: JSON.stringify({
                 token: token,
                 studentId: studentID,
-                subscription: subscription,
-                payementStatus: payementStatus,
+                subscriptionType: subscription,
+                paymentStatus: paymentStatus,
                 amount2Pay: amount2Pay
             })
         })
         const response = await newRegistrant.json()
-        console.log("response", response)
+        console.log("responseTSDFKSSEF", response)
 
         return response
 
