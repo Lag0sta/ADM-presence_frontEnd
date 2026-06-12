@@ -20,11 +20,9 @@ function CheckAttendance() {
       timeZone: "Europe/Brussels",
     }).format(new Date()).replaceAll("-", "/");
 
-
-    const latest = [...attendances]
-      .sort((a, b) => b.attendanceDay.localeCompare(a.attendanceDay))[0];
-
-    return latest?.attendanceDay === todayBE ? latest : undefined;
+    return attendances.find(
+      (a) => a.attendanceDay === todayBE
+    );
   }, [attendances]);
 
   useEffect(() => {
