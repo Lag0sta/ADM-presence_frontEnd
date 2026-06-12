@@ -7,7 +7,7 @@ interface props {
 
 function Header({ handleModalAction, setComponent } : props ){
 
-const auth = useAppSelector((state) => state.auth.value);
+const auth = useAppSelector((state) => state.auth.value) || "";
 console.log("auth dans Header:", auth);
   const handleHome = ()  => {
     console.log("Home clicked")
