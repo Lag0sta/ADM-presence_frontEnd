@@ -44,7 +44,7 @@ console.log("auth dans Header:", auth);
           <span onClick={handleAttendanceList}>Liste des Inscrits</span>
           <div className=" w-18 bg-[#FFCB00] rounded-full flex justify-center items-center"
           onClick={handleUserModal}>
-            <img className="w-fit" src="../public/BanderoleFuzue.png"/>
+            <img className="w-fit" src="BanderoleFuzue.png"/>
           </div>
           </div>
       }
