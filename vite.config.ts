@@ -15,7 +15,7 @@ export default defineConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: '/pwa-192x192.png',
+            src: './public/BanderoleFuzue.png',
             sizes: '192x192',
             type: 'image/png',
           },
