@@ -1,10 +1,10 @@
     import { useEffect } from "react";
 
-  import { useAppSelector, useAppDispatch } from "./store/hooks.js";
-  import type { handleModalAction } from "./types/Types.ts"
+  import { useAppSelector, useAppDispatch } from "./store/hooks";
+  import type { handleModalAction } from "./types/Types"
 
-  import { getStudentsRequest } from "./utils/studentAction.js";
-  import { getStudents } from "./store/reducers/student.js";
+  import { getStudentsRequest } from "./utils/studentAction";
+  import { getStudents } from "./store/reducers/student";
 
   interface props {
     handleModalAction: handleModalAction

@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useAppDispatch } from './store/hooks.js';
+import { useAppDispatch } from './store/hooks';
 
-import { signInRequest } from './utils/authAction.js';
-import { addAuth } from './store/reducers/auth.js';
+import { signInRequest } from './utils/authAction';
+import { addAuth } from './store/reducers/auth';
 
-import type { handleModalAction } from './types/Types.js';
+import type { handleModalAction } from './types/Types';
 
 interface props {
   handleModalAction: handleModalAction;

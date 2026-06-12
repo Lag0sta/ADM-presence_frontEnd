@@ -1,9 +1,9 @@
-import { useAppSelector, useAppDispatch } from "./store/hooks.js";
+import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { useState, useEffect, useMemo } from "react";
 
-import { NewAttendanceRequest, addStudentAttendanceRequest, getAttendancesRequest } from "./utils/attendanceAction.js"
+import { NewAttendanceRequest, addStudentAttendanceRequest, getAttendancesRequest } from "./utils/attendanceAction"
 
-import { getAttendances } from "./store/reducers/attendance.js";
+import { getAttendances } from "./store/reducers/attendance";
 
 function CheckAttendance() {
   const user = useAppSelector((state) => state.auth.value);

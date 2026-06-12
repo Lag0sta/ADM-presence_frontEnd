@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import Header from "./Header"
-import MainComp from "./MainComp.tsx"
-import Modal from './Modal.tsx'
+import MainComp from "./MainComp"
+import Modal from './Modal'
 
 function App() {
   const [component, setComponent] = useState("home")

@@ -1,8 +1,8 @@
-import ModalAddStudent from "./ModalAddStudent.tsx";
-import ModalNewSubscription from "./ModalNewSubscription.tsx";
+import ModalAddStudent from "./ModalAddStudent";
+import ModalNewSubscription from "./ModalNewSubscription";
 import SignIn from "./SignIn";
-import ModalUser from "./ModalUser.tsx";
-import type { handleModalAction } from "./types/Types.ts"
+import ModalUser from "./ModalUser";
+import type { handleModalAction } from "./types/Types"
 
 interface props {
   handleModalAction: handleModalAction

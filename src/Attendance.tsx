@@ -1,7 +1,7 @@
 import {  useState } from "react";
 
-import CheckAttendance from "./CheckAttendance.js";
-import AttendanceHistory from "./AttendanceHistory.js";
+import CheckAttendance from "./CheckAttendance";
+import AttendanceHistory from "./AttendanceHistory";
 
 function Attendance() {
   const [toggleState, setToggleState] = useState("option1");

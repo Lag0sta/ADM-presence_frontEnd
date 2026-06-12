@@ -1,8 +1,8 @@
-import Attendance from "./Attendance.tsx";
-import AttendanceList from "./AttendanceList.tsx"
+import Attendance from "./Attendance";
+import AttendanceList from "./AttendanceList"
 import Home from "./Home"
 
-import type {handleModalAction} from "./types/Types.ts"
+import type {handleModalAction} from "./types/Types"
 
 interface props {
     component: string;

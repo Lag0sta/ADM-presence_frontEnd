@@ -1,6 +1,6 @@
 import { useAppSelector } from "./store/hooks";
 
-import type { handleModalAction } from "./types/Types.ts"
+import type { handleModalAction } from "./types/Types"
 
 interface props {
   handleModalAction: handleModalAction

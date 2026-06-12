@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useAppDispatch } from "./store/hooks.js";
-import { NewRegistrantRequest, getStudentsRequest } from "./utils/studentAction.js";
-import { getStudents } from "./store/reducers/student.js";
+import { useAppDispatch } from "./store/hooks";
+import { NewRegistrantRequest, getStudentsRequest } from "./utils/studentAction";
+import { getStudents } from "./store/reducers/student";
 
 function ModalAddStudent() {
   const [apellido, setApellido] = useState("");

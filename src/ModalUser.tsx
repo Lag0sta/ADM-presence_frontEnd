@@ -1,9 +1,9 @@
-import { useAppDispatch, useAppSelector } from './store/hooks.js';
+import { useAppDispatch, useAppSelector } from './store/hooks';
 
-import { logOutRequest } from './utils/authAction.js';
-import { clearAuth } from './store/reducers/auth.js';
+import { logOutRequest } from './utils/authAction';
+import { clearAuth } from './store/reducers/auth';
 
-import type { handleModalAction } from './types/Types.js';
+import type { handleModalAction } from './types/Types';
 
 interface props {
   handleModalAction: handleModalAction;

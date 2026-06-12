@@ -1,8 +1,8 @@
-import { useAppSelector, useAppDispatch } from "./store/hooks.js";
+import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { useEffect } from "react";
 
-import { deleteStudentRequest, deleteDateRequest, getAttendancesRequest } from "./utils/attendanceAction.js";
-import { getAttendances, deleteStudenteAttendance, deleteDateAttendance } from "./store/reducers/attendance.js";
+import { deleteStudentRequest, deleteDateRequest, getAttendancesRequest } from "./utils/attendanceAction";
+import { getAttendances, deleteStudenteAttendance, deleteDateAttendance } from "./store/reducers/attendance";
 
 function AttendanceHistory() {
   const user = useAppSelector((state) => state.auth.value);
