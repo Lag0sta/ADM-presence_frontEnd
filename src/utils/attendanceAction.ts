@@ -1,7 +1,6 @@
 import type { newAData, addSAData, dSData, dDData } from "../types/attendanceAction";
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
-
 export async function getAttendancesRequest() {
     try {
         const getAttendances = await fetch(`${API_URL}/attendances/`)
