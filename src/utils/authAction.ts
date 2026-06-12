@@ -1,5 +1,5 @@
 import type { signInData, logOutData } from "../types/authAction";
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+const API_URL = import.meta.env.VITE_API_URL.replace(/\/$/, "") || 'http://localhost:4000';
 
 export async function signInRequest(signInData: signInData) {
     const { apellido, email, password } = signInData
