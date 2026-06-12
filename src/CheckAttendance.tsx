@@ -16,8 +16,15 @@ function CheckAttendance() {
   const dispatch = useAppDispatch();
 
   const latestAttendance = useMemo(() => {
-    return [...attendances]
+    const todayBE = new Intl.DateTimeFormat("sv-SE", {
+      timeZone: "Europe/Brussels",
+    }).format(new Date()).replaceAll("-", "/");
+
+
+    const latest = [...attendances]
       .sort((a, b) => b.attendanceDay.localeCompare(a.attendanceDay))[0];
+
+    return latest?.attendanceDay === todayBE ? latest : undefined;
   }, [attendances]);
 
   useEffect(() => {

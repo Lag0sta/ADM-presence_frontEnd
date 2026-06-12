@@ -6,25 +6,30 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), VitePWA({
-      registerType: 'autoUpdate',
+    registerType: 'autoUpdate',
 
-      manifest: {
-        name: 'ADM Presence',
-        short_name: 'ADMp',
-        description: 'Gestion des présences',
-        theme_color: '#ffffff',
-        icons: [
-          {
-            src: 'BanderoleFuzue.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: 'BanderoleFuzue.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-        ],
-      },
-    })],
+    workbox: {
+      clientsClaim: true,
+      skipWaiting: true,
+    },
+    
+    manifest: {
+      name: 'ADM Presence',
+      short_name: 'ADMp',
+      description: 'Gestion des présences',
+      theme_color: '#ffffff',
+      icons: [
+        {
+          src: 'BanderoleFuzue.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: 'BanderoleFuzue.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+      ],
+    },
+  })],
 })
