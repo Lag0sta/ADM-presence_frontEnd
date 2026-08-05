@@ -4,22 +4,60 @@ import { useState, useEffect, useMemo } from "react";
 import { NewAttendanceRequest, addStudentAttendanceRequest, getAttendancesRequest } from "./utils/attendanceAction"
 
 import { getAttendances } from "./store/reducers/attendance";
+import { getattendanceOfTheDay } from "./store/reducers/attendanceOfTheDay";
 
 function CheckAttendance() {
   const user = useAppSelector((state) => state.auth.value);
   const students: any[] = useAppSelector((state) => state.student.value);
   const attendances: any[] = useAppSelector((state) => state.attendance.value);
+  const attendanceOfTheDay: any = useAppSelector((state) => state.attendanceOfTheDay.value);
   const [checkedUsers, setCheckedUsers] = useState<string[]>([]);
   const [testStudents, setTestStudents] = useState<string[]>([]);
   const [attendedStudent, setAttendedStudent] = useState<string[]>([]);
 
+  console.log("attendanceOfTheDay", attendanceOfTheDay);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const response = await getAttendancesRequest();
+        console.log("responseloadHistory123", response);
+        const attendances = response.data;
+
+        const todayBE = new Intl.DateTimeFormat("sv-SE", {
+          timeZone: "Europe/Brussels",
+        }).format(new Date()).replaceAll("-", "/");
+
+        const todayAttendance = attendances.find(
+          (a: any) => a.attendanceDay === todayBE
+        );
+
+        console.log("responseloadHistory", attendances);
+        console.log("todayAttendance", todayAttendance);
+
+        dispatch(getAttendances(attendances)); // historique complet
+
+        if (todayAttendance) {
+          dispatch(getattendanceOfTheDay(todayAttendance)); // slice séparé recommandé
+        }
+
+      } catch (error) {
+        console.error("Error data fetch:", error);
+      }
+    };
+
+    loadHistory();
+  }, []);
+
+  //récupération des étudiants présents aujourd'hui
   const latestAttendance = useMemo(() => {
     const todayBE = new Intl.DateTimeFormat("sv-SE", {
       timeZone: "Europe/Brussels",
-    }).format(new Date()).replaceAll("-", "/");
+    }).format(new Date())
 
+    console.log("todayBE", todayBE);
+    console.log("attendancesTODAY", attendances);
     return attendances.find(
       (a) => a.attendanceDay === todayBE
     );
@@ -101,7 +139,7 @@ function CheckAttendance() {
           .replaceAll("/", "-")}
         </span>
         <div className="grid grid-cols-[1fr_1fr_2fr_1fr] bg-[#FFCB00] p-2 rounded-tr-lg font-semibold border-[#FFCB00] text-white">
-          <span className=" ">Appelido :</span>
+          <span className=" " >Appelido :</span>
           <span className=" ">Nom :</span>
           <span>Type d'abonnement :</span>
         </div>
@@ -110,14 +148,31 @@ function CheckAttendance() {
             className="grid grid-cols-[1fr_1fr_2fr_1fr] border-b-2 border-x-2 border-[#FFCB00]"
           >
             <div key={student._id} className="ml-2 flex justify-start ">
-              <span className="font-semibold">{student.apellido}</span>
+              <span className="font-semibold" 
+                    style={{
+                      ...(student.subscription?.pointsLeft === 0 && {
+                      backgroundColor: "red",
+                      color: "white",
+                    }),
+              }}>{student.apellido}</span>
             </div>
             <div className="flex justify-center items-center">
-              <span className="pl-1">{student.name}</span>
+              <span className="pl-1"
+                    style={{
+                      ...(student.subscription?.pointsLeft === 0 && {
+                      backgroundColor: "red",
+                      color: "white",
+                    }),
+                  }}>{student.name}</span>
             </div>
             <div className="flex justify-center items-center">
               {student.subscription?.plan ? (
-                <span>{student.subscription.plan}</span>
+                <span style={{
+                      ...(student.subscription?.pointsLeft === 0 && {
+                      backgroundColor: "red",
+                      color: "white",
+                    }),
+                  }}>{student.subscription.plan}</span>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer hover:text-[#FFCB00]"
                 // onClick={() => handleNewSubscription(student)}
@@ -125,12 +180,13 @@ function CheckAttendance() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                 </svg>
               )}
+
             </div>
             <input
               type="checkbox"
               disabled={
                 (attendedStudent ?? []).includes(student._id) ||
-                (testStudents ?? []).includes(student._id)
+                (testStudents ?? []).includes(student._id) || student.subscription?.pointsLeft === 0
               }
               checked={checkedUsers.includes(student._id)}
               onChange={() => handleCheckboxChange(student._id)}
@@ -140,7 +196,8 @@ function CheckAttendance() {
         ))}
         <div className="flex justify-center items-center my-5">
           <span className="w-fit py-2 px-4 bg-gray-900 rounded-full text-[#FFCB00] text-center"
-            onClick={handleSave}>Enregistrer</span>
+            onClick={handleSave}
+          >Enregistrer</span>
 
         </div>
       </div>

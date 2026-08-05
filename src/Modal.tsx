@@ -2,15 +2,16 @@ import ModalAddStudent from "./ModalAddStudent";
 import ModalNewSubscription from "./ModalNewSubscription";
 import SignIn from "./SignIn";
 import ModalUser from "./ModalUser";
-import type { handleModalAction } from "./types/Types"
+import type { handleModalAction, handleMsgModalAction } from "./types/Types"
 
 interface props {
   handleModalAction: handleModalAction
+  handleMsgModalAction: handleMsgModalAction
   setComponent: (value: string) => void;
   setStudentSubscription: (value: any) => void;
   studentSubscription: any;
 }
-function Modal({ handleModalAction, setComponent, studentSubscription, setStudentSubscription }: props) {
+function Modal({ handleModalAction, handleMsgModalAction, setComponent, studentSubscription, setStudentSubscription }: props) {
 
   const handleCloseModal = () => {
     handleModalAction.setIsModalOpen(false);
@@ -37,7 +38,9 @@ function Modal({ handleModalAction, setComponent, studentSubscription, setStuden
                                   studentSubscription={studentSubscription}/>
           }
           {handleModalAction.modalComponent === "signIn" &&
-            <SignIn handleModalAction={handleModalAction}/>
+            <SignIn handleModalAction={handleModalAction} 
+                    handleMsgModalAction={handleMsgModalAction}
+            />
           }
           {handleModalAction.modalComponent === "userModal" &&
           <ModalUser handleModalAction={handleModalAction}

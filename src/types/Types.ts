@@ -4,3 +4,10 @@ export interface handleModalAction {
     modalComponent: string;
     setModalComponent: (value: string) => void;
 }
+
+export interface handleMsgModalAction {
+    isMsgModalOpen: boolean;
+    msgModalContent: string;
+    setIsMsgModalOpen: (value: boolean) => void;
+    setMsgModalContent: (value: string) => void;
+}

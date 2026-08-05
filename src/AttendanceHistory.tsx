@@ -1,23 +1,30 @@
 import { useAppSelector, useAppDispatch } from "./store/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { deleteStudentRequest, deleteDateRequest, getAttendancesRequest } from "./utils/attendanceAction";
 import { getAttendances, deleteStudenteAttendance, deleteDateAttendance } from "./store/reducers/attendance";
 
 function AttendanceHistory() {
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 1;
   const user = useAppSelector((state) => state.auth.value);
-  
+
   const attendances: any[] = useAppSelector((state) => state.attendance.value);
   const dispatch = useAppDispatch()
 
-console.log('attendancesNOW', attendances)
-console.log('userNOW', user)
+  const start = (page - 1) * itemsPerPage;
+  const currentAttendances = attendances.slice(start, start + itemsPerPage);
+
+  const totalPages = Math.ceil(attendances.length / itemsPerPage);
+
+  console.log('attendancesNOW', attendances)
+  console.log('userNOW', user)
   useEffect(() => {
     const loadHistory = async () => {
       try {
         const response = await getAttendancesRequest();
         console.log("responseloadHistory", response);
-        dispatch(getAttendances(response.data.sort((a : any, b : any) => b.attendanceDay.localeCompare(a.attendanceDay))));
+        dispatch(getAttendances(response.data.sort((a: any, b: any) => b.attendanceDay.localeCompare(a.attendanceDay))));
       } catch (error) {
         console.error("Error data fetch:", error);
       }
@@ -28,7 +35,7 @@ console.log('userNOW', user)
   const handleDeleteStudent = async (attendance: any, student: any) => {
 
     const dSData = { attendanceId: attendance._id, studentId: student._id, token: user.token };
-   
+
     try {
       const response = await deleteStudentRequest(dSData);
       console.log("response Attendance", response);
@@ -45,7 +52,7 @@ console.log('userNOW', user)
       const response = await deleteDateRequest(dDData);
       console.log("response Date", response, attendance._id);
       const attendanceID = attendance._id
-      dispatch(deleteDateAttendance({attendanceID}));
+      dispatch(deleteDateAttendance({ attendanceID }));
 
     } catch (error) {
       console.error("Error during sign in:", error);
@@ -54,13 +61,38 @@ console.log('userNOW', user)
 
   return (
     <div className=" w-screen h-full flex justify-evenly items-center ">
-      {attendances.map((attendance: any) => (
-        <div key={attendance._id} className="w-[45%] flex flex-col">
-          <div className="flex justify-between items-center">
-            <span className="w-fit px-6 py-1 bg-[#FFCB00] text-gray-800 text-lg rounded-t-lg font-bold">
-              Date: {attendance.attendanceDay.split("-").reverse().join("-")}
-            </span>
+      {currentAttendances.map((attendance: any) => (
 
+        <div key={attendance._id} className="w-[45%] flex flex-col">
+
+          <div className="flex justify-between items-center">
+            <div className="flex justify-start items-center w-fit px-6 py-1 bg-[#FFCB00] rounded-t-lg">
+            <span className="text-gray-800 text-lg font-bold">
+              Date:
+              <span>{attendance.attendanceDay.split("-").reverse().join("-")}</span>
+            </span>
+             <div className="ml-4 bg-[#FFCB00] text-gray-100 text-2xl rounded-tr-lg font-black ">
+            {page !== 1 &&
+              <button
+              className="mouse-pointer"
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+              >
+                ←
+              </button>
+            }
+            {page !== totalPages &&
+              <button
+               className="mouse-pointer"
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
+              >
+                →
+              </button>
+            }
+            </div>
+            </div>
+           
           </div>
           <div className="flex justify-between items-center bg-[#FFCB00] p-2 font-semibold border-[#FFCB00] text-white">
             <span className="w-fit  py-1  text-gray-800  rounded-t-lg ">

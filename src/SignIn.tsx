@@ -4,13 +4,14 @@ import { useAppDispatch } from './store/hooks';
 import { signInRequest } from './utils/authAction';
 import { addAuth } from './store/reducers/auth';
 
-import type { handleModalAction } from './types/Types';
+import type { handleModalAction, handleMsgModalAction } from './types/Types';
 
 interface props {
   handleModalAction: handleModalAction;
+  handleMsgModalAction: handleMsgModalAction;
 }
 
-function SignIn({ handleModalAction }: props) {
+function SignIn({ handleModalAction, handleMsgModalAction }: props) {
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +22,15 @@ function SignIn({ handleModalAction }: props) {
     const signInData = { apellido, email, password };
     try {
       const response = await signInRequest(signInData);
+      if(response.errors) {
+        console.error("Sign in failed:", response.message);
+        console.log("response.errors", response.errors);
+        handleMsgModalAction.setIsMsgModalOpen(true);
+        handleMsgModalAction.setMsgModalContent(response.message);
 
+        return;
+      }
+console.log("Sign in successful:", response.data);
       dispatch(addAuth(response.data));
 
       handleModalAction.setIsModalOpen(false);

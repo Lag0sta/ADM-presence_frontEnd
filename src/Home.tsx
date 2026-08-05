@@ -1,11 +1,12 @@
 import { useAppSelector } from "./store/hooks";
 
-import type { handleModalAction } from "./types/Types"
+import type { handleModalAction, handleMsgModalAction } from "./types/Types"
 
 interface props {
   handleModalAction: handleModalAction
+  handleMsgModalAction: handleMsgModalAction
 }
-function Home({ handleModalAction }: props) {
+function Home({ handleModalAction, handleMsgModalAction }: props) {
 
   const auth = useAppSelector((state) => state.auth.value);
 
