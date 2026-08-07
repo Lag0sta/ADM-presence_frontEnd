@@ -1,16 +1,17 @@
 
-import { useAppSelector, useAppDispatch } from "./store/hooks";
+import { useAppSelector } from "./store/hooks";
+
 import type { handleModalAction } from "./types/Types"
+
 
 interface props {
   handleModalAction: handleModalAction
   setStudentSubscription: (value: any) => void;
+  setStudentFile: (value: any) => void;
 }
 
-function AttendanceList({ handleModalAction, setStudentSubscription }: props) {
-  const auth = useAppSelector((state) => state.auth.value);
+function AttendanceList({ handleModalAction, setStudentSubscription, setStudentFile }: props) {
   const students: any[] = useAppSelector((state) => state.student.value);
-  const dispatch = useAppDispatch();
   console.log("studentsPresent yeah :", students);
 
 
@@ -20,7 +21,15 @@ function AttendanceList({ handleModalAction, setStudentSubscription }: props) {
     handleModalAction.setIsModalOpen(true)
   }
 
+  const handleStudentFile = (student: any) => {
+    console.log("Student File clicked for student:", student)
+    setStudentFile(student)
+    handleModalAction.setModalComponent("studentFile")
+    handleModalAction.setIsModalOpen(true)
+  }
+
   const handleNewSubscription = (student: any) => {
+    console.log("click")
     console.log("New Subscription clicked for student:", student)
     setStudentSubscription(student)
     handleModalAction.setModalComponent("newSubscription")
@@ -65,10 +74,11 @@ function AttendanceList({ handleModalAction, setStudentSubscription }: props) {
             className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr] border-b-2 border-x-2 border-[#FFCB00]"
           >
             <div className="ml-2 flex justify-start ">
-              <span className="font-semibold">{student.apellido}</span>
+              <span className="font-bold hover:text-[#FFCB00]"
+              onClick={() => handleStudentFile(student)}>{student.apellido}</span>
             </div>
             <div className="flex justify-center items-center">
-              <span className="pl-1">{student.name}</span>
+              <span className="pl-1 text-sm">{student.name}</span>
             </div>
             <div className="flex justify-center items-center">
               {student.subscription?.plan ? (

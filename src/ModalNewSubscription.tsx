@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import {  NewSubscriptionRequest, getStudentsRequest } from "./utils/studentAction";
-import { getStudents } from "./store/reducers/student";
+import { getStudents } from "./store/reducers/students";
+import type { handleModalAction } from "./types/Types";
 
 interface props {
+  handleModalAction: handleModalAction
   studentSubscription: any
   setStudentSubscription: (value: any) => void;
 }
 
-function ModalNewSubscription({setStudentSubscription, studentSubscription} : props) {
+function ModalNewSubscription({setStudentSubscription, studentSubscription, handleModalAction} : props) {
   const user = useAppSelector((state) => state.auth.value);
   
   const [subscription, setSubscription] = useState("");
@@ -16,21 +18,17 @@ function ModalNewSubscription({setStudentSubscription, studentSubscription} : pr
   const [amount2Pay, setAmount2Pay] = useState(0);
   const apellido = studentSubscription.apellido || ""
   const name = studentSubscription.name || ""
-  let paymentStatus: boolean;
 console.log("theStudentsalright? :", studentSubscription)
   const dispatch = useAppDispatch();
 
   const handleNewSubscription = async () => {
     console.log("the MFCLICK !")
     try {
-      if (payed === "non") {
-        paymentStatus = false
-      } else if (payed === "oui") {
-        paymentStatus = true
-      }
+      if (payed === "oui") setAmount2Pay(0)
+      
 
-      const newSubData = { studentID : studentSubscription._id, token : user.token, subscription, paymentStatus, amount2Pay }
-
+      const newSubData = { studentID : studentSubscription._id, token : user.token, subscription, amount2Pay }
+      console.log("user", user)
       console.log("newSubData", newSubData)
 
       const response = await NewSubscriptionRequest(newSubData);
@@ -40,7 +38,9 @@ console.log("theStudentsalright? :", studentSubscription)
       const response2 = await getStudentsRequest()
       console.log("response2", response2.data)
       dispatch(getStudents(response2.data));
-      setStudentSubscription({})      
+      setStudentSubscription({}) 
+      handleModalAction.setModalComponent("");
+      handleModalAction.setIsModalOpen(false);     
 
     } catch (error) {
       console.error("Error during adding new registrant:", error);
@@ -70,20 +70,21 @@ console.log("theStudentsalright? :", studentSubscription)
           />
 
         </div>
+        
         <div className="flex flex-col">
           <label className="mt-2  text-lg font-semibold"
             htmlFor="Abonnement"
           >
             Type d'abonnement :
           </label>
-          <label>
-            <input type="radio"
-              name="subscription"
-              value="trimestriel"
-              checked={subscription === "trimestriel"}
-              onChange={(e) => setSubscription(e.target.value)} />
-            Abonnement Trimestriel
-          </label>
+            <label>
+              <input type="radio"
+                name="subscription"
+                value="trimestriel"
+                checked={subscription === "trimestriel"}
+                onChange={(e) => setSubscription(e.target.value)} />
+              Abonnement Trimestriel
+            </label>
 
           <label>
             <input type="radio"

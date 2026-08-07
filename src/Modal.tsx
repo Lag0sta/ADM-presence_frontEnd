@@ -2,6 +2,7 @@ import ModalAddStudent from "./ModalAddStudent";
 import ModalNewSubscription from "./ModalNewSubscription";
 import SignIn from "./SignIn";
 import ModalUser from "./ModalUser";
+import ModalStudentFile from "./ModalStudentFile";
 import type { handleModalAction, handleMsgModalAction } from "./types/Types"
 
 interface props {
@@ -10,8 +11,10 @@ interface props {
   setComponent: (value: string) => void;
   setStudentSubscription: (value: any) => void;
   studentSubscription: any;
+  studentFile: any;
+  setStudentFile: (value: any) => void;
 }
-function Modal({ handleModalAction, handleMsgModalAction, setComponent, studentSubscription, setStudentSubscription }: props) {
+function Modal({ handleModalAction, handleMsgModalAction, setComponent, studentSubscription, setStudentSubscription, studentFile, setStudentFile }: props) {
 
   const handleCloseModal = () => {
     handleModalAction.setIsModalOpen(false);
@@ -35,7 +38,8 @@ function Modal({ handleModalAction, handleMsgModalAction, setComponent, studentS
           }
           {handleModalAction.modalComponent === "newSubscription" &&
             <ModalNewSubscription setStudentSubscription={setStudentSubscription}
-                                  studentSubscription={studentSubscription}/>
+                                  studentSubscription={studentSubscription}
+                                  handleModalAction={handleModalAction} />
           }
           {handleModalAction.modalComponent === "signIn" &&
             <SignIn handleModalAction={handleModalAction} 
@@ -45,6 +49,13 @@ function Modal({ handleModalAction, handleMsgModalAction, setComponent, studentS
           {handleModalAction.modalComponent === "userModal" &&
           <ModalUser handleModalAction={handleModalAction}
           setComponent={setComponent}/>
+          }
+          {handleModalAction.modalComponent === "studentFile" &&
+          <ModalStudentFile studentFile={studentFile
+}          setStudentFile={setStudentFile}
+          handleModalAction={handleModalAction}
+          handleMsgModalAction={handleMsgModalAction}
+          />
           }
         </div>
       </div>

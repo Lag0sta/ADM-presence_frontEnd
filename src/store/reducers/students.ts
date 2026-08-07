@@ -5,14 +5,12 @@ type SubscriptionType =
       plan: "trimestriel";
       startDate: string;
       endDate: string;
-      paymentStatus: boolean;
       amount2Pay: number;
       pointsLeft?: never;
     }
   | {
       plan: "carte";
       pointsLeft: number;
-      paymentStatus: boolean;
       amount2Pay: number;
       startDate?: never;
       endDate?: never;
@@ -23,6 +21,7 @@ interface Student {
   apellido: string;
   name: string;
   subscription: SubscriptionType;
+  isAdmin: boolean;
 }
 
 interface StudentState {

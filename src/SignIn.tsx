@@ -22,7 +22,8 @@ function SignIn({ handleModalAction, handleMsgModalAction }: props) {
     const signInData = { apellido, email, password };
     try {
       const response = await signInRequest(signInData);
-      if(response.errors) {
+      console.log("response SignIn", response);
+      if (!response.result) {
         console.error("Sign in failed:", response.message);
         console.log("response.errors", response.errors);
         handleMsgModalAction.setIsMsgModalOpen(true);
@@ -30,7 +31,7 @@ function SignIn({ handleModalAction, handleMsgModalAction }: props) {
 
         return;
       }
-console.log("Sign in successful:", response.data);
+      console.log("Sign in successful:", response.data);
       dispatch(addAuth(response.data));
 
       handleModalAction.setIsModalOpen(false);

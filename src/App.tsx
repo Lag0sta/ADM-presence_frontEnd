@@ -7,7 +7,7 @@ import Modal from './Modal'
 import MsgModal from './MsgModal'
 
 import { getStudentsRequest } from './utils/studentAction';
-import { getStudents } from './store/reducers/student';
+import { getStudents } from './store/reducers/students';
 
 function App() {
   const [component, setComponent] = useState("home")
@@ -16,10 +16,13 @@ function App() {
   const [isMsgModalOpen, setIsMsgModalOpen] = useState(false)
   const [msgModalContent, setMsgModalContent] = useState("")
   const [studentSubscription, setStudentSubscription] = useState("")
+  const [studentFile, setStudentFile] = useState({})
+
   const handleModalAction = {isModalOpen, setIsModalOpen, modalComponent, setModalComponent}
   const handleMsgModalAction = {isMsgModalOpen, msgModalContent, setIsMsgModalOpen, setMsgModalContent}
   
   const auth = useAppSelector((state) => state.auth.value);
+  console.log("MainComp component:", component, "yeah");
 
   const dispatch = useAppDispatch();
   
@@ -50,7 +53,8 @@ function App() {
         <MainComp component={component}
                   handleModalAction={handleModalAction}
                   handleMsgModalAction={handleMsgModalAction}
-                  setStudentSubscription={setStudentSubscription} />
+                  setStudentSubscription={setStudentSubscription} 
+                  setStudentFile={setStudentFile} />
       </main>
 
 
@@ -59,7 +63,9 @@ function App() {
                handleMsgModalAction={handleMsgModalAction}
                setComponent={setComponent}
                studentSubscription={studentSubscription}
-               setStudentSubscription={setStudentSubscription}/>
+               setStudentSubscription={setStudentSubscription}
+               studentFile={studentFile}
+               setStudentFile={setStudentFile}/>
       }
       {isMsgModalOpen &&
         <MsgModal handleMsgModalAction={handleMsgModalAction}
