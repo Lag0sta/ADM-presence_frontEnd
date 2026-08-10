@@ -10,7 +10,7 @@ function MsgModal({handleMsgModalAction }: props) {
   }
 
   return (
-    <div className="h-screen w-screen  fixed inset-0 flex items-center justify-center z-20 "
+    <div className="h-screen w-screen  fixed inset-0 flex items-center justify-center z-90 "
       role="dialog"
       aria-labelledby="modal-title"
       aria-modal="true">

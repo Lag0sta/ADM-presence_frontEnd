@@ -1,4 +1,4 @@
-import type { getURData } from "../types/userAction";
+import type { getURData, updateUFData } from "../types/userAction";
 
 const API_URL =
   (import.meta.env.VITE_API_URL ?? 'http://localhost:4000')
@@ -27,4 +27,24 @@ export async function getUserRequest(getURData : getURData) {
     }
   }
     
-      
+export async function UpdateUserFileRequest( updateUFData : updateUFData) {
+    const { token, updateData } = updateUFData
+    
+    try {
+        const newRegistrant = await fetch(`${API_URL}/users/updateUserFile`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                token: token,
+                updateData: updateData
+            })
+        })
+        const response = await newRegistrant.json()
+        console.log("responseTSDFKSSEF", response)
+
+        return response
+
+    } catch (error) {
+        return error
+    }
+}

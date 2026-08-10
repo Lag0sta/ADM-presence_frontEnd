@@ -8,3 +8,8 @@ export interface logOutData {
     apellido: string;
     token: string;
 }
+
+export interface aRequestData {
+    token: string;
+    password: string;
+}

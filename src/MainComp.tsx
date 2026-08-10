@@ -3,17 +3,18 @@ import AttendanceList from "./AttendanceList"
 import UserPage from "./UserPage";
 import Home from "./Home"
 
-import type {handleModalAction, handleMsgModalAction} from "./types/Types"
+import type {handleModalAction, handleMsgModalAction, handleAuthModalAction} from "./types/Types"
 
 interface props {
     component: string;
     handleModalAction:handleModalAction
     handleMsgModalAction: handleMsgModalAction;
+    handleAuthModalAction: handleAuthModalAction
     setStudentSubscription: (value: any) => void;
     setStudentFile: (value: any) => void;
 }
 
-function MainComp({ component, handleModalAction, handleMsgModalAction, setStudentSubscription, setStudentFile
+function MainComp({ component, handleModalAction, handleMsgModalAction, handleAuthModalAction, setStudentSubscription, setStudentFile
  } : props) {
 
 
@@ -32,7 +33,8 @@ function MainComp({ component, handleModalAction, handleMsgModalAction, setStude
        setStudentFile={setStudentFile}/>
       }
       {component === "userPage" &&
-        <UserPage/>
+        <UserPage handleMsgModalAction={handleMsgModalAction}
+                  handleAuthModalAction={handleAuthModalAction}/>
       }
     </div>
   )

@@ -11,3 +11,8 @@ export interface handleMsgModalAction {
     setIsMsgModalOpen: (value: boolean) => void;
     setMsgModalContent: (value: string) => void;
 }
+
+export interface handleAuthModalAction {
+    isAuthModalOpen: boolean;
+    setIsAuthModalOpen: (value: boolean) => void;
+}
