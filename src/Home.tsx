@@ -1,21 +1,19 @@
 import { useAppSelector } from "./store/hooks";
 
-import type { handleModalAction, handleMsgModalAction } from "./types/Types"
+import type { handleModalAction } from "./types/Types"
 
 interface props {
   handleModalAction: handleModalAction
-  handleMsgModalAction: handleMsgModalAction
 }
-function Home({ handleModalAction, handleMsgModalAction }: props) {
+
+function Home({ handleModalAction }: props) {
 
   const auth = useAppSelector((state) => state.auth.value);
 
   const handleSignIn = () => {
     handleModalAction.setIsModalOpen(true)
     handleModalAction.setModalComponent("signIn")
-    console.log("Sign In clicked")
   }
-
 
   return (
     <div className="w-full h-full flex justify-evenly items-center ">

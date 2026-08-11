@@ -2,8 +2,12 @@ import {  useState } from "react";
 
 import CheckAttendance from "./CheckAttendance";
 import AttendanceHistory from "./AttendanceHistory";
+import type { handleMsgModalAction } from "./types/Types";
 
-function Attendance() {
+interface props {
+  handleMsgModalAction: handleMsgModalAction
+}
+function Attendance({handleMsgModalAction} : props) {
   const [toggleState, setToggleState] = useState("option1");
   
   const handlePresence = () => {
@@ -13,7 +17,6 @@ function Attendance() {
   const handlePresenceHistory = () => {
     setToggleState("option2");
   }
-
 
   return (
     <div className=" w-full h-full mt-10 flex justify-evenly items-center ">
@@ -33,7 +36,7 @@ function Attendance() {
         <CheckAttendance/>
         }
         {toggleState === "option2" &&
-        <AttendanceHistory/>
+        <AttendanceHistory handleMsgModalAction={handleMsgModalAction}/>
         }
         
       </div>

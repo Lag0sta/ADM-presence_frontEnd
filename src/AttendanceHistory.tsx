@@ -1,10 +1,15 @@
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { useEffect, useState } from "react";
 
-import { deleteStudentRequest, deleteDateRequest, getAttendancesRequest } from "./utils/attendanceAction";
+import { deleteStudentRequest, deleteDateRequest, getAttendancesRequest } from "./api/attendanceRequest";
 import { getAttendances, deleteStudenteAttendance, deleteDateAttendance } from "./store/reducers/attendance";
 
-function AttendanceHistory() {
+import type { handleMsgModalAction } from "./types/Types"
+
+interface props {
+  handleMsgModalAction: handleMsgModalAction
+}
+function AttendanceHistory({handleMsgModalAction} : props )  {
   const [page, setPage] = useState(1);
   const itemsPerPage = 1;
   const user = useAppSelector((state) => state.auth.value);
@@ -12,19 +17,19 @@ function AttendanceHistory() {
   const attendances: any[] = useAppSelector((state) => state.attendance.value);
   const dispatch = useAppDispatch()
 
+  // Pagination
   const start = (page - 1) * itemsPerPage;
   const currentAttendances = attendances.slice(start, start + itemsPerPage);
-
   const totalPages = Math.ceil(attendances.length / itemsPerPage);
 
-  console.log('attendancesNOW', attendances)
-  console.log('userNOW', user)
+  // Load history
   useEffect(() => {
     const loadHistory = async () => {
       try {
         const response = await getAttendancesRequest();
-        console.log("responseloadHistory", response);
+
         dispatch(getAttendances(response.data.sort((a: any, b: any) => b.attendanceDay.localeCompare(a.attendanceDay))));
+        
       } catch (error) {
         console.error("Error data fetch:", error);
       }
@@ -38,6 +43,13 @@ function AttendanceHistory() {
 
     try {
       const response = await deleteStudentRequest(dSData);
+
+      if(!response.result){
+        handleMsgModalAction.setMsgModalContent({result: response.result , message:response.message});
+        handleMsgModalAction.setIsMsgModalOpen(true);
+        return
+      }
+
       console.log("response Attendance", response);
       dispatch(deleteStudenteAttendance({ attendanceId: attendance._id, studentId: student._id }));
 

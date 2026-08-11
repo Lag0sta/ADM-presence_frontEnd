@@ -1,3 +1,5 @@
+import type { AppDispatch } from "../store/store";
+
 export interface newSData {
     apellido: string;
     name: string;
@@ -38,4 +40,8 @@ export interface updateSFData {
         }
 
     };
+}
+
+export interface loadStudentsData {
+    dispatch: AppDispatch,
 }

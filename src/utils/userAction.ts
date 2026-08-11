@@ -1,4 +1,4 @@
-import type { loadUserData, getURData } from "../types/userType";
+import type { loadUserData } from "../types/userType";
 import { getUser } from "../store/reducers/user";
 import { getUserRequest } from "../api/userRequest";
 

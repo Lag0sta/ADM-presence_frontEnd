@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import UserFile from "./UserFile";
-import { getUserRequest } from "./utils/userAction";
-import { clearUser, getUser } from "./store/reducers/user";
+import {loadUser} from "./utils/userAction"
+
 import type { handleModalAction, handleMsgModalAction, handleAuthModalAction } from "./types/Types";
 
 interface props {
@@ -14,11 +14,7 @@ interface props {
 function UserPage({ handleModalAction, handleMsgModalAction, handleAuthModalAction }: props) {
   const auth = useAppSelector((state) => state.auth.value);
   const user = useAppSelector((state) => state.user.value);
-
-  const baseApellido = user?.apellido || "";
-  const baseName = user?.name || "";
-  const [apellido, setApellido] = useState(baseApellido);
-  const [name, setName] = useState(baseName);
+  
   const [update, setUpdate] = useState(false)
   const dispatch = useAppDispatch();
 
@@ -26,25 +22,11 @@ function UserPage({ handleModalAction, handleMsgModalAction, handleAuthModalActi
 
   useEffect(() => {
     if (!auth.token) return
-    const userPage = async () => {
-      try {
-        const getURData = { apellido: auth.apellido, token: auth.token };
-        console.log("getURData:", getURData);
-        const students = await getUserRequest(getURData);
 
-        if (!students.result) {
-          console.error("Error fetching user:", students.message);
-          return;
-        }
-        console.log("Students fetched:", students);
-        dispatch(getUser(students.data));
+    const loadUserData = { apellido: auth.apellido, token: auth.token, dispatch };
+    loadUser(loadUserData);
 
-      } catch (error) {
-        console.error("Error fetching students:", error);
-      }
-    }
-    userPage();
-  }, [auth.token]);
+  }, [auth, dispatch]);
 
   const handleUpdatePassword = () => {
     handleModalAction.setModalComponent("updatePassword")
@@ -84,7 +66,6 @@ function UserPage({ handleModalAction, handleMsgModalAction, handleAuthModalActi
                             update={update} 
                             setUpdate={setUpdate}
                             />
-
 
           <div className="w-2/6 h-full flex flex-col gap-2 mt-30 pl-4 ">
             <button className="w-65 bg-gray-900 text-[#FFCB00] rounded-full py-1 px-4 ml-2 hover:bg-gray-800 hover:text-[#FFCB00] transition-colors duration-300 disabled:bg-[#FFCB00] disabled:text-gray-500 disabled:border-2 disabled:border-white "

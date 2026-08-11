@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useAppSelector, useAppDispatch } from "./store/hooks";
-import { authRequest } from "./utils/authAction"
-import { UpdateUserInfoRequest } from "./utils/userAction"
+import { authRequest } from "./api/authRequest"
+import { UpdateUserInfoRequest } from "./api/userRequest"
 import { updateAuthApellido } from "./store/reducers/auth"
 import type { handleModalAction, handleMsgModalAction } from "./types/Types"
 
@@ -34,19 +34,16 @@ function ModalUpdateLogInfo({ handleModalAction, handleMsgModalAction }: props) 
     const handleSubmit = async () => {
         try {
             const aRequestData = { token: auth.token, password, email };
-
             const authResponse = await authRequest(aRequestData)
 
             if (!authResponse.result) {
-                console.log("authResponse", authResponse);
-                handleMsgModalAction.setMsgModalContent(authResponse.message);
+                handleMsgModalAction.setMsgModalContent({result: authResponse.result, message: authResponse.message});
                 handleMsgModalAction.setIsMsgModalOpen(true);
                 return;
             }
 
             if (handleModalAction.modalComponent === "updateApellido") {
                 const updateUIData = { token: auth.token, apellido, password, email };
-
                 const response = await UpdateUserInfoRequest(updateUIData);
 
                 if (!response.result) {
@@ -55,13 +52,13 @@ function ModalUpdateLogInfo({ handleModalAction, handleMsgModalAction }: props) 
                     return;
                 }
                 handleMsgModalAction.setMsgModalContent({result: response.result, message: "apellido modifié"});
+
                 handleMsgModalAction.setIsMsgModalOpen(true);
-                dispatch(updateAuthApellido(response.user.apellido))
+                dispatch(updateAuthApellido(response.apellido))
             }
 
             if (handleModalAction.modalComponent === "updateEmail") {
-                const updateUIData = { token: auth.token, apellido, password, email };
-
+                const updateUIData = { token: auth.token, apellido: auth.apellido, password, email: newEmail };
                 const response = await UpdateUserInfoRequest(updateUIData);
 
                 if (!response.result) {
@@ -74,8 +71,7 @@ function ModalUpdateLogInfo({ handleModalAction, handleMsgModalAction }: props) 
             }
 
             if (handleModalAction.modalComponent === "updatePassword") {
-                const updateUIData = { token: auth.token, apellido, password, email };
-
+                const updateUIData = { token: auth.token, apellido: auth.apellido, password: newPassword, email };
                 const response = await UpdateUserInfoRequest(updateUIData);
 
                 if (!response.result) {
@@ -86,17 +82,11 @@ function ModalUpdateLogInfo({ handleModalAction, handleMsgModalAction }: props) 
                 handleMsgModalAction.setMsgModalContent({result: response.result, message: "mot de passe modifié"});
                 handleMsgModalAction.setIsMsgModalOpen(true);
             }
-            setApellido("");
-            setPassword("");
-            setNewPassword("");
-            setConfirmNewPassword("");
-            setEmail("");
-            setNewEmail("");
-            setConfirmNewEmail("");
-            handleModalAction.setModalComponent("");
-            handleModalAction.setIsModalOpen(false);
+
+            handleCloseModal()
 
         } catch (error) {
+            console.error("ERREUR handleSubmit :", error);
             return error
         }
     }
@@ -159,7 +149,6 @@ function ModalUpdateLogInfo({ handleModalAction, handleMsgModalAction }: props) 
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)} />
                             </div>
-
                         </div>
                     }
                     {handleModalAction.modalComponent === "updateEmail" &&

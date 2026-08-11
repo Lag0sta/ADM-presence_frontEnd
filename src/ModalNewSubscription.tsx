@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
-import {  NewSubscriptionRequest, getStudentsRequest } from "./utils/studentAction";
-import { getStudents } from "./store/reducers/students";
-import type { handleModalAction } from "./types/Types";
+import {  NewSubscriptionRequest } from "./api/studentRequest";
+import { loadStudents } from "./utils/studentAction"
+import type { handleModalAction, handleMsgModalAction } from "./types/Types";
 
 interface props {
+  handleMsgModalAction: handleMsgModalAction
   handleModalAction: handleModalAction
   studentSubscription: any
   setStudentSubscription: (value: any) => void;
 }
 
-function ModalNewSubscription({setStudentSubscription, studentSubscription, handleModalAction} : props) {
+function ModalNewSubscription({handleModalAction, handleMsgModalAction, setStudentSubscription, studentSubscription, } : props) {
   const user = useAppSelector((state) => state.auth.value);
   
   const [subscription, setSubscription] = useState("");
@@ -18,26 +19,25 @@ function ModalNewSubscription({setStudentSubscription, studentSubscription, hand
   const [amount2Pay, setAmount2Pay] = useState(0);
   const apellido = studentSubscription.apellido || ""
   const name = studentSubscription.name || ""
-console.log("theStudentsalright? :", studentSubscription)
   const dispatch = useAppDispatch();
 
   const handleNewSubscription = async () => {
-    console.log("the MFCLICK !")
+
     try {
       if (payed === "oui") setAmount2Pay(0)
       
-
       const newSubData = { studentID : studentSubscription._id, token : user.token, subscription, amount2Pay }
-      console.log("user", user)
-      console.log("newSubData", newSubData)
 
       const response = await NewSubscriptionRequest(newSubData);
-      console.log("give us the answer !", response)
-      if (!response) return;
 
-      const response2 = await getStudentsRequest()
-      console.log("response2", response2.data)
-      dispatch(getStudents(response2.data));
+      if (!response.result){
+        handleMsgModalAction.setMsgModalContent({result: response.result , message:response.message});
+        handleMsgModalAction.setIsMsgModalOpen(true);
+        return
+      }
+
+      loadStudents({dispatch})
+
       setStudentSubscription({}) 
       handleModalAction.setModalComponent("");
       handleModalAction.setIsModalOpen(false);     

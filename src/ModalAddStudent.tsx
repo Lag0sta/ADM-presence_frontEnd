@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch } from "./store/hooks";
-import { NewRegistrantRequest, getStudentsRequest } from "./utils/studentAction";
+import { NewRegistrantRequest, getStudentsRequest } from "./api/studentRequest";
 import { getStudents } from "./store/reducers/students";
 
 function ModalAddStudent() {
@@ -35,7 +35,6 @@ function ModalAddStudent() {
     }
   };
 
-  console.log("subscription", subscription)
   return (
     <div className="w-full h-full flex flex-col justify-evenly items-center my-2">
       <h3 className="text-3xl text-center text-white mb-1">

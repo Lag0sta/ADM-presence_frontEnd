@@ -3,7 +3,6 @@ import { useAppSelector } from "./store/hooks";
 
 import type { handleModalAction } from "./types/Types"
 
-
 interface props {
   handleModalAction: handleModalAction
   setStudentSubscription: (value: any) => void;
@@ -11,16 +10,16 @@ interface props {
 }
 
 function AttendanceList({ handleModalAction, setStudentSubscription, setStudentFile }: props) {
+
   const students: any[] = useAppSelector((state) => state.student.value);
-  console.log("studentsPresent yeah :", students);
 
-
-
-  const handleAddNew = () => {
+  //add new student
+  const handleAddNewStudent = () => {
     handleModalAction.setModalComponent("addAttendee")
     handleModalAction.setIsModalOpen(true)
   }
 
+  //student file
   const handleStudentFile = (student: any) => {
     console.log("Student File clicked for student:", student)
     setStudentFile(student)
@@ -28,20 +27,18 @@ function AttendanceList({ handleModalAction, setStudentSubscription, setStudentF
     handleModalAction.setIsModalOpen(true)
   }
 
+  //new subscription
   const handleNewSubscription = (student: any) => {
-    console.log("click")
-    console.log("New Subscription clicked for student:", student)
     setStudentSubscription(student)
     handleModalAction.setModalComponent("newSubscription")
     handleModalAction.setIsModalOpen(true)
   }
 
-  console.log("test2", students.map((s: any) => s.apellido))
   return (
     <div className="w-max-full h-full mt-15 flex flex-col  items-center ">
       <div className="flex justify-evenly items-center w-full h-fit mb-4">
         <span className="py-2 px-4 bg-gray-900 rounded-full text-[#FFCB00] text-center"
-          onClick={handleAddNew}>
+          onClick={handleAddNewStudent}>
           Nouvel Inscrit
         </span>
       </div>

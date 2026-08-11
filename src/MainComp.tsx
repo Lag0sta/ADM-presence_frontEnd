@@ -17,15 +17,13 @@ interface props {
 function MainComp({ component, handleModalAction, handleMsgModalAction, handleAuthModalAction, setStudentSubscription, setStudentFile
  } : props) {
 
-
   return (
     <div className="w-full h-full flex justify-evenly items-center ">
       {component === "home" && 
-        <Home handleModalAction={handleModalAction}
-              handleMsgModalAction={handleMsgModalAction}/>
+        <Home handleModalAction={handleModalAction}/>
       }
       {component === "checkAttendance" &&
-        <Attendance/>
+        <Attendance handleMsgModalAction={handleMsgModalAction}/>
       }
       {component === "attendanceList" &&
       <AttendanceList handleModalAction={handleModalAction}

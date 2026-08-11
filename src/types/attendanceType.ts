@@ -1,3 +1,9 @@
+import type { AppDispatch } from "../store/store";
+
+export interface loadAttendanceHystoryData {
+    dispatch : AppDispatch
+}
+
 export interface newAData {
     students: string[];
     token: string;

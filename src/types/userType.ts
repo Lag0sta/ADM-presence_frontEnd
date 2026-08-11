@@ -1,4 +1,12 @@
+import type { AppDispatch } from "../store/store";
+
 export interface getURData {
+    apellido: string,
+    token: string
+}
+
+export interface loadUserData{
+    dispatch: AppDispatch,
     apellido: string,
     token: string
 }

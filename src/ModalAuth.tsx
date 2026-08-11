@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { submitPassword } from "./utils/authAction"
+import { submitAuth } from "./utils/authAction"
 import type {handleAuthModalAction } from "./types/Types"
 
 interface props {
@@ -9,9 +9,9 @@ function ModalAuth({ handleAuthModalAction }: props) {
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const handleSubmit = () => {
-        submitPassword(password)
+        submitAuth(email, password);
         setPassword("");
-
+        setEmail("");
     }
     const handleCloseModal = () => {
         setPassword("");

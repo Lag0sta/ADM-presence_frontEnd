@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAppSelector } from "./store/hooks";
 import type { handleModalAction, handleMsgModalAction } from "./types/Types"
 
-import { UpdateStudentFileRequest } from "./utils/studentAction";
+import { UpdateStudentFileRequest } from "./api/studentRequest";
 
 interface props {
     handleModalAction: handleModalAction;
@@ -26,10 +26,6 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
     const [endDate, setEndDate] = useState(baseEndDate);
 
     const auth = useAppSelector((state) => state.auth.value);
-    console.log("Lets see apellido :", apellido, "name :", name, "subscriptionPlan :", subscriptionPlan, "amount2Pay :", amount2Pay, "pointsLeft :", pointsLeft, "endDate :", endDate)
-    console.log("studentFile", studentFile);
-
-    console.log("update", update)
 
     const handleSave = async () => {
         try {
@@ -55,12 +51,10 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
             };
 
             const updateSFData = { studentID: studentFile._id, token: auth.token, updateData };
-
-            console.log("updateSFData", updateSFData);
             const response = await UpdateStudentFileRequest(updateSFData);
-            console.log("responseMSF", response);
+
             if (!response.result) {
-                handleMsgModalAction.setMsgModalContent({result: response.result, message: response.message});
+                handleMsgModalAction.setMsgModalContent({ result: response.result, message: response.message });
                 handleMsgModalAction.setIsMsgModalOpen(true);
                 return;
             }
@@ -72,6 +66,7 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
             console.error("Error updating student:", error);
         }
     }
+
     return (
         <div className="w-full h-full flex flex-col justify-evenly items-center my-2">
             <h3 className="text-3xl text-center text-white mb-1">

@@ -46,7 +46,7 @@ const attendanceOfTheDaySlice = createSlice({
       attendance.students = attendance.students.filter(student => student._id !== studentId)
 
     },
-    deleteDateattendanceOfTheDay: (state, action) => {
+    deleteDateattendanceOfTheDay: (state, ) => {
       state.value = initialState.value
     }
 

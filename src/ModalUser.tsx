@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from './store/hooks';
 
-import { logOutRequest } from './utils/authAction';
+import { logOutRequest } from './api/authRequest';
 import { clearAuth } from './store/reducers/auth';
 
 import type { handleModalAction } from './types/Types';
@@ -14,12 +14,11 @@ function ModalUser({ handleModalAction, setComponent }: props) {
 
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth.value);
-  console.log("auth dans SignIn:", auth);
+
   const handleUserPage = () => {
     setComponent("userPage")
     handleModalAction.setIsModalOpen(false);
     handleModalAction.setModalComponent("");
-
   }
 
   const handleLogOut = async () => {
@@ -31,9 +30,7 @@ function ModalUser({ handleModalAction, setComponent }: props) {
       handleModalAction.setIsModalOpen(false);
       handleModalAction.setModalComponent("");
       setComponent("home")
-
     }
-
   }
 
 

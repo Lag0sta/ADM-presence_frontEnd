@@ -1,53 +1,26 @@
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { useState, useEffect, useMemo } from "react";
 
-import { NewAttendanceRequest, addStudentAttendanceRequest, getAttendancesRequest } from "./utils/attendanceAction"
+import { NewAttendanceRequest, addStudentAttendanceRequest, getAttendancesRequest } from "./api/attendanceRequest"
 
 import { getAttendances } from "./store/reducers/attendance";
-import { getattendanceOfTheDay } from "./store/reducers/attendanceOfTheDay";
+import { loadAttendanceHistory } from "./utils/attendanceAction"
 
 function CheckAttendance() {
   const user = useAppSelector((state) => state.auth.value);
   const students: any[] = useAppSelector((state) => state.student.value);
   const attendances: any[] = useAppSelector((state) => state.attendance.value);
-  const attendanceOfTheDay: any = useAppSelector((state) => state.attendanceOfTheDay.value);
   const [checkedUsers, setCheckedUsers] = useState<string[]>([]);
   const [testStudents, setTestStudents] = useState<string[]>([]);
   const [attendedStudent, setAttendedStudent] = useState<string[]>([]);
 
-  console.log("attendanceOfTheDay", attendanceOfTheDay);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const loadHistory = async () => {
-      try {
-        const response = await getAttendancesRequest();
-        console.log("responseloadHistory123", response);
-        const attendances = response.data;
+    const loadAttendanceHistoryData = { dispatch };
 
-        const todayBE = new Intl.DateTimeFormat("sv-SE", {
-          timeZone: "Europe/Brussels",
-        }).format(new Date()).replaceAll("-", "/");
-
-        const todayAttendance = attendances.find(
-          (a: any) => a.attendanceDay === todayBE
-        );
-
-        console.log("responseloadHistory", attendances);
-        console.log("todayAttendance", todayAttendance);
-
-        dispatch(getAttendances(attendances)); // historique complet
-
-        if (todayAttendance) {
-          dispatch(getattendanceOfTheDay(todayAttendance)); // slice séparé recommandé
-        }
-
-      } catch (error) {
-        console.error("Error data fetch:", error);
-      }
-    };
-
-    loadHistory();
+    loadAttendanceHistory(loadAttendanceHistoryData);
+    
   }, []);
 
   //récupération des étudiants présents aujourd'hui

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "./store/hooks";
-import { UpdateUserFileRequest } from "./utils/userAction";
-import {askPassword, askEmail, authRequest} from "./utils/authAction";
-import { getUser } from "./store/reducers/user";
+import { UpdateUserFileRequest } from "./api/userRequest";
+import { authRequest} from "./api/authRequest";
+import { askAuth } from "./utils/authAction"
+import { loadUser } from "./utils/userAction"
 
 import type { handleMsgModalAction, handleAuthModalAction } from "./types/Types";
 
@@ -23,15 +24,14 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
     const baseAmount2Pay = user?.subscription?.amount2Pay || 0;
     const basePointsLeft = user?.subscription?.pointsLeft || 0;
     const baseEndDate = user?.subscription?.endDate || "";
-    const [apellido, setApellido] = useState(baseApellido);
     const [name, setName] = useState(baseName);
     const [subscriptionPlan, setSubscriptionPlan] = useState(baseSubscriptionPlan || null);
     const [amount2Pay, setAmount2Pay] = useState(baseAmount2Pay);
     const [pointsLeft, setPointsLeft] = useState(basePointsLeft);
     const [endDate, setEndDate] = useState(baseEndDate);
-    const dispatch = useAppDispatch();
+    const apellido = useAppSelector((state) => state.auth.value.apellido);
 
-    console.log("User", user, "yeah");
+    const dispatch = useAppDispatch();
 
     const handleSave = async () => {
         try {
@@ -39,14 +39,15 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
 
             handleAuthModalAction.setIsAuthModalOpen(true);
 
-            const email = await askEmail();
-            const password = await askPassword();
+            const { email, password } = await askAuth();
+            
+            if (!email || !password) return console.log("No email or password");
+
             const aRequestData = { token: auth.token, password, email };
 
             const authResponse = await authRequest(aRequestData)
 
             if(!authResponse.result) {
-                console.log("authResponse", authResponse);
                 handleMsgModalAction.setMsgModalContent(authResponse.message);
                 handleMsgModalAction.setIsMsgModalOpen(true);
                 return;
@@ -67,18 +68,23 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
 
             const updateUFData = { token: auth.token, updateData };
 
-            console.log("updateSFData", updateUFData);
             const response = await UpdateUserFileRequest(updateUFData);
-            console.log("responseMSF", response);
+
             if (!response.result) {
                 handleMsgModalAction.setMsgModalContent(response.message);
                 handleMsgModalAction.setIsMsgModalOpen(true);
                 return;
             }
-            
-            dispatch(getUser(response.data));
-            setUpdate(false);
 
+            handleMsgModalAction.setMsgModalContent({result: response.result, message: response.message});
+            handleMsgModalAction.setIsMsgModalOpen(true);
+
+            const loadUserData = { apellido: response.data.apellido, token: auth.token, dispatch }
+
+            loadUser(loadUserData);
+
+            setUpdate(false);
+            
         } catch (error) {
             console.error("Error updating student:", error);
         }

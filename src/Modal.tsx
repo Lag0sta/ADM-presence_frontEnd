@@ -39,29 +39,31 @@ function Modal({ handleModalAction, handleMsgModalAction, setComponent, studentS
             <ModalAddStudent />
           }
           {handleModalAction.modalComponent === "newSubscription" &&
-            <ModalNewSubscription setStudentSubscription={setStudentSubscription}
+            <ModalNewSubscription handleModalAction={handleModalAction}
+                                  handleMsgModalAction={handleMsgModalAction}
+                                  setStudentSubscription={setStudentSubscription}
                                   studentSubscription={studentSubscription}
-                                  handleModalAction={handleModalAction} />
+            />
           }
           {handleModalAction.modalComponent === "signIn" &&
-            <SignIn handleModalAction={handleModalAction} 
-                    handleMsgModalAction={handleMsgModalAction}
+            <SignIn handleModalAction={handleModalAction}
+              handleMsgModalAction={handleMsgModalAction}
             />
           }
           {handleModalAction.modalComponent === "userModal" &&
-          <ModalUser handleModalAction={handleModalAction}
-          setComponent={setComponent}/>
+            <ModalUser handleModalAction={handleModalAction}
+              setComponent={setComponent} />
           }
           {handleModalAction.modalComponent === "studentFile" &&
-          <ModalStudentFile studentFile={studentFile
-}          setStudentFile={setStudentFile}
-          handleModalAction={handleModalAction}
-          handleMsgModalAction={handleMsgModalAction}
-          />
+            <ModalStudentFile studentFile={studentFile
+            } setStudentFile={setStudentFile}
+              handleModalAction={handleModalAction}
+              handleMsgModalAction={handleMsgModalAction}
+            />
           }
           {(handleModalAction.modalComponent === "updatePassword" || handleModalAction.modalComponent === "updateEmail" || handleModalAction.modalComponent === "updateApellido") &&
-            <ModalUpdateLogInfo handleModalAction={handleModalAction} 
-                    handleMsgModalAction={handleMsgModalAction}
+            <ModalUpdateLogInfo handleModalAction={handleModalAction}
+              handleMsgModalAction={handleMsgModalAction}
             />
           }
         </div>

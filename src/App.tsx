@@ -7,8 +7,7 @@ import Modal from './Modal'
 import MsgModal from './MsgModal'
 import ModalAuth from './ModalAuth'
 
-import { getStudentsRequest } from './utils/studentAction';
-import { getStudents } from './store/reducers/students';
+import {loadStudents} from "./utils/studentAction"
 
 function App() {
   const [component, setComponent] = useState("home")
@@ -25,23 +24,15 @@ function App() {
   const handleAuthModalAction = {isAuthModalOpen, setIsAuthModalOpen}
 
   const auth = useAppSelector((state) => state.auth.value);
-  console.log("MainComp component:", component, "yeah");
 
   const dispatch = useAppDispatch();
   
   useEffect(() => {
         if (!auth.token) return
-        const initStudents = async () => {
-          try {
-            const students = await getStudentsRequest();
-            console.log("Students fetched:", students);
-            dispatch(getStudents(students.data));
-    
-          } catch (error) {
-            console.error("Error fetching students:", error);
-          }
-        }
-        initStudents();
+        const loadStudentsData = {dispatch}
+
+        loadStudents(loadStudentsData)
+        
       }, [auth.token]);
 
 

@@ -8,24 +8,20 @@ interface props {
 function Header({ handleModalAction, setComponent } : props ){
 
 const auth = useAppSelector((state) => state.auth.value) || "";
-console.log("auth dans Header:", auth);
-  const handleHome = ()  => {
-    console.log("Home clicked")
+
+const handleHome = ()  => {
     setComponent("home")
   }
 
   const handleCheckAttendance = () => {
-    console.log("Check Attendance clicked")
     setComponent("checkAttendance")
   }
 
   const handleAttendanceList = () => {
-    console.log("Attendance List clicked")
     setComponent("attendanceList")
   }
 
   const handleUserModal = () => {
-    console.log("User Modal clicked")
     handleModalAction.setModalComponent("userModal")
     handleModalAction.setIsModalOpen(true)
   }

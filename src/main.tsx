@@ -4,7 +4,7 @@ import App from './App'
 import './index.css'
 import { registerSW } from 'virtual:pwa-register'
 import { Provider } from 'react-redux'
-import {store} from './store/store'
+import { store } from './store/store'
 
 const updateSW = registerSW({
   immediate: true,
@@ -15,14 +15,11 @@ const updateSW = registerSW({
   },
 })
 
-
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-        <Provider store={store}>
-
-    <App />
-        </Provider>
+    <Provider store={store}>
+      <App />
+    </Provider>
 
   </React.StrictMode>,
 )
