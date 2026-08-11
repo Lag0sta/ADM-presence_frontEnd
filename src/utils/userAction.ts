@@ -1,72 +1,22 @@
-import type { getURData, updateUFData, updateUIData } from "../types/userAction";
-
-const API_URL =
-  (import.meta.env.VITE_API_URL ?? 'http://localhost:4000')
-    .replace(/\/$/, "");
+import type { loadUserData, getURData } from "../types/userType";
+import { getUser } from "../store/reducers/user";
+import { getUserRequest } from "../api/userRequest";
 
 
-export async function getUserRequest(getURData : getURData) {
-    const { apellido, token } = getURData
+export async function loadUser(loadUserData : loadUserData) {
 
-    try {
-         const getUser = await fetch(`${API_URL}/users/userInfo`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                apellido: apellido,
-                token: token
-            })
-        })
-       
-        const response = await getUser.json()
+    const { apellido, token, dispatch } = loadUserData
+      try {
+        const getURData = { apellido, token };
+        const user = await getUserRequest(getURData);
 
-        return response
-    } catch (error) {
-        console.error("Error fetching user:", error);
-              
+        if (!user.result) {
+          console.error("Error fetching user:", user.message);
+          return;
+        }
+        dispatch(getUser(user.data));
+
+      } catch (error) {
+        console.error("Error fetching students:", error);
+      }
     }
-  }
-    
-export async function UpdateUserFileRequest( updateUFData : updateUFData) {
-    const { token, updateData } = updateUFData
-    
-    try {
-        const newRegistrant = await fetch(`${API_URL}/users/updateUserFile`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                token: token,
-                updateData: updateData
-            })
-        })
-        const response = await newRegistrant.json()
-
-        return response
-
-    } catch (error) {
-        return error
-    }
-}
-
-export async function UpdateUserInfoRequest( updateUIData : updateUIData) {
-    const { token, apellido, password, email } = updateUIData
-    
-    try {
-        const newRegistrant = await fetch(`${API_URL}/users/updateUserInfo`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                token: token,
-                apellido: apellido,
-                password: password,
-                email: email
-            })
-        })
-        const response = await newRegistrant.json()
-
-        return response
-
-    } catch (error) {
-        return error
-    }
-}
