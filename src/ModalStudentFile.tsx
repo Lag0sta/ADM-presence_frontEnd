@@ -60,7 +60,7 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
             const response = await UpdateStudentFileRequest(updateSFData);
             console.log("responseMSF", response);
             if (!response.result) {
-                handleMsgModalAction.setMsgModalContent(response.message);
+                handleMsgModalAction.setMsgModalContent({result: response.result, message: response.message});
                 handleMsgModalAction.setIsMsgModalOpen(true);
                 return;
             }

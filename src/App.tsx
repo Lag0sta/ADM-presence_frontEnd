@@ -15,7 +15,7 @@ function App() {
   const [modalComponent, setModalComponent] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMsgModalOpen, setIsMsgModalOpen] = useState(false)
-  const [msgModalContent, setMsgModalContent] = useState("")
+  const [msgModalContent, setMsgModalContent] = useState({result: false, message: ""})
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [studentSubscription, setStudentSubscription] = useState("")
   const [studentFile, setStudentFile] = useState({})

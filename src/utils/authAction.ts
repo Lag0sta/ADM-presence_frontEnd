@@ -3,6 +3,8 @@ const API_URL = import.meta.env.VITE_API_URL.replace(/\/$/, "")
 
 
 let resolvePassword: ((password: string) => void) | null = null;
+let resolveEmail: ((email: string) => void) | null = null;
+
 
 export async function askPassword (): Promise<string> {
   return new Promise((resolve) => {
@@ -16,8 +18,20 @@ export function submitPassword(password: string) {
   resolvePassword = null;
 }
 
+export async function askEmail (): Promise<string> {
+  return new Promise((resolve) => {
+    // affichage d'une modal, puis :
+     resolveEmail = resolve;
+  });
+};
+
+export function submitEmail(password: string) {
+  resolvePassword?.(password);
+  resolvePassword = null;
+}
+
 export async function authRequest(aRequestData : aRequestData){
-    const { token, password } = aRequestData
+    const { token, password, email } = aRequestData
 
     try {
         const auth = await fetch(`${API_URL}/auths/authValidation`, {
@@ -26,6 +40,7 @@ export async function authRequest(aRequestData : aRequestData){
             body: JSON.stringify({
                 token: token,
                 password: password,
+                email: email
             })
         })
         const response = await auth.json()

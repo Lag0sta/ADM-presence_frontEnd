@@ -27,7 +27,7 @@ function SignIn({ handleModalAction, handleMsgModalAction }: props) {
         console.error("Sign in failed:", response.message);
         console.log("response.errors", response.errors);
         handleMsgModalAction.setIsMsgModalOpen(true);
-        handleMsgModalAction.setMsgModalContent(response.message);
+        handleMsgModalAction.setMsgModalContent({result: response.result, message: response.message});
 
         return;
       }

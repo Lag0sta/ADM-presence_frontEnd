@@ -7,6 +7,7 @@ interface props {
 }
 function ModalAuth({ handleAuthModalAction }: props) {
     const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
     const handleSubmit = () => {
         submitPassword(password)
         setPassword("");
@@ -31,6 +32,11 @@ function ModalAuth({ handleAuthModalAction }: props) {
                         </svg>
                     </div>
                     <h4 className = "text-white text-bold text-2xl">Authentification</h4>
+                    <input className="mx-8 my-4 border border-2 border-gray-100 rounded-md p-2"
+                        type="email"
+                        placeholder="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} />
                     <input className="mx-8 my-4 border border-2 border-gray-100 rounded-md p-2"
                         type="password"
                         placeholder="mot de passe"

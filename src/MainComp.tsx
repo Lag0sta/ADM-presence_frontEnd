@@ -33,7 +33,8 @@ function MainComp({ component, handleModalAction, handleMsgModalAction, handleAu
        setStudentFile={setStudentFile}/>
       }
       {component === "userPage" &&
-        <UserPage handleMsgModalAction={handleMsgModalAction}
+        <UserPage handleModalAction={handleModalAction}
+                  handleMsgModalAction={handleMsgModalAction}
                   handleAuthModalAction={handleAuthModalAction}/>
       }
     </div>

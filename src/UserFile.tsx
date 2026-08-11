@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { UpdateUserFileRequest } from "./utils/userAction";
-import {askPassword, authRequest} from "./utils/authAction";
+import {askPassword, askEmail, authRequest} from "./utils/authAction";
 import { getUser } from "./store/reducers/user";
 
 import type { handleMsgModalAction, handleAuthModalAction } from "./types/Types";
@@ -38,12 +38,12 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
             if (!auth.token) return
 
             handleAuthModalAction.setIsAuthModalOpen(true);
+
+            const email = await askEmail();
             const password = await askPassword();
-            console.log("password", password);
-            const aRequestData = { token: auth.token, password };
-            console.log("aRequestData", aRequestData);
+            const aRequestData = { token: auth.token, password, email };
+
             const authResponse = await authRequest(aRequestData)
-            console.log("await authResponse", authResponse);
 
             if(!authResponse.result) {
                 console.log("authResponse", authResponse);
@@ -75,6 +75,7 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
                 handleMsgModalAction.setIsMsgModalOpen(true);
                 return;
             }
+            
             dispatch(getUser(response.data));
             setUpdate(false);
 

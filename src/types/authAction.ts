@@ -12,4 +12,5 @@ export interface logOutData {
 export interface aRequestData {
     token: string;
     password: string;
+    email: string;
 }

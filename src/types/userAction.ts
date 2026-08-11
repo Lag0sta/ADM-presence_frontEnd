@@ -17,3 +17,10 @@ export interface updateUFData {
     },
     token: string
 }
+
+export interface updateUIData {
+    token: string,
+    apellido?: string,
+    email?: string,
+    password?: string
+}

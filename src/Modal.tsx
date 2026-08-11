@@ -3,6 +3,8 @@ import ModalNewSubscription from "./ModalNewSubscription";
 import SignIn from "./SignIn";
 import ModalUser from "./ModalUser";
 import ModalStudentFile from "./ModalStudentFile";
+import ModalUpdateLogInfo from "./ModalUpdateLogInfo";
+
 import type { handleModalAction, handleMsgModalAction } from "./types/Types"
 
 interface props {
@@ -56,6 +58,11 @@ function Modal({ handleModalAction, handleMsgModalAction, setComponent, studentS
           handleModalAction={handleModalAction}
           handleMsgModalAction={handleMsgModalAction}
           />
+          }
+          {(handleModalAction.modalComponent === "updatePassword" || handleModalAction.modalComponent === "updateEmail" || handleModalAction.modalComponent === "updateApellido") &&
+            <ModalUpdateLogInfo handleModalAction={handleModalAction} 
+                    handleMsgModalAction={handleMsgModalAction}
+            />
           }
         </div>
       </div>

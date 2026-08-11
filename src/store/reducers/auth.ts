@@ -15,6 +15,10 @@ const authSlice = createSlice({
       state.value = action.payload
     },
     
+    updateAuthApellido: (state, action) => {
+      state.value.apellido = action.payload
+    },
+
     //Supprime les informations d'authentification.
     clearAuth: (state) => {
         state.value = initialState.value
@@ -22,5 +26,5 @@ const authSlice = createSlice({
   },
 });
 
-export const {addAuth, clearAuth } = authSlice.actions;
+export const {addAuth, clearAuth, updateAuthApellido } = authSlice.actions;
 export default authSlice.reducer;

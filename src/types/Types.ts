@@ -7,9 +7,9 @@ export interface handleModalAction {
 
 export interface handleMsgModalAction {
     isMsgModalOpen: boolean;
-    msgModalContent: string;
+    msgModalContent: {result: boolean, message: string};
     setIsMsgModalOpen: (value: boolean) => void;
-    setMsgModalContent: (value: string) => void;
+    setMsgModalContent: (value : { result: boolean; message: string } ) => void;
 }
 
 export interface handleAuthModalAction {
