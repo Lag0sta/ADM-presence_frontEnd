@@ -81,7 +81,7 @@ function AttendanceHistory({handleMsgModalAction} : props )  {
             <div className="flex justify-start items-center w-fit px-6 py-1 bg-[#FFCB00] rounded-t-lg">
             <span className="text-gray-800 text-lg font-bold">
               Date:
-              <span>{attendance.attendanceDay.split("-").reverse().join("-")}</span>
+              <span>{attendance.attendanceDay?.split("-").reverse().join("-")}</span>
             </span>
              <div className="ml-4 bg-[#FFCB00] text-gray-100 text-2xl rounded-tr-lg font-black ">
             {page !== 1 &&
