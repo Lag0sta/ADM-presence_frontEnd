@@ -1,6 +1,7 @@
 import { getStudents } from "../store/reducers/students";
 import { getStudentsRequest } from "../api/studentRequest";
 import type { loadStudentsData } from "../types/studentType";
+
 export async function loadStudents(loadStudentsData: loadStudentsData) {
     const { dispatch } = loadStudentsData
     try {
