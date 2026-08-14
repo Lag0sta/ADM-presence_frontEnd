@@ -3,6 +3,7 @@ import type { AppDispatch } from "../store/store";
 export interface newSData {
     apellido: string;
     name: string;
+    age_Group: string;
     subscription: string;
     amount2Pay: number;
 }

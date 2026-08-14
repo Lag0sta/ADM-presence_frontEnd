@@ -60,11 +60,11 @@ export async function addStudentAttendanceRequest(addSAData: addSAData) {
     }
 }
 
-export async function deleteStudentRequest(dSData: dSData) {
+export async function deleteStudentAttendanceRequest(dSData: dSData) {
     const { attendanceId, studentId, token } = dSData
 
     try {
-        const deleteStudent = await fetch(`${API_URL}/attendances/deleteStudent`, {
+        const deleteStudentAttendanceRequest = await fetch(`${API_URL}/attendances/deleteStudentAttendance`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -73,8 +73,8 @@ export async function deleteStudentRequest(dSData: dSData) {
                 token: token,
             })
         })
-        const response = await deleteStudent.json()
-        
+        const response = await deleteStudentAttendanceRequest.json()
+
         return response
     } catch (error) {
         return error

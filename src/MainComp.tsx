@@ -1,5 +1,5 @@
 import Attendance from "./Attendance";
-import AttendanceList from "./AttendanceList"
+import StudentList from "./StudentList"
 import UserPage from "./UserPage";
 import Home from "./Home"
 
@@ -26,7 +26,7 @@ function MainComp({ component, handleModalAction, handleMsgModalAction, handleAu
         <Attendance handleMsgModalAction={handleMsgModalAction}/>
       }
       {component === "attendanceList" &&
-      <AttendanceList handleModalAction={handleModalAction}
+      <StudentList handleModalAction={handleModalAction}
        setStudentSubscription={setStudentSubscription}
        setStudentFile={setStudentFile}/>
       }

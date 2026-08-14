@@ -14,12 +14,20 @@ type SubscriptionType =
       amount2Pay: number;
       startDate?: never;
       endDate?: never;
+    }
+  | {
+      plan: "annuel";
+      pointsLeft: number;
+      amount2Pay: number;
+      startDate?: never;
+      endDate?: never;
     };
 
 interface Student {
   _id: string;
   apellido: string;
   name: string;
+  age_Group: string;
   subscription: SubscriptionType;
   isAdmin: boolean;
 }
