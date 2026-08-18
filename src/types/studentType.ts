@@ -18,7 +18,8 @@ export interface newSubData {
 export interface updateSFData {
     studentID: string;
     token: string;
-    updateData: {
+    updateData:
+    | {
         admin: {
             subscription?: {
                 plan?: "trimestriel" | "carte";
@@ -26,8 +27,10 @@ export interface updateSFData {
                 endDate?: Date;
                 pointsLeft?: number;
                 amount2Pay?: number;
-            }
-        },
+            };
+        };
+    }
+    | {
         student: {
             apellido?: string;
             name?: string;
@@ -38,8 +41,7 @@ export interface updateSFData {
                 pointsLeft?: number;
                 amount2Pay?: number;
             };
-        }
-
+        };
     };
 }
 

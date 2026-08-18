@@ -7,7 +7,7 @@ export async function getStudentsRequest() {
     try {
         const getStudents = await fetch(`${API_URL}/students/`)
         const response = await getStudents.json()
-        console.log("responseOG", response)
+
         return response
     } catch (error) {
         console.error("Error fetching students:", error);
@@ -16,7 +16,6 @@ export async function getStudentsRequest() {
 
 export async function NewRegistrantRequest( newSData : newSData) {
     const { apellido, name, age_Group, subscription, amount2Pay } = newSData
-    console.log("newSData", newSData)
     try {
         const newRegistrant = await fetch(`${API_URL}/students/addNewStudent`, {
             method: "POST",
@@ -30,7 +29,6 @@ export async function NewRegistrantRequest( newSData : newSData) {
             })
         })
         const response = await newRegistrant.json()
-        console.log("responseOG", response)
 
         return response
 
@@ -54,7 +52,6 @@ export async function NewSubscriptionRequest( newSubData : newSubData) {
             })
         })
         const response = await newRegistrant.json()
-        console.log("responseTSDFKSSEF", response)
 
         return response
 
@@ -65,7 +62,6 @@ export async function NewSubscriptionRequest( newSubData : newSubData) {
 
 export async function UpdateStudentFileRequest( updateSFData : updateSFData) {
     const { studentID, token, updateData } = updateSFData
-    
     try {
         const newRegistrant = await fetch(`${API_URL}/students/updateStudentFile`, {
             method: "PUT",
@@ -77,7 +73,6 @@ export async function UpdateStudentFileRequest( updateSFData : updateSFData) {
             })
         })
         const response = await newRegistrant.json()
-        console.log("responseTSDFKSSEF", response)
 
         return response
 

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./store/hooks";
-import {loadStudents} from "./utils/studentAction"
+import { loadStudents } from "./utils/studentAction"
 
 import type { handleModalAction } from "./types/Types"
 
@@ -16,17 +16,17 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
   const students: any[] = useAppSelector((state) => state.student.value);
   const auth = useAppSelector((state) => state.auth.value);
   const dispatch = useAppDispatch();
-  
+
   console.log("STUDENTS", students)
   console.log("find", students.filter(s => s.age_Group === "adult"))
 
-useEffect(() => {
-        if (!auth.token) return
-        const loadStudentsData = {dispatch}
+  useEffect(() => {
+    if (!auth.token) return
+    const loadStudentsData = { dispatch }
 
-        loadStudents(loadStudentsData)
-        
-      }, [auth.token]);
+    loadStudents(loadStudentsData)
+
+  }, [auth.token]);
 
   //add new student
   const handleAddNewStudent = () => {
@@ -121,51 +121,53 @@ useEffect(() => {
           if (ageGroup === "underaged") return student.age_Group === "underaged";
 
           return false;
-        }).map((student: any) => (
-            <div key={student._id}
-              className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr] border-b-2 border-x-2 border-[#FFCB00]"
-            >
-              <div className="ml-2 flex justify-start ">
-                <span className="font-bold hover:text-[#FFCB00]"
-                  onClick={() => handleStudentFile(student)}>{student.apellido}</span>
-              </div>
-              <div className="flex justify-center items-center">
-                <span className="pl-1 text-sm">{student.name}</span>
-              </div>
-              <div className="flex justify-center items-center">
-                {student.subscription?.plan ? (
-                  <span>{student.subscription?.plan}</span>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer hover:text-[#FFCB00]"
-                    onClick={() => handleNewSubscription(student)}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-                  </svg>
-                )}
-              </div>
-              {student.subscription?.plan === "trimestriel" || student.subscription?.plan === "annuel" ? (
-                <div className="flex justify-center items-center">
-                  <span>{new Date(student.subscription?.endDate)
-                    .toLocaleDateString("fr-FR", { timeZone: "UTC" })
-                    .replaceAll("/", "-")}
-                  </span>
-                </div>
-              ) : (
-                <div className="flex justify-center items-center bg-gray-400" />
-              )}
-              {student.subscription?.plan === "carte" ? (
-                <div className="flex justify-center items-center">
-                  <span >{student.subscription?.pointsLeft}</span>
-                </div>
-              ) : (
-                <div className="flex justify-center items-center bg-gray-400" />
-              )}
-              <div className="flex justify-center items-center">
-                <span className="pl-4">{student.subscription?.amount2Pay} €</span>
-              </div>
+        }).sort((a: any, b: any) =>
+          a.apellido.localeCompare(b.apellido)
+        ).map((student: any) => (
+          <div key={student._id}
+            className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr] border-b-2 border-x-2 border-[#FFCB00]"
+          >
+            <div className="ml-2 flex justify-start ">
+              <span className="font-bold hover:text-[#FFCB00]"
+                onClick={() => handleStudentFile(student)}>{student.apellido}</span>
             </div>
-          ))}
-         
+            <div className="flex justify-center items-center">
+              <span className="pl-1 text-sm">{student.name}</span>
+            </div>
+            <div className="flex justify-center items-center">
+              {student.subscription?.plan ? (
+                <span>{student.subscription?.plan}</span>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer hover:text-[#FFCB00]"
+                  onClick={() => handleNewSubscription(student)}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              )}
+            </div>
+            {student.subscription?.plan === "trimestriel" || student.subscription?.plan === "annuel" ? (
+              <div className="flex justify-center items-center">
+                <span>{new Date(student.subscription?.endDate)
+                  .toLocaleDateString("fr-FR", { timeZone: "UTC" })
+                  .replaceAll("/", "-")}
+                </span>
+              </div>
+            ) : (
+              <div className="flex justify-center items-center bg-gray-400" />
+            )}
+            {student.subscription?.plan === "carte" ? (
+              <div className="flex justify-center items-center">
+                <span >{student.subscription?.pointsLeft}</span>
+              </div>
+            ) : (
+              <div className="flex justify-center items-center bg-gray-400" />
+            )}
+            <div className="flex justify-center items-center">
+              <span className="pl-4">{student.subscription?.amount2Pay} €</span>
+            </div>
+          </div>
+        ))}
+
       </div>
     </div>
   )
