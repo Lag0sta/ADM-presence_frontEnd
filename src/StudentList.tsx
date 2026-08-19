@@ -117,10 +117,7 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
 
         {students.filter((student: any) => {
           if (ageGroup === "all") return true;
-          if (ageGroup === "adult") return student.age_Group === "adult";
-          if (ageGroup === "underaged") return student.age_Group === "underaged";
-
-          return false;
+          return student.age_Group === ageGroup;
         }).sort((a: any, b: any) =>
           a.apellido.localeCompare(b.apellido)
         ).map((student: any) => (

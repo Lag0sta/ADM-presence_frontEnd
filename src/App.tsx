@@ -37,7 +37,7 @@ function App() {
 
 
   return (
-    <div className='h-screen grid grid-rows-[1fr_5fr_]  '>
+    <div className='h-screen grid xxxs:grid-rows-[1fr_5fr_] xxs:grid-rows-[1fr_9fr_] sm:grid-rows-[1fr_5fr_] 2xl:portrait:grid-rows-[1fr_9fr_] 2xl:landscape:grid-rows-[1fr_6fr_]'>
       <header className='bg-gray-900 text-white'>
         <Header handleModalAction={handleModalAction}
                 setComponent={setComponent} />

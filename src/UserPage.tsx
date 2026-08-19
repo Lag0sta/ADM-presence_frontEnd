@@ -44,9 +44,9 @@ function UserPage({ handleModalAction, handleMsgModalAction, handleAuthModalActi
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
+    <div className="w-full flex flex-col items-center justify-center">
 
-      <div className="w-5/6 h-fit py-10 flex flex-col items-center justify-center bg-[#FFCB00] rounded-lg ">
+      <div className="w-5/6 h-fit mt-10 py-5 flex flex-col items-center justify-center bg-[#FFCB00] rounded-lg ">
         <div className="h-20 flex items-center justify-center gap-2 ">
 
           <h3 className="text-4xl font-semibold">{user.apellido}</h3>

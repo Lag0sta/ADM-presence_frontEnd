@@ -24,7 +24,7 @@ function ModalAuth({ handleAuthModalAction }: props) {
             aria-labelledby="modal-title"
             aria-modal="true">
             <div className="fixed inset-0 bg-black/75 backdrop-blur-xs" />
-            <div className='z-50 w-75  bg-[#FFCB00] rounded-lg overflow-hidden '>
+            <div className='z-50  bg-[#FFCB00] rounded-lg overflow-hidden '>
                 <div className="h-full w-full flex flex-col justify-center items-center">
                     <div className="w-full flex justify-end ml-4 " onClick={handleCloseModal}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#000" className="size-10 mr-4 mt-2 hover:fill-gray-400 hover:cursor-pointer ">

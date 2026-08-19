@@ -13,6 +13,7 @@ function CheckAttendance() {
   const [checkedUsers, setCheckedUsers] = useState<string[]>([]);
   const [testStudents, setTestStudents] = useState<string[]>([]);
   const [attendedStudent, setAttendedStudent] = useState<string[]>([]);
+  const [ageGroup, setAgeGroup] = useState("all");
 
   const dispatch = useAppDispatch();
 
@@ -20,7 +21,7 @@ function CheckAttendance() {
     const loadAttendanceHistoryData = { dispatch };
 
     loadAttendanceHistory(loadAttendanceHistoryData);
-    
+
   }, []);
 
   //récupération des étudiants présents aujourd'hui
@@ -107,45 +108,83 @@ function CheckAttendance() {
   return (
     <div className=" w-full h-full flex justify-evenly items-center ">
       <div className="  flex flex-col">
-        <span className="w-fit px-2 py-1 bg-gray-800 text-[#FFCB00]  rounded-t-lg">Date: {new Date(Date.now())
-          .toLocaleDateString("fr-FR", { timeZone: "UTC" })
-          .replaceAll("/", "-")}
-        </span>
-        <div className="grid grid-cols-[1fr_1fr_2fr_1fr] bg-[#FFCB00] p-2 rounded-tr-lg font-semibold border-[#FFCB00] text-white">
+        <div className="flex justify-between">
+          <span className="w-fit px-2 py-1 bg-gray-800 text-[#FFCB00]  rounded-t-lg">Date: {new Date(Date.now())
+            .toLocaleDateString("fr-FR", { timeZone: "UTC" })
+            .replaceAll("/", "-")}
+          </span>
+          <div className="w-80 flex justify-evenly items-center bg-black text-[#FFCB00] rounded-t-lg">
+            <div className="mr-2">
+              <input type="radio"
+                name="ageGroup ?"
+                value="underaged"
+                checked={ageGroup === "underaged"}
+                onChange={(e) => setAgeGroup(e.target.value)}
+              />
+              Mineur
+            </div>
+
+            <div className="mx-2">
+              <input type="radio"
+                name="ageGroup ? "
+                value="adult"
+                checked={ageGroup === "adult"}
+                onChange={(e) => setAgeGroup(e.target.value)}
+              />
+              Adultes
+            </div>
+
+            <div className="ml-2">
+              <input type="radio"
+                name="ageGroup ? "
+                value="all"
+                checked={ageGroup === "all"}
+                onChange={(e) => setAgeGroup(e.target.value)}
+              />
+              Tous
+            </div>
+          </div>
+        </div>
+        <div className="w-full grid grid-cols-[1fr_1fr_2fr_1fr] bg-[#FFCB00] p-2  font-semibold border-[#FFCB00] text-white">
           <span className=" " >Appelido :</span>
           <span className=" ">Nom :</span>
           <span>Type d'abonnement :</span>
         </div>
-        {students.map((student: any) => (
+        {students.filter((student: any) => {
+          if (ageGroup === "all") return true;
+          return student.age_Group === ageGroup;
+        }).sort((a: any, b: any) =>
+          a.apellido.localeCompare(b.apellido)
+        ).map((student: any) => (
           <div key={student._id}
             className="grid grid-cols-[1fr_1fr_2fr_1fr] border-b-2 border-x-2 border-[#FFCB00]"
           >
             <div key={student._id} className="ml-2 flex justify-start ">
-              <span className="font-semibold" 
-                    style={{
-                      ...(student.subscription?.pointsLeft === 0 && {
-                      backgroundColor: "red",
-                      color: "white",
-                    }),
-              }}>{student.apellido}</span>
+              <span className="font-semibold"
+                style={{
+                  ...((student.subscription?.pointsLeft === 0 && student.subscription.plan === "carte") && {
+                    backgroundColor: "red",
+                    color: "white",
+                  }),
+                }}>{student.apellido}</span>
             </div>
             <div className="flex justify-center items-center">
               <span className="pl-1"
-                    style={{
-                      ...(student.subscription?.pointsLeft === 0 && {
-                      backgroundColor: "red",
-                      color: "white",
-                    }),
-                  }}>{student.name}</span>
+                style={{
+                  ...((student.subscription?.pointsLeft === 0 && student.subscription.plan === "carte") && {
+                    backgroundColor: "red",
+                    color: "white",
+                  }),
+                }}>{student.name}</span>
             </div>
             <div className="flex justify-center items-center">
               {student.subscription?.plan ? (
                 <span style={{
-                      ...(student.subscription?.pointsLeft === 0 && {
-                      backgroundColor: "red",
-                      color: "white",
-                    }),
-                  }}>{student.subscription.plan}</span>
+                  ...((student.subscription?.pointsLeft === 0 && student.subscription.plan === "carte") && {
+                    backgroundColor: "red",
+                    color: "white",
+                  }),
+                }}>{student.subscription.plan}</span>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer hover:text-[#FFCB00]"
                 // onClick={() => handleNewSubscription(student)}
@@ -159,7 +198,7 @@ function CheckAttendance() {
               type="checkbox"
               disabled={
                 (attendedStudent ?? []).includes(student._id) ||
-                (testStudents ?? []).includes(student._id) || student.subscription?.pointsLeft === 0
+                (testStudents ?? []).includes(student._id) || (student.subscription?.pointsLeft === 0 && student.subscription.plan === "carte")
               }
               checked={checkedUsers.includes(student._id)}
               onChange={() => handleCheckboxChange(student._id)}

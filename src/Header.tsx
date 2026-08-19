@@ -9,9 +9,9 @@ function Header({ handleModalAction, setComponent } : props ){
 
 const auth = useAppSelector((state) => state.auth.value) || "";
 
-const handleHome = ()  => {
-    setComponent("home")
-  }
+// const handleHome = ()  => {
+//     setComponent("home")
+//   }
 
   const handleCheckAttendance = () => {
     setComponent("checkAttendance")
@@ -30,15 +30,15 @@ const handleHome = ()  => {
     <div className="w-full h-full flex justify-evenly items-center ">
         
       {!auth.token &&
-      <h2>Bienvenue sur ADM Présence</h2>}
+      <h2 className="font-cascadiaCode xxxs:text-base xxs:text-lg 2xl:landscape:text-4xl 2xl:portrait:text-3xl ">Bienvenue sur <span className="font-edoSZ xxxs:text-xl xxs:text-2xl 2xl:landscape:text-7xl 2xl:portrait:text-5xl text-[#FFCB00]">ADM Présence</span></h2>}
       {auth.token &&
       <div className="w-full h-full flex justify-evenly items-center ">
-          <span onClick={handleHome}>Home</span>
+          {/* <span className="font-cascadiaCode xxxs:text-base xxs:text-lg  sm:text-xl 2xl:text-5xl" onClick={handleHome}>Home</span> */}
           {/* Possibilité de cliquer la présence    */}
-          <span onClick={handleCheckAttendance}>Présences</span>
+          <span className="font-cascadiaCode xxxs:text-lg xxs:text-lg  sm:text-xl 2xl:text-5xl" onClick={handleCheckAttendance}>Présences</span>
           {/* Ajout d'un nouvel inscrit - état de l'abonnement - type d'abonnement - où en est le paiement - nombre de présence   */}
-          <span onClick={handleAttendanceList}>Liste des Inscrits</span>
-          <div className=" w-18 bg-[#FFCB00] rounded-full flex justify-center items-center"
+          <span className="font-cascadiaCode xxxs:text-lg xxs:text-lg  sm:text-xl 2xl:text-5xl" onClick={handleAttendanceList}>Inscrits</span>
+          <div className="xxxs:w-15 xxs:w-17 sm:w-18 2xl:w-42 w-18 bg-[#FFCB00] rounded-full flex justify-center items-center"
           onClick={handleUserModal}>
             <img className="w-fit" src="BanderoleFuzue.png"/>
           </div>

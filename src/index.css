@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+
+@font-face {
+  font-family: "edoSZ";
+  src: url("/edosz.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "cascadiaCode";
+  src: url("/CascadiaCode-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "cascadiaCode";
+  src: url("/CascadiaCode-Italic-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+@theme {
+  --font-edoSZ: "edoSZ", sans-serif;
+  --font-cascadiaCode: "cascadiaCode", monospace;
+
+
+  --breakpoint-xxxs: 20rem;
+  --breakpoint-xxs: 22.5rem;
+  --breakpoint-xs: 30rem;
+}

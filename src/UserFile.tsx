@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { UpdateUserFileRequest } from "./api/userRequest";
-import { authRequest} from "./api/authRequest";
+import { authRequest } from "./api/authRequest";
 import { askAuth } from "./utils/authAction"
 import { loadUser } from "./utils/userAction"
 
@@ -33,6 +33,14 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
 
     const dispatch = useAppDispatch();
 
+    useEffect(() => {
+        setName(user?.name || "");
+        setSubscriptionPlan(user?.subscription?.plan || null);
+        setAmount2Pay(user?.subscription?.amount2Pay || 0);
+        setPointsLeft(user?.subscription?.pointsLeft || 0);
+        setEndDate(user?.subscription?.endDate || "");
+    }, [user]);
+
     const handleSave = async () => {
         try {
             if (!auth.token) return
@@ -40,14 +48,14 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
             handleAuthModalAction.setIsAuthModalOpen(true);
 
             const { email, password } = await askAuth();
-            
+
             if (!email || !password) return console.log("No email or password");
 
             const aRequestData = { token: auth.token, password, email };
 
             const authResponse = await authRequest(aRequestData)
 
-            if(!authResponse.result) {
+            if (!authResponse.result) {
                 handleMsgModalAction.setMsgModalContent(authResponse.message);
                 handleMsgModalAction.setIsMsgModalOpen(true);
                 return;
@@ -76,7 +84,7 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
                 return;
             }
 
-            handleMsgModalAction.setMsgModalContent({result: response.result, message: response.message});
+            handleMsgModalAction.setMsgModalContent({ result: response.result, message: response.message });
             handleMsgModalAction.setIsMsgModalOpen(true);
 
             const loadUserData = { apellido: response.data.apellido, token: auth.token, dispatch }
@@ -84,7 +92,7 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
             loadUser(loadUserData);
 
             setUpdate(false);
-            
+
         } catch (error) {
             console.error("Error updating student:", error);
         }

@@ -6,6 +6,7 @@ const initialState = {
     attendanceDay: "",
     createdAt: "",
     students: [{
+      age_Group: "",
       apellido: "",
       name: "",
       _id: "",
