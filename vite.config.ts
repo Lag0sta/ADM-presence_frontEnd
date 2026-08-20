@@ -8,8 +8,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react(), tailwindcss(), VitePWA({
     registerType: 'autoUpdate',
-
+    
     workbox: {
+      cleanupOutdatedCaches: true,
       clientsClaim: true,
       skipWaiting: true,
     },
@@ -21,12 +22,12 @@ export default defineConfig({
       theme_color: '#ffffff',
       icons: [
         {
-          src: 'BanderoleFuzue.png',
+          src: '/BanderoleFuzue.png',
           sizes: '192x192',
           type: 'image/png',
         },
         {
-          src: 'BanderoleFuzue.png',
+          src: '/BanderoleFuzue.png',
           sizes: '512x512',
           type: 'image/png',
         },

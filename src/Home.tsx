@@ -17,7 +17,7 @@ function Home({ handleModalAction }: props) {
 
   return (
     <div className="w-full h-full flex justify-evenly items-center ">
-      
+      TEST YEAH
       {!auth.token &&
         <div className=" flex items-center bg-[#FFCB00] border-2 border-[#FFCB00]  rounded-full p-2 border-[#FFCB00] hover:bg-white ">
           <span className="xxxs:px-2 xxxs:py-1 xxxs:text-xl xxs:px-3 xxs:py-2 xxs:text-3xl sm:text-2xl 2xl:text-5xl 2xl:px-5 2xl:py-4 font-cascadiaCode font-semibold text-white cursor-pointer hover:text-[#FFCB00]" onClick={handleSignIn}>Connexion</span>

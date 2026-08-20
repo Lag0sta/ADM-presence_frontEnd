@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./store/hooks";
+import { useOrientation } from "./hooks/orientation";
 import { loadStudents } from "./utils/studentAction"
 
 import type { handleModalAction } from "./types/Types"
@@ -12,6 +13,8 @@ interface props {
 }
 
 function StudentList({ handleModalAction, setStudentSubscription, setStudentFile }: props) {
+  const [isXXXS, setIsXXXS] = useState(window.innerWidth >= 320 && window.innerWidth < 360)
+
   const [ageGroup, setAgeGroup] = useState("all")
   const students: any[] = useAppSelector((state) => state.student.value);
   const auth = useAppSelector((state) => state.auth.value);
@@ -19,6 +22,22 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
 
   console.log("STUDENTS", students)
   console.log("find", students.filter(s => s.age_Group === "adult"))
+
+  const { isPortrait, isLandscape } = useOrientation();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsXXXS(
+        window.innerWidth >= 320 &&
+        window.innerWidth < 360
+      );
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (!auth.token) return
@@ -28,37 +47,10 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
 
   }, [auth.token]);
 
-//   const [isPortrait, setIsPortrait] = useState(
-//     window.matchMedia("(orientation: portrait)").matches
-//   );
+  console.log("isPortrait", isPortrait);
+  console.log("isLandscape", isLandscape);
 
-//   const [isLandscape, setIsLandscape] = useState(
-//     window.matchMedia("(orientation: landscape)").matches
-//   );
-
-//   useEffect(() => {
-//     const mediaQuery = window.matchMedia("(orientation: portrait)");
-
-//     const handleChange = (event: MediaQueryListEvent) => {
-//       setIsPortrait(event.matches);
-//     };
-
-//     mediaQuery.addEventListener("change", handleChange);
-
-//     return () => {
-//       mediaQuery.removeEventListener("change", handleChange);
-//     };
-//   }, []);
-
-//   console.log("isPortrait",isPortrait);
-// console.log("isLandscape", isLandscape);
-// console.log({
-//   innerWidth: window.innerWidth,
-//   innerHeight: window.innerHeight,
-//   landscape: window.innerWidth > window.innerHeight,
-//   portrait: window.innerHeight > window.innerWidth,
-// });
-
+  console.log("isXXXS", isXXXS, "size screen", window.innerWidth);
   //add new student
   const handleAddNewStudent = () => {
     handleModalAction.setModalComponent("addAttendee")
@@ -126,23 +118,23 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
         <div className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr] bg-[#FFCB00] p-2 font-semibold border-[#FFCB00] text-white rounded-tr-lg">
 
           <div className="flex justify-center items-center">
-            <span className="text-lg  ">Appelido :</span>
+            <span className="text-lg  ">Appelido:</span>
           </div>
           <div className="flex justify-center items-center">
-            <span className="text-lg  ">Nom :</span>
+            <span className="text-lg  ">Nom:</span>
           </div>
           <div className="flex justify-center items-center">
 
-            <span className="text-lg ">Type d'abonnement :</span>
+            <span className="text-lg ">Abonnement:</span>
           </div>
           <div className="flex justify-center items-center">
-            <span className="text-lg ">Fin de l'abonnement :</span>
+            <span className="text-lg ">Expiration:</span>
           </div>
           <div className="flex justify-center items-center">
-            <span className="text-lg ">Nombre de points restants :</span>
+            <span className="text-lg ">Points:</span>
           </div>
           <div className="flex justify-center items-center">
-            <span className="text-lg ">Montant à payer :</span>
+            <span className="text-lg ">À payer:</span>
           </div>
         </div>
 
