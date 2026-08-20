@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useAppSelector } from "./store/hooks";
 import StudentFile from "./StudentFile";
 import StudentFileUpdate from "./StudentFileUpdate"
 import type { handleModalAction, handleMsgModalAction } from "./types/Types"
 
-import { UpdateStudentFileRequest } from "./api/studentRequest";
 
 interface props {
     handleModalAction: handleModalAction;
