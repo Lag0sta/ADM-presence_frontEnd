@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { useOrientation } from "./hooks/orientation";
+import { useXXXS } from "./hooks/breakPoints"
 import { loadStudents } from "./utils/studentAction"
 
 import type { handleModalAction } from "./types/Types"
@@ -13,7 +14,9 @@ interface props {
 }
 
 function StudentList({ handleModalAction, setStudentSubscription, setStudentFile }: props) {
-  const [isXXXS, setIsXXXS] = useState(window.innerWidth >= 320 && window.innerWidth < 360)
+  const isXXXS = useXXXS();
+  const { isPortrait, isLandscape } = useOrientation();
+
 
   const [ageGroup, setAgeGroup] = useState("all")
   const students: any[] = useAppSelector((state) => state.student.value);
@@ -23,22 +26,6 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
   console.log("STUDENTS", students)
   console.log("find", students.filter(s => s.age_Group === "adult"))
 
-  const { isPortrait, isLandscape } = useOrientation();
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsXXXS(
-        window.innerWidth >= 320 &&
-        window.innerWidth < 360
-      );
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   useEffect(() => {
     if (!auth.token) return
     const loadStudentsData = { dispatch }
@@ -47,10 +34,32 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
 
   }, [auth.token]);
 
-  console.log("isPortrait", isPortrait);
+  
+ useEffect(() => {
+  if (!isPortrait) return;
+
+  const lockLandscape = async () => {
+    try {
+      await screen.orientation.lock("landscape");
+      console.log("Orientation verrouillée !");
+
+    } catch (error) {
+      console.warn(
+        "Impossible de verrouiller l'orientation :",
+        error
+      );
+    }
+  };
+
+  lockLandscape();
+
+  return () => {
+    screen.orientation.unlock();
+  };
+}, [isXXXS, isPortrait]);
+
   console.log("isLandscape", isLandscape);
 
-  console.log("isXXXS", isXXXS, "size screen", window.innerWidth);
   //add new student
   const handleAddNewStudent = () => {
     handleModalAction.setModalComponent("addAttendee")
@@ -72,6 +81,7 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
     handleModalAction.setIsModalOpen(true)
   }
 
+
   return (
     <div className="w-max-full h-full mt-15 flex flex-col  items-center ">
       <div className="flex justify-evenly items-center w-full h-fit mb-4">
@@ -83,7 +93,7 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
 
       </div>
 
-      <div className="  flex flex-col">
+      <div className=" flex flex-col">
         <div className="w-80 flex justify-evenly items-center bg-black text-[#FFCB00] rounded-t-lg">
           <div className="mr-2">
             <input type="radio"
