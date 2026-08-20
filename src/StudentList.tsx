@@ -28,6 +28,37 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
 
   }, [auth.token]);
 
+  const [isPortrait, setIsPortrait] = useState(
+    window.matchMedia("(orientation: portrait)").matches
+  );
+
+  const [isLandscape, setIsLandscape] = useState(
+    window.matchMedia("(orientation: landscape)").matches
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(orientation: portrait)");
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsPortrait(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  console.log("isPortrait",isPortrait);
+console.log("isLandscape", isLandscape);
+console.log({
+  innerWidth: window.innerWidth,
+  innerHeight: window.innerHeight,
+  landscape: window.innerWidth > window.innerHeight,
+  portrait: window.innerHeight > window.innerWidth,
+});
+
   //add new student
   const handleAddNewStudent = () => {
     handleModalAction.setModalComponent("addAttendee")

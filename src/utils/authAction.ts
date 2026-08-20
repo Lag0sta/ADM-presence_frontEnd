@@ -15,3 +15,4 @@ export function submitAuth(email: string, password: string) {
     resolveAuth?.({ email, password });
     resolveAuth = null;
 }
+
