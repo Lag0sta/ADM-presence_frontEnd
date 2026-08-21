@@ -18,24 +18,24 @@ function MainComp({ component, handleModalAction, handleMsgModalAction, handleAu
  } : props) {
 
   return (
-    <div className="w-full h-full flex justify-evenly items-center ">
-      {component === "home" && 
-        <Home handleModalAction={handleModalAction}/>
-      }
-      {component === "checkAttendance" &&
-        <Attendance handleMsgModalAction={handleMsgModalAction}/>
-      }
-      {component === "attendanceList" &&
-      <StudentList handleModalAction={handleModalAction}
-       setStudentSubscription={setStudentSubscription}
-       setStudentFile={setStudentFile}/>
-      }
-      {component === "userPage" &&
-        <UserPage handleModalAction={handleModalAction}
-                  handleMsgModalAction={handleMsgModalAction}
-                  handleAuthModalAction={handleAuthModalAction}/>
-      }
-    </div>
+      <div className="w-full h-full flex justify-evenly items-center">
+        {component === "home" && 
+          <Home handleModalAction={handleModalAction}/>
+        }
+        {component === "checkAttendance" &&
+          <Attendance handleMsgModalAction={handleMsgModalAction}/>
+        }
+        {component === "attendanceList" &&
+        <StudentList handleModalAction={handleModalAction}
+        setStudentSubscription={setStudentSubscription}
+        setStudentFile={setStudentFile}/>
+        }
+        {component === "userPage" &&
+          <UserPage handleModalAction={handleModalAction}
+                    handleMsgModalAction={handleMsgModalAction}
+                    handleAuthModalAction={handleAuthModalAction}/>
+        }
+      </div>
   )
 }
 
