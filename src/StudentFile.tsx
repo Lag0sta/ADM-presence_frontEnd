@@ -5,14 +5,14 @@ interface props {
 function StudentFile({ studentFile, setUpdate }: props) {
 
     return (
-            <div className="w-full px-3 flex flex-col justify-between">
+            <div className="h-full w-full px-3 flex flex-col justify-between">
             <div className="w-full  flex justify-between items-center">
                 <span className="text-md font-semibold">Apellido: </span>
                 <span className=" text-end pr-2 py-1 my-2 ">
                     {studentFile.apellido}
                 </span>
             </div>
-            <div className="w-full flex justify-between items-center">
+            <div className="w-full h-full overlay-y-auto flex justify-between items-center">
                 <span className="text-md font-semibold">Nom: </span>
                 <span className="text-end pr-2 py-1 my-2 ">
                     {studentFile.name}
