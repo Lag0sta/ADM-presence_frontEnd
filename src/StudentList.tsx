@@ -70,7 +70,8 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
 
         </div>
 
-        <div className=" flex flex-col landscape:xs:max-h-44 landscape:sm:max-h-56 landscape:md:max-h-96 landscape:lg:max-h-96 border-b-2 border-b-[#FFCB00]">
+        <div className=" flex flex-col 
+         landscape:xs:max-h-44 landscape:sm:max-h-56 landscape:md:max-h-58 landscape:lg:max-h-96 border-b-2 border-b-[#FFCB00]">
           <div className="w-80 flex justify-evenly items-center bg-black text-[#FFCB00] rounded-t-lg">
             <div className="mr-2">
               <input type="radio"

@@ -74,7 +74,7 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
     }
 
     return (
-        <div className="w-full h-full flex flex-col justify-evenly items-center my-2">
+        <div className="portrait:xxxs:h-[15rem] portrait:xxxs:w-[18rem] flex flex-col justify-evenly items-center my-2 overflow-y-auto">
 
             <div className="w-full px-6 flex justify-between items-center">
                 <span className="text-md font-semibold">Nom: </span>

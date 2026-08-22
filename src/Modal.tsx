@@ -77,7 +77,7 @@ function Modal({ handleModalAction, handleMsgModalAction, setComponent, studentS
               setComponent={setComponent} />
           }
           {handleModalAction.modalComponent === "studentFile" &&
-            <div className="portrait:xxxs:h-[22rem] portrait:xxxs:w-[17rem] ">
+            <div className=" ">
 
               <ModalStudentFile studentFile={studentFile
               } setStudentFile={setStudentFile}

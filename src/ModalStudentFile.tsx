@@ -14,11 +14,11 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
     const [update, setUpdate] = useState(false)
 
     return (
-        <div className="w-full h-full flex flex-col justify-evenly items-center my-2">
+        <div className="  flex flex-col justify-evenly items-center">
             <h3 className="text-3xl text-center text-white mb-1">
                 Fiche {studentFile?.apellido}
             </h3>
-            <div className="w-full px-6 flex justify-between items-center">
+            <div className="w-fit flex justify-between items-center">
                 {!update &&
                     <StudentFile studentFile={studentFile}
                                  setUpdate={setUpdate} />
