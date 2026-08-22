@@ -6,7 +6,7 @@ import MainComp from "./MainComp"
 import Modal from './Modal'
 import MsgModal from './MsgModal'
 import ModalAuth from './ModalAuth'
-import TestOrientation from './TestOrientation'
+// import TestOrientation from './TestOrientation'
 import {loadStudents} from "./utils/studentAction"
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
         <Header handleModalAction={handleModalAction}
                 setComponent={setComponent} />
       </header>
-<TestOrientation/>
+{/* <TestOrientation/> */}
       <main className='bg-gray-100'>
         <MainComp component={component}
                   handleModalAction={handleModalAction}
