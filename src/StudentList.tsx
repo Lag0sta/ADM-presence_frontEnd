@@ -26,7 +26,7 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
   const students: any[] = useAppSelector((state) => state.student.value);
   const auth = useAppSelector((state) => state.auth.value);
   const dispatch = useAppDispatch();
-  const { isPortrait, isLandscape } = useOrientation();
+  const { isPortrait, } = useOrientation();
 
 
   useEffect(() => {
