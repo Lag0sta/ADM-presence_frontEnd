@@ -70,7 +70,6 @@ function Modal({ handleModalAction, handleMsgModalAction, setComponent, studentS
             </div>
           }
 
-          <div className="h-[2rem] w-full" />
 
           {handleModalAction.modalComponent === "userModal" &&
             <ModalUser handleModalAction={handleModalAction}

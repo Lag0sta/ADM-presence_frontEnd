@@ -20,7 +20,7 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
     const [ageGroupe, setAgeGroupe] = useState(studentFile?.age_Group || "");
     const [subscriptionPlan, setSubscriptionPlan] = useState(studentFile?.subscription?.plan || "aucune");
     const [amount2Pay, setAmount2Pay] = useState(studentFile?.subscription?.amount2Pay || 0);
-    const [pointsLeft, setPointsLeft] = useState<number>(Number(studentFile?.subscription?.pointsLeft || 0)); 
+    const [pointsLeft, setPointsLeft] = useState<number>(Number(studentFile?.subscription?.pointsLeft || 0));
     const [endDate, setEndDate] = useState(studentFile?.subscription?.endDate || "");
 
     const dispatch = useAppDispatch();
@@ -29,28 +29,28 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
         try {
             const role = studentFile.isAdmin
             const updateData = role === "admin"
-    ? {
-        admin: {
-            subscription: {
-                plan: subscriptionPlan,
-                amount2Pay: Number(amount2Pay),
-                pointsLeft,
-                endDate,
-            },
-        },
-    }
-    : {
-        student: {
-            apellido,
-            name,
-            subscription: {
-                plan: subscriptionPlan,
-                amount2Pay: Number(amount2Pay),
-                pointsLeft,
-                endDate,
-            },
-        },
-    };
+                ? {
+                    admin: {
+                        subscription: {
+                            plan: subscriptionPlan,
+                            amount2Pay: Number(amount2Pay),
+                            pointsLeft,
+                            endDate,
+                        },
+                    },
+                }
+                : {
+                    student: {
+                        apellido,
+                        name,
+                        subscription: {
+                            plan: subscriptionPlan,
+                            amount2Pay: Number(amount2Pay),
+                            pointsLeft,
+                            endDate,
+                        },
+                    },
+                };
 
             const updateSFData = { studentID: studentFile._id, token: auth.token, updateData };
             const response = await UpdateStudentFileRequest(updateSFData);
@@ -74,10 +74,11 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
     }
 
     return (
-        <div className="portrait:xxxs:h-[15rem] portrait:xxxs:w-[18rem] flex flex-col justify-evenly items-center my-2 overflow-y-auto">
+        <div className="portrait:xxxs:h-full portrait:xxxs:w-[18rem]
+        landscape:xs:h-full landscape:xs:w-[20rem] px-3 flex flex-col justify-between">
 
             <div className="w-full px-6 flex justify-between items-center">
-                <span className="text-md font-semibold">Nom: </span>
+                <span className="text-md font-cascadiaCode font-bold">Nom: </span>
                 <input className="bg-yellow-100 rounded-md text-end pr-2 py-1 my-2 disabled:bg-[#FFCB00] disabled:text-gray-800"
                     type="text"
                     value={name}
@@ -87,7 +88,7 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
 
             </div>
             <div className="flex flex-col">
-                <span className="mt-2  text-lg font-semibold"
+                <span className="mt-2  text-lg font-cascadiaCode font-bold"
                 >
                     Catégorie d'age :
                 </span>
@@ -99,7 +100,7 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
                             checked={ageGroupe === "underaged"}
                             onChange={(e) => setAgeGroupe(e.target.value)}
                             disabled={subscriptionPlan === "trimestriel" || subscriptionPlan === "carte"} />
-                        <span>Mineur</span>
+                        <span className="font-cascadiaCode">Mineur</span>
 
                     </div>
 
@@ -110,18 +111,15 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
                             checked={ageGroupe === "adult"}
                             onChange={(e) => setAgeGroupe(e.target.value)}
                             disabled={studentFile.subscription?.plan === "annuel"} />
-                        <span>Adulte</span>
+                        <span className="font-cascadiaCode">Adulte</span>
                     </div>
                 </div>
             </div>
 
-            {subscriptionPlan &&
-                <button className="bg-gray-900 text-[#FFCB00] text-xs mt-3 rounded-full py-1 px-2 ml-2 hover:bg-gray-800 hover:text-[#FFCB00] transition-colors duration-300 disabled:bg-[#FFCB00] disabled:text-gray-500 disabled:border-2 disabled:border-white "
-                    onClick={() => setSubscriptionPlan("none")}
-                >Annuller l'Abonnement</button>}
+
             {ageGroupe === "adult" &&
                 <div id="subscription" className="flex flex-col items-center">
-                    <span className=" text-lg font-semibold">Type d'abonnement :</span>
+                    <span className="xxxs:mt-4 text-lg font-cascadiaCode font-bold">Type d'abonnement :</span>
                     <div className="flex flex-col items-start">
                         <div>
                             <input type="radio"
@@ -131,7 +129,9 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
                                 onChange={(e) => setSubscriptionPlan(e.target.value)}
                                 disabled={!update}
                             />
-                            Abonnement Trimestriel
+                            <span className="font-cascadiaCode">
+                                Abonnement Trimestriel
+                            </span>
                         </div>
 
                         <div>
@@ -142,12 +142,18 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
                                 onChange={(e) => setSubscriptionPlan(e.target.value)}
                                 disabled={!update}
                             />
-                            Carte de 10
+                            <span className="font-cascadiaCode">
+                                Carte de 10
+                            </span>
                         </div>
                     </div>
+                    {subscriptionPlan &&
+                        <button className="bg-gray-900 text-[#FFCB00] text-xs mt-1 rounded-full mb-4 py-1 px-2 ml-2 hover:bg-gray-800 hover:text-[#FFCB00] transition-colors duration-300 disabled:bg-[#FFCB00] disabled:text-gray-500 disabled:border-2 disabled:border-white "
+                            onClick={() => setSubscriptionPlan("none")}
+                        >Annuller l'Abonnement</button>}
                     {(subscriptionPlan === "trimestriel") &&
-                        <div className="w-full px-6 flex justify-between items-center">
-                            <span className="mt-2 text-md font-semibold">Date de fin: </span>
+                        <div className="w-full mt-4 px-6 flex justify-between items-center">
+                            <span className="mt-2 text-md font-cascadiaCode font-bold">Date de fin: </span>
                             <input className="w-1/2  bg-yellow-100 rounded-md text-end pr-2"
                                 type="text"
                                 name="endDate"
@@ -162,9 +168,10 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
                             />
                         </div>
                     }
+
                     {(studentFile.subscription?.plan === "carte" || studentFile.subscription?.pointsLeft > 0) &&
                         <div className="w-full px-6 flex justify-between items-center">
-                            <span className="mt-2 text-md font-semibold">Points restants: </span>
+                            <span className="mt-2 text-md font-cascadiaCode font-bold">Points restants: </span>
                             <input className="w-1/6  bg-yellow-100 rounded-md text-end pr-2"
                                 type="number"
                                 name="pointsLeft"
@@ -175,7 +182,7 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
                     }
 
                     <div className="w-full px-6 flex justify-between items-center mb-4">
-                        <span className="mt-2 text-md font-semibold">Restes à Payer: </span>
+                        <span className="mt-2 text-md font-cascadiaCode font-bold">Restes à Payer: </span>
                         <input className="w-1/3  bg-yellow-100 rounded-md text-end pr-2"
                             type="text"
                             name="amount2Pay"
@@ -186,8 +193,9 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
 
                 </div>
             }
+
             {ageGroupe === "underaged" &&
-                <div id="subscription" className="flex flex-col items-center">
+                <div id="subscription" className="flex flex-col items-center ">
                     <span className=" text-lg font-semibold">Type d'abonnement :</span>
                     <div className="flex flex-col items-start">
                         <div>
@@ -198,7 +206,9 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
                                 onChange={(e) => setSubscriptionPlan(e.target.value)}
                                 disabled={!update}
                             />
-                            Abonnement Annuel
+                            <span className="font-cascadiaCode">
+                                Abonnement Annuel
+                            </span>
                         </div>
 
                     </div>

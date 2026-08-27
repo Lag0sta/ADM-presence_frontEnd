@@ -35,15 +35,15 @@ function ModalUser({ handleModalAction, setComponent }: props) {
 
 
   return (
-    <div className='flex flex-col justify-evenly items-center w-full h-full mt-4 mb-10'>
-      <h3 className="text-3xl text-center text-white mb-1">
-        Bonjour : <span>{auth.apellido}</span>
+    <div className='flex flex-col justify-evenly items-center w-full h-full mt-4  mx-4'>
+      <h3 className="mb-1 portrait:xxxs:text-2xl landscape:xs:text-2xl  text-center text-black font-cascadiaCode ">
+        Bonjour: <span className="text-white portrait:xxxs:text-3xl landscape:xs:text-3xl font-edoSZ">{auth.apellido}</span>
       </h3>
-      <button className="w-fit bg-black border-2 rounded-md px-2 py-1 mt-3 mb-6 border-black text-white hover:bg-white hover:text-black hover:cursor-pointer "
+      <button className="w-fit bg-black border-2 rounded-md px-2 py-1 my-3 border-black text-white font-cascadiaCode hover:bg-white hover:text-black hover:cursor-pointer "
         onClick={handleUserPage}>
         Page Utilisateur
       </button>
-      <button className="w-fit bg-black border-2 rounded-md px-4 py-1 mt-3 mb-6 border-black text-white hover:bg-white hover:text-black hover:cursor-pointer "
+      <button className="w-fit bg-black border-2 rounded-md px-4 py-1 my-3 border-black text-white font-cascadiaCode hover:bg-white hover:text-black hover:cursor-pointer "
         onClick={handleLogOut}>
         Deconnexion
       </button>

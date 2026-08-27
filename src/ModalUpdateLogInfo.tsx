@@ -238,6 +238,7 @@ function ModalUpdateLogInfo({ handleModalAction, handleMsgModalAction }: props) 
                         disabled={condition}>Valider</button>
                 </div>
             </div>
+            
         </div>
     )
 }

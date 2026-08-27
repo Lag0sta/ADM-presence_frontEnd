@@ -100,51 +100,25 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
 
     return (
         <div className=" flex flex-col items-center justify-center">
-            <div className="  flex flex-col  justify-center  mt-4 ">
-                {!update &&
-                    <div className="landscape:xs:w-[12rem] landscape:lg:w-[20rem] flex flex-col mb-4 px-6">
-                        <div className="  flex justify-between  my-2">
-                            <span className="landscape:xs:text-md landscape:lg:text-xl font-cascadiaCode font-bold">Nom: </span>
-
-                            <span className="text-md text-white landscape:xs:text-md landscape:lg:text-xl font-cascadiaCode">{user.name}</span>
-                        </div>
-                        <div className="  flex justify-between  my-2">
-                            <span className="landscape:xs:text-md font-cascadiaCode landscape:lg:text-xl font-bold">Plan: </span>
-
-                            <span className="text-md text-white landscape:xs:text-md landscape:lg:text-xl font-cascadiaCode">{user.subscription?.plan}</span>
-                        </div>
-                        {user.subscription?.plan === "trimestriel" &&
-                            <div className=" items-center flex justify-between my-2">
-                                <span className="landscape:xs:text-md landscape:lg:text-xl font-cascadiaCode font-bold">fin:</span>
-                                <span className="text-md text-white landscape:xs:text-md landscape:lg:text-xl font-cascadiaCode">{new Date(endDate)
-                                    .toLocaleDateString("fr-FR", { timeZone: "UTC" })
-                                    .replaceAll("/", "-")}</span>
-                            </div>
-                        }
-                        {user.subscription?.plan === "carte" &&
-                            <div className=" items-center flex justify-between my-2">
-                                <span className="landscape:xs:text-md landscape:lg:text-xl font-cascadiaCode font-bold">points:</span>
-                                <span className="text-md text-white landscape:xs:text-md landscape:lg:text-xl font-cascadiaCode">{user.subscription?.pointsLeft}</span>
-                            </div>
-                        }
-                        <div className=" items-center flex justify-between my-2">
-                            <span className="landscape:xs:text-md landscape:lg:text-xl font-cascadiaCode font-bold">à payer: </span>
-
-                            <span className="text-md text-white landscape:xs:text-md landscape:lg:text-xl font-cascadiaCode">{user.subscription?.amount2Pay} €</span>
-                        </div>
-                    </div>
-                }
-
-                {update &&
-                    <div id="subscription" className="w-[15rem] flex flex-col justify-center items-center">
-                        <div>
-                            <span className="mt-2 text-lg font-semibold">Nom:</span>
-                            <input className=" bg-yellow-100 rounded-md  pl-2 py-1 my-2 disabled:bg-[#FFCB00] disabled:text-gray-800"
+            <div className=" flex flex-col  justify-center gap-2 mt-4 ">
+                <div className="bg-green-500 landscape:xs:w-[12rem] flex justify-between items-center ">
+                    <span className="text-md font-semibold ">Nom: </span>
+                    <span>{name}</span>
+                </div>
+                <div className="bg-green-500 landscape:xs:w-[12rem] flex justify-between items-center ">
+                    <span className="text-md font-semibold ">Nom: </span>
+                    <input className="w-[1rem] bg-yellow-100 rounded-md text-end pr-2 py-1 my-2 disabled:bg-[#FFCB00] disabled:text-gray-800"
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        disabled={!update}
                     />
-                        </div>
+
+                </div>
+                
+
+                {update &&
+                    <div id="subscription" className=" flex flex-col justify-center items-center">
                         <span className="mt-2 text-lg font-semibold">Plan:</span>
                         <div className=" flex justify-between items-center mb-4">
                             <div className="flex flex-row justify-between ">
@@ -215,17 +189,13 @@ function UserFile({ handleMsgModalAction, handleAuthModalAction, setUpdate, upda
                 }
                 {!update &&
                     <div className="flex justify-center items-center">
-                        <button className="mb-4 bg-gray-900 text-[#FFCB00] rounded-full  py-1 px-3 hover:bg-gray-800 hover:text-[#FFCB00] transition-colors duration-300 disabled:bg-[#FFCB00] disabled:text-gray-500 disabled:border-2 disabled:border-white "
+                        <button className=" bg-gray-900 text-[#FFCB00] rounded-full py-1 hover:bg-gray-800 hover:text-[#FFCB00] transition-colors duration-300 disabled:bg-[#FFCB00] disabled:text-gray-500 disabled:border-2 disabled:border-white "
                             onClick={() => setUpdate(true)}
-                        >
-                            <span className="portrait:xxs:text-lg">
-                                modifier
-                            </span>
-                        </button>
+                        >modifier</button>
                     </div>
                 }
                 {update &&
-                    <div className="mb-4 flex justify-center items-center">
+                    <div className="flex justify-center items-center">
                         <button className="bg-gray-900 text-[#FFCB00] rounded-full py-1 px-2 ml-2 hover:bg-gray-800 hover:text-[#FFCB00] transition-colors duration-300 disabled:bg-[#FFCB00] disabled:text-gray-500 disabled:border-2 disabled:border-white "
                             onClick={() => setUpdate(false)}
                         >Annuller</button>

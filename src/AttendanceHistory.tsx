@@ -74,11 +74,11 @@ function AttendanceHistory({ handleMsgModalAction }: props) {
   }
 
   return (
-    <div className=" w-screen h-full flex justify-evenly items-center ">
+    <div className="flex justify-evenly items-center ">
 
       {currentAttendances.map((attendance: any) => (
 
-        <div key={attendance._id} className="w-[45%] flex flex-col">
+        <div key={attendance._id} className="landscape:xs:w-[28rem] flex flex-col">
           <div className="w-80 my-4 flex justify-evenly items-center bg-black text-[#FFCB00] rounded-lg">
             <div className="mr-2">
               <input type="radio"
@@ -144,10 +144,15 @@ function AttendanceHistory({ handleMsgModalAction }: props) {
           </div>
           <div className="flex justify-between items-center bg-[#FFCB00] p-2 font-semibold border-[#FFCB00] text-white">
             <span className="w-fit  py-1  text-gray-800  rounded-t-lg ">
-              nombre de présences : <span className="text-gray-800">{attendance?.students?.length}</span>
+              nombre de présences : <span className="text-gray-800">
+                {attendance?.students?.filter((student: any) => {
+                  if (ageGroup === "all") return true;
+                  return student.age_Group === ageGroup;
+                }).length}
+              </span>
             </span>
           </div>
-          
+
           {attendance.students
             .filter((student: any) => {
               if (ageGroup === "all") return true;

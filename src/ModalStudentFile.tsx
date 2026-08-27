@@ -14,11 +14,16 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
     const [update, setUpdate] = useState(false)
 
     return (
-        <div className="  flex flex-col justify-evenly items-center">
-            <h3 className="text-3xl text-center text-white mb-1">
-                Fiche {studentFile?.apellido}
+        <div className="portrait:xxxs:h-[22rem] portrait:xxxs:w-[18rem]
+        portrait:xxs:h-[30rem] portrait:xxs:w-[18rem]
+        landscape:sm:h-[15.5rem]
+        landscape:md:h-[19.5rem]
+        landscape:lg:h-[22rem]
+        landscape:xs:h-[11.5rem] landscape:xs:w-[25rem]  flex flex-col justify-evenly items-center ">
+            <h3 className="w-full mb-5 py-2 bg-black text-4xl text-center text-white font-edoSZ">
+                {studentFile?.apellido}
             </h3>
-            <div className="w-fit flex justify-between items-center">
+            <div className="w-fit h-full flex justify-between items-center overflow-y-auto">
                 {!update &&
                     <StudentFile studentFile={studentFile}
                                  setUpdate={setUpdate} />

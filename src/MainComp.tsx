@@ -18,7 +18,7 @@ function MainComp({ component, handleModalAction, handleMsgModalAction, handleAu
  } : props) {
 
   return (
-      <div className="w-full h-full flex justify-evenly items-center">
+      <div className="w-full h-full max-h-full flex justify-evenly items-center">
         {component === "home" && 
           <Home handleModalAction={handleModalAction}/>
         }

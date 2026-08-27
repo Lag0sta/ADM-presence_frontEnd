@@ -38,7 +38,7 @@ const auth = useAppSelector((state) => state.auth.value) || "";
           <span className=" xxxs:text-lg xxs:text-lg sm:text-xl 2xl:text-5xl font-cascadiaCode cursor-pointer hover:text-[#FFCB00]" onClick={handleCheckAttendance}>Présences</span>
           {/* Ajout d'un nouvel inscrit - état de l'abonnement - type d'abonnement - où en est le paiement - nombre de présence   */}
           <span className="xxxs:text-lg xxs:text-lg  sm:text-xl 2xl:text-5xl font-cascadiaCode cursor-pointer hover:text-[#FFCB00]" onClick={handleAttendanceList}>Inscrits</span>
-          <div className="xxxs:portrait:w-15 xxxs:landscape:w-14 xxxs:landscape:my-2 xxs:w-17 sm:w-18 2xl:w-42 w-18 bg-[#FFCB00] rounded-full flex justify-center items-center cursor-pointer "
+          <div className="xxxs:portrait:w-15 xxxs:landscape:w-14 xxxs:landscape:my-2 xxs:w-17 sm:w-18 portrait:md:w-22 portrait:lg:w-26 landscape:lg:w-22 landscape:xl:w-24 2xl:w-42 w-18 bg-[#FFCB00] rounded-full flex justify-center items-center cursor-pointer "
           onClick={handleUserModal}>
             <img className="w-fit" src="BanderoleFuzue.png"/>
           </div>

@@ -106,22 +106,25 @@ function CheckAttendance() {
   };
 
   return (
-    <div className=" w-full h-full flex justify-evenly items-center ">
-      <div className="  flex flex-col">
+    <div className=" flex justify-evenly items-center ">
+      <div className="  flex flex-col ">
         <div className="flex justify-between">
-          <span className="w-fit px-2 py-1 bg-gray-800 text-[#FFCB00]  rounded-t-lg">Date: {new Date(Date.now())
+          <span className="w-fit px-2 py-1 bg-gray-800 text-[#FFCB00]  rounded-t-lg landscape:sm:text-lg">Date: {new Date(Date.now())
             .toLocaleDateString("fr-FR", { timeZone: "UTC" })
             .replaceAll("/", "-")}
           </span>
-          <div className="w-80 flex justify-evenly items-center bg-black text-[#FFCB00] rounded-t-lg">
+          <div className="w-fit px-2 flex justify-evenly items-center bg-black text-[#FFCB00] rounded-t-lg">
             <div className="mr-2">
-              <input type="radio"
+              <input
+                type="radio"
                 name="ageGroup ?"
                 value="underaged"
                 checked={ageGroup === "underaged"}
                 onChange={(e) => setAgeGroup(e.target.value)}
               />
-              Mineur
+              <span className="text-sm">
+                Mineur
+              </span>
             </div>
 
             <div className="mx-2">
@@ -131,7 +134,9 @@ function CheckAttendance() {
                 checked={ageGroup === "adult"}
                 onChange={(e) => setAgeGroup(e.target.value)}
               />
+               <span className="text-sm">
               Adultes
+              </span>
             </div>
 
             <div className="ml-2">
@@ -141,15 +146,19 @@ function CheckAttendance() {
                 checked={ageGroup === "all"}
                 onChange={(e) => setAgeGroup(e.target.value)}
               />
+               <span className="text-sm">
               Tous
+              </span>
             </div>
           </div>
         </div>
-        <div className="w-full grid grid-cols-[1fr_1fr_2fr_1fr] bg-[#FFCB00] p-2  font-semibold border-[#FFCB00] text-white">
-          <span className=" " >Appelido :</span>
-          <span className=" ">Nom :</span>
-          <span>Type d'abonnement :</span>
+        <div className="w-full grid grid-cols-[1fr_1fr_1fr_1fr] bg-[#FFCB00] p-2  font-semibold border-[#FFCB00] text-white ">
+          <span className="landscape:xs:mr-5 landscape:xs:text-md landscape:sm:text-lg font-cascadiaCode font-bold" >Appelido:</span>
+          <span className="landscape:xs:mr-2 landscape:xs:text-md  landscape:sm:text-lg font-cascadiaCode font-bold">Nom:</span>
+          <span className="landscape:xs:mr-2 landscape:xs:text-md font-cascadiaCode font-bold text-center">Plan:</span>
         </div>
+
+        <div className="">
         {students.filter((student: any) => {
           if (ageGroup === "all") return true;
           return student.age_Group === ageGroup;
@@ -157,10 +166,10 @@ function CheckAttendance() {
           a.apellido.localeCompare(b.apellido)
         ).map((student: any) => (
           <div key={student._id}
-            className="grid grid-cols-[1fr_1fr_2fr_1fr] border-b-2 border-x-2 border-[#FFCB00]"
+            className="grid grid-cols-[1fr_1fr_1fr_1fr] border-b-2 border-x-2 border-[#FFCB00]"
           >
             <div key={student._id} className="ml-2 flex justify-start ">
-              <span className="font-semibold"
+              <span className="landscape:xs:text-sm landscape:sm:text-lg font-bold"
                 style={{
                   ...((student.subscription?.pointsLeft === 0 && student.subscription.plan === "carte") && {
                     backgroundColor: "red",
@@ -168,8 +177,8 @@ function CheckAttendance() {
                   }),
                 }}>{student.apellido}</span>
             </div>
-            <div className="flex justify-center items-center">
-              <span className="pl-1"
+            <div className="flex justify-start items-center">
+              <span className="pl-1 landscape:xs:text-xs landscape:sm:text-base"
                 style={{
                   ...((student.subscription?.pointsLeft === 0 && student.subscription.plan === "carte") && {
                     backgroundColor: "red",
@@ -179,7 +188,7 @@ function CheckAttendance() {
             </div>
             <div className="flex justify-center items-center">
               {student.subscription?.plan ? (
-                <span style={{
+                <span className="landscape:xs:text-xs landscape:sm:text-base" style={{
                   ...((student.subscription?.pointsLeft === 0 && student.subscription.plan === "carte") && {
                     backgroundColor: "red",
                     color: "white",
@@ -206,6 +215,7 @@ function CheckAttendance() {
 
           </div>
         ))}
+        </div>
         <div className="flex justify-center items-center my-5">
           <span className="w-fit py-2 px-4 bg-gray-900 rounded-full text-[#FFCB00] text-center"
             onClick={handleSave}

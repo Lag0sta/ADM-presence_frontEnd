@@ -60,7 +60,7 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
 
   return (
     <div className="flex justify-center">
-      <div className={(isPortrait && (isXXXS || isXXS || isXS || isSM )) ? "w-max-full h-full flex flex-col  items-center portrait:hidden " : "max-w-[95%] h-full  flex flex-col "}>
+      <div className={(isPortrait && (isXXXS || isXXS || isXS || isSM)) ? "w-max-full h-full flex flex-col  items-center portrait:hidden " : "max-w-[95%] h-full  flex flex-col "}>
         <div className="flex justify-evenly items-center w-full h-fit mb-4 ">
 
           <span className="py-2 px-4 bg-gray-900 rounded-full text-[#FFCB00] text-center"
@@ -106,8 +106,8 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
           <div className="grid xxxs:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr] bg-[#FFCB00] p-2 font-semibold font-cascadiaCode  border-[#FFCB00] text-white rounded-tr-lg">
 
             <div className="ml-2 flex justify-start items-center">
-              {!(isXS || isSM)? (
-                <span className="text-lg  landscape:xl:text-2xl ">Appelido:</span>
+              {!(isXS || isSM) ? (
+                <span className="text-lg portrait:lg:text-xl landscape:lg:text-xl landscape:xl:text-2xl ">Appelido:</span>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -117,8 +117,8 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
               }
             </div>
             <div className="flex justify-center items-center">
-              {!(isXS || isSM)? (
-                <span className="text-lg landscape:xl:text-2xl ">Nom:</span>
+              {!(isXS || isSM) ? (
+                <span className="text-lg landscape:lg:text-xl landscape:lg:text-xl landscape:xl:text-2xl ">Nom:</span>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
@@ -127,8 +127,8 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
               )}
             </div>
             <div className="flex justify-center items-center">
-              {!(isXS || isSM)? (
-                <span className="text-lg landscape:xl:text-2xl">Plan :</span>
+              {!(isXS || isSM) ? (
+                <span className="text-lg landscape:lg:text-xl landscape:lg:text-xl landscape:xl:text-2xl">Plan :</span>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
@@ -136,8 +136,8 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
               )}
             </div>
             <div className="flex justify-center items-center">
-              {!(isXS || isSM)? (
-                <span className="text-lg landscape:xl:text-2xl">Date de fin:</span>
+              {!(isXS || isSM) ? (
+                <span className="text-lg landscape:lg:text-xl landscape:lg:text-xl landscape:xl:text-2xl">Date de fin:</span>
 
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -147,8 +147,8 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
               )}
             </div>
             <div className="flex justify-center items-center">
-              {!(isXS || isSM)? (
-                <span className="text-lg landscape:xl:text-2xl">Points:</span>
+              {!(isXS || isSM) ? (
+                <span className="text-lg landscape:lg:text-xl landscape:lg:text-xl landscape:xl:text-2xl">Points:</span>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
@@ -156,8 +156,8 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
               )}
             </div>
             <div className="flex justify-center items-center">
-              { !(isXS || isSM)? (
-                <span className="text-lg landscape:xl:text-2xl">À payer:</span>
+              {!(isXS || isSM) ? (
+                <span className="text-lg landscape:lg:text-xl landscape:lg:text-xl landscape:xl:text-2xl">À payer:</span>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
@@ -176,17 +176,23 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
                 className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] border-t-2 border-x-2 border-[#FFCB00] landscape:xl:h-10"
               >
                 <div className="ml-2 flex justify-start items-center ">
-                  <span className="xxxs:text-sm font-bold cursor-pointer hover:text-[#FFCB00] landscape:sm:text-md landscape:md:text-lg landscape:xl:text-xl landscape:xl:font-semibold text-center"
+                  <span className="xxxs:text-sm font-bold cursor-pointer hover:text-[#FFCB00] 
+                  portrait:lg:text-xl
+                  landscape:sm:text-md landscape:md:text-lg landscape:lg:text-xl landscape:xl:text-xl landscape:xl:font-semibold text-center"
                     onClick={() => handleStudentFile(student)}>{student.apellido}</span>
                 </div>
                 <div className="flex justify-center items-center">
-                  <span className="pl-1 xxxs:text-xs text-sm text-center landscape:sm:text-sm landscape:md:text-md landscape:xl:text-lg landscape:xl:font-normal font-semibold">{student.name}</span>
+                  <span className="pl-1 xxxs:text-xs text-sm text-center 
+                  portrait:lg:text-lg
+                  landscape:sm:text-sm landscape:md:text-md landscape:lg:text-lg landscape:xl:text-lg landscape:xl:font-normal font-semibold">{student.name}</span>
                 </div>
                 <div className="flex justify-center items-center">
                   {student.subscription?.plan ? (
                     <div>
 
-                      <span className=" xxxs:text-xs text-center landscape:sm:text-sm landscape:md:text-md landscape:lg:text-xl landscape:xl:text-xl  font-semibold">{student.subscription?.plan}</span>
+                      <span className=" xxxs:text-xs text-center
+                       portrait:lg:text-lg
+                       landscape:sm:text-sm landscape:md:text-md landscape:lg:text-lg landscape:xl:text-xl  font-semibold">{student.subscription?.plan}</span>
                     </div>
                   ) : (
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer hover:text-[#FFCB00]"
@@ -198,9 +204,11 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
                 </div>
                 {student.subscription?.plan === "trimestriel" || student.subscription?.plan === "annuel" ? (
                   <div className="flex justify-center items-center">
-                    <span className=" xxxs:text-xs text-center landscape:sm:text-sm landscape:md:text-md landscape:xl:text-lg font-semibold">{new Date(student.subscription?.endDate)
-                      .toLocaleDateString("fr-FR", { timeZone: "UTC" })
-                      .replaceAll("/", "-")}
+                    <span className=" xxxs:text-xs text-center
+                                      portrait:lg:text-lg
+                                      landscape:sm:text-sm landscape:md:text-md landscape:lg:text-lg landscape:xl:text-lg font-semibold">{new Date(student.subscription?.endDate)
+                        .toLocaleDateString("fr-FR", { timeZone: "UTC" })
+                        .replaceAll("/", "-")}
                     </span>
                   </div>
                 ) : (
@@ -208,13 +216,17 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
                 )}
                 {student.subscription?.plan === "carte" ? (
                   <div className="flex justify-center items-center font-semibold">
-                    <span className=" xxxs:text-xs landscape:sm:text-sm landscape:md:text-md landscape:xl:text-lg">{student.subscription?.pointsLeft}</span>
+                    <span className=" xxxs:text-xs 
+                                      portrait:lg:text-lg
+                                      landscape:sm:text-sm landscape:md:text-md landscape:lg:text-lg landscape:xl:text-lg">{student.subscription?.pointsLeft}</span>
                   </div>
                 ) : (
                   <div className="flex justify-center items-center bg-gray-400" />
                 )}
                 <div className="flex justify-end items-center">
-                  <span className="pr-4 xxxs:text-xs landscape:sm:text-sm landscape:md:text-md landscape:xl:text-lg font-semibold">{student.subscription?.amount2Pay} €</span>
+                  <span className="pr-4 xxxs:text-xs                   portrait:lg:text-lg
+
+landscape:sm:text-sm landscape:md:text-md landscape:lg:text-lg landscape:xl:text-lg font-semibold">{student.subscription?.amount2Pay} €</span>
                 </div>
               </div>
             ))}
@@ -222,17 +234,17 @@ function StudentList({ handleModalAction, setStudentSubscription, setStudentFile
           </div>
         </div>
 
-        
+
       </div>
       {
-          (isPortrait && (isXXXS || isXXS || isXS || isSM)) &&
-          <div className="landscape:hidden">
-            <span className="font-cascadiaCode font-semibold">
+        (isPortrait && (isXXXS || isXXS || isXS || isSM)) &&
+        <div className="landscape:hidden">
+          <span className="font-cascadiaCode font-semibold">
             Veuillez tourner l'écran
 
-            </span>
-          </div>
-        }
+          </span>
+        </div>
+      }
     </div >
   )
 }

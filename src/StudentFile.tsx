@@ -5,51 +5,55 @@ interface props {
 function StudentFile({ studentFile, setUpdate }: props) {
 
     return (
-        <div className="portrait:xxxs:h-[15rem] portrait:xxxs:w-[18rem] px-3 flex flex-col justify-between overflow-y-auto">
-            <div className="w-full  flex justify-between items-center">
-                <span className="text-md font-semibold">Apellido: </span>
-                <span className=" text-end pr-2 py-1 my-2 ">
+        <div className=" portrait:xxxs:h-[full]
+        portrait:xxs:h-full portrait:xxs:w-[18rem]
+        
+        landscape:xs:h-full landscape:xs:w-[20rem]
+         px-3 flex flex-col justify-between">
+            <div className="w-full flex justify-between items-center">
+                <span className="text-md font-cascadiaCode font-bold">Apellido: </span>
+                <span className="pr-2 py-1 text-white text-end font-cascadiaCode ">
                     {studentFile.apellido}
                 </span>
             </div>
-            <div className="w-full h-full  flex justify-between items-center">
-                <span className="text-md font-semibold">Nom: </span>
-                <span className="text-end pr-2 py-1 my-2 ">
+            <div className="  flex justify-between items-center">
+                <span className="text-md font-bold">Nom: </span>
+                <span className="text-white text-end pr-2 py-1 ">
                     {studentFile.name}
                 </span>
             </div>
-            <div className="flex flex-col w-full mb-4">
+            <div className="flex flex-col w-full ">
                 <div className=" items-center flex justify-between my-2">
-                    <span className="text-md font-semibold">Catégorie d'age: </span>
-                    <span className="text-md pr-2">{studentFile.age_Group}</span>
+                    <span className="text-md font-bold">Catégorie d'age: </span>
+                    <span className="text-white text-md pr-2">{studentFile.age_Group}</span>
                 </div>
             </div>
 
             <div className="flex flex-col w-full mb-4">
 
                 <div className=" items-center flex justify-between my-2">
-                    <span className="text-md font-semibold">Type d'abonnement: </span>
+                    <span className="text-md font-bold">Type d'abonnement: </span>
 
-                    <span className="text-md pr-2">{studentFile.subscription?.plan}</span>
+                    <span className="text-white text-md pr-2">{studentFile.subscription?.plan}</span>
                 </div>
                 {studentFile.subscription?.plan === "trimestriel" &&
                     <div className=" items-center flex justify-between my-2">
-                        <span className="text-md font-semibold">date de fin :</span>
-                        <span className="text-md pr-2">{new Date(studentFile?.subscription?.endDate || "")
+                        <span className="text-md font-bold">date de fin :</span>
+                        <span className="text-white text-md pr-2">{new Date(studentFile?.subscription?.endDate || "")
                             .toLocaleDateString("fr-FR", { timeZone: "UTC" })
                             .replaceAll("/", "-")}</span>
                     </div>
                 }
                 {studentFile.subscription?.plan === "carte" &&
                     <div className=" items-center flex justify-between my-2">
-                        <span className="text-md font-semibold">points restants :</span>
-                        <span className="text-md pr-2">{studentFile.subscription?.pointsLeft}</span>
+                        <span className="text-md font-bold">points restants :</span>
+                        <span className="text-white text-md pr-2">{studentFile.subscription?.pointsLeft}</span>
                     </div>
                 }
                 <div className=" items-center flex justify-between my-2">
-                    <span className="text-md font-semibold">Restant à payer: </span>
+                    <span className="text-md font-bold">Restant à payer: </span>
 
-                    <span className="text-md pr-2">{studentFile.subscription?.amount2Pay} €</span>
+                    <span className="text-white text-md pr-2">{studentFile.subscription?.amount2Pay} €</span>
                 </div>
             </div>
 
