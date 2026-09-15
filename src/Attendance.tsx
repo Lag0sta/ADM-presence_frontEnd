@@ -40,7 +40,7 @@ function Attendance({ handleMsgModalAction }: props) {
             Historique
           </span>
         </div>
-        <div className="w-full  overflow-hidden">
+        <div className="w-full overflow-hidden">
         {toggleState === "option1" &&
           <CheckAttendance />
         }
