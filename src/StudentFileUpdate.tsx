@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "./store/hooks";
 import type { handleModalAction, handleMsgModalAction } from "./types/Types"
 
 import { loadStudents } from "./utils/studentAction";
-import { UpdateStudentFileRequest } from "./api/studentRequest";
+import { DeleteStudentFileSubscriptionRequest, NewSubscriptionRequest, UpdateStudentFileRequest } from "./api/studentRequest";
 
 interface props {
     handleModalAction: handleModalAction;
@@ -19,12 +19,76 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
     const [name, setName] = useState(studentFile?.name || "");
     const [ageGroupe, setAgeGroupe] = useState(studentFile?.age_Group || "");
     const [subscriptionPlan, setSubscriptionPlan] = useState(studentFile?.subscription?.plan || "aucune");
+    const [newSubscriptionPlan, setNewSubscriptionPlan] = useState("");
     const [amount2Pay, setAmount2Pay] = useState(studentFile?.subscription?.amount2Pay || 0);
+    const [newAmount2Pay, setNewAmount2Pay] = useState(0);
     const [pointsLeft, setPointsLeft] = useState<number>(Number(studentFile?.subscription?.pointsLeft || 0));
-    const [endDate, setEndDate] = useState(studentFile?.subscription?.endDate || "");
+    const [endDate, setEndDate] = useState(studentFile?.subscription?.endDate || "")
+    const [payed, setPayed] = useState("non");
 
     const dispatch = useAppDispatch();
     const auth = useAppSelector((state) => state.auth.value);
+
+
+    console.log("newSubscriptionPlan", newSubscriptionPlan)
+   
+
+    const handleNewSubscription = async () => {
+
+        try {
+            if (payed === "oui") setAmount2Pay(0)
+
+            const newSubData = { studentID: studentFile._id, token: auth.token, subscription: newSubscriptionPlan, amount2Pay: newAmount2Pay }
+
+            const response = await NewSubscriptionRequest(newSubData);
+
+            if (!response.result) {
+                handleMsgModalAction.setMsgModalContent({ result: response.result, message: response.message });
+                handleMsgModalAction.setIsMsgModalOpen(true);
+                return
+            }
+
+            loadStudents({ dispatch })
+            setNewSubscriptionPlan("");
+            setSubscriptionPlan(response.data.subscription?.plan || "aucune");
+            setAmount2Pay(response.data.subscription?.amount2Pay || 0);
+            setPointsLeft(Number(response.data.subscription?.pointsLeft || 0));
+            setEndDate(response.data.subscription?.endDate || "");
+            
+            handleMsgModalAction.setMsgModalContent({ result: response.result, message: response.message });
+            handleMsgModalAction.setIsMsgModalOpen(true);
+
+        } catch (error) {
+            console.error("Error during adding new registrant:", error);
+        }
+    };
+
+     const handleDeleteSubscription = async () => {
+        try {
+            const updateSFSData = { studentID: studentFile._id, token: auth.token };
+
+            const response = await DeleteStudentFileSubscriptionRequest(updateSFSData);
+
+            if (!response.result) {
+                handleMsgModalAction.setMsgModalContent({ result: response.result, message: response.message });
+                handleMsgModalAction.setIsMsgModalOpen(true);
+                console.log("response.message :", response.message)
+                return;
+            }
+            handleMsgModalAction.setIsMsgModalOpen(true);
+
+            handleMsgModalAction.setMsgModalContent({ result: response.result, message: response.message });
+            setSubscriptionPlan(response.data.subscription?.plan || "aucune");
+            setAmount2Pay(response.data.subscription?.amount2Pay || 0);
+            setPointsLeft(Number(response.data.subscription?.pointsLeft || 0));
+            setEndDate(response.data.subscription?.endDate || "");
+            loadStudents({ dispatch });
+
+        } catch (error) {
+            console.error("Error deleting subscription:", error);
+        }
+    }
+
     const handleSave = async () => {
         try {
             const role = studentFile.isAdmin
@@ -63,11 +127,14 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
 
             handleMsgModalAction.setMsgModalContent({ result: response.result, message: response.message });
             handleMsgModalAction.setIsMsgModalOpen(true);
+
             const loadStudentsData = { dispatch };
             loadStudents(loadStudentsData)
+
             setUpdate(false);
             handleModalAction.setIsModalOpen(false);
             handleModalAction.setModalComponent("");
+            setNewSubscriptionPlan("");
         } catch (error) {
             console.error("Error updating student:", error);
         }
@@ -117,40 +184,119 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
             </div>
 
 
-            {ageGroupe === "adult" &&
+            {(ageGroupe === "adult") &&
                 <div id="subscription" className="flex flex-col items-center">
                     <span className="xxxs:mt-4 text-lg font-cascadiaCode font-bold">Type d'abonnement :</span>
-                    <div className="flex flex-col items-start">
-                        <div>
-                            <input type="radio"
-                                name="subscription"
-                                value="trimestriel"
-                                checked={subscriptionPlan === "trimestriel"}
-                                onChange={(e) => setSubscriptionPlan(e.target.value)}
-                                disabled={!update}
-                            />
-                            <span className="font-cascadiaCode">
-                                Abonnement Trimestriel
-                            </span>
-                        </div>
+                    {(subscriptionPlan !== "aucune") &&
 
-                        <div>
-                            <input type="radio"
-                                name="subscription"
-                                value="carte"
-                                checked={subscriptionPlan === "carte"}
-                                onChange={(e) => setSubscriptionPlan(e.target.value)}
-                                disabled={!update}
-                            />
-                            <span className="font-cascadiaCode">
-                                Carte de 10
-                            </span>
+                        <div className="flex flex-col items-start" >
+                            <div>
+                                <input type="radio"
+                                    name="subscription"
+                                    value="trimestriel"
+                                    checked={subscriptionPlan === "trimestriel"}
+                                    onChange={(e) => setSubscriptionPlan(e.target.value)}
+                                    disabled={!update}
+                                />
+                                <span className="font-cascadiaCode">
+                                    Abonnement Trimestriel
+                                </span>
+                            </div>
+
+                            <div>
+                                <input type="radio"
+                                    name="subscription"
+                                    value="carte"
+                                    checked={subscriptionPlan === "carte"}
+                                    onChange={(e) => setSubscriptionPlan(e.target.value)}
+                                    disabled={!update}
+                                />
+                                <span className="font-cascadiaCode">
+                                    Carte de 10
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    {subscriptionPlan &&
+                    }
+                    {(subscriptionPlan === "aucune") &&
+
+                        <div className="flex flex-col items-start">
+                            <div className="">
+                                <input type="radio"
+                                    name="subscription"
+                                    value="trimestriel"
+                                    checked={newSubscriptionPlan === "trimestriel"}
+                                    onChange={(e) => setNewSubscriptionPlan(e.target.value)}
+                                    disabled={!update}
+                                />
+                                <span className="font-cascadiaCode">
+                                    Abonnement Trimestriel
+                                </span>
+                            </div>
+
+                            <div>
+                                <input type="radio"
+                                    name="subscription"
+                                    value="carte"
+                                    checked={newSubscriptionPlan === "carte"}
+                                    onChange={(e) => setNewSubscriptionPlan(e.target.value)}
+                                    disabled={!update}
+                                />
+                                <span className="font-cascadiaCode">
+                                    Carte de 10
+                                </span>
+                            </div>
+                        </div>
+                    }
+                    {newSubscriptionPlan &&
+
+                        <div className="flex flex-col my-2">
+                            <div className="flex flex-col">
+                                <label className="text-lg font-semibold mt-2 "
+                                    htmlFor="Abonnement"
+                                >
+                                    Payé ?
+                                </label>
+                                <div className="w-fit">
+                                    <label className="mx-1">
+                                        <input type="radio"
+                                            name="payed?"
+                                            value="oui"
+                                            checked={payed === "oui"}
+                                            onChange={(e) => setPayed(e.target.value)} />
+                                        Oui
+                                    </label>
+
+                                    <label className="mx-1">
+                                        <input type="radio"
+                                            name="payed ? "
+                                            value="non"
+                                            checked={payed === "non"}
+                                            onChange={(e) => setPayed(e.target.value)} />
+                                        Non
+                                    </label>
+                                </div>
+                            </div>
+
+                            {payed === "non" &&
+                                <input className="border-2 border-black bg-white rounded-md pl-2 py-1 my-2"
+                                    type="text"
+                                    placeholder="montant dû"
+                                    value={newAmount2Pay}
+                                    onChange={(e) => setNewAmount2Pay(parseFloat(e.target.value) || 0)}
+                                />
+                            }
+                        </div>
+                    }
+                    {subscriptionPlan === "aucune" &&
                         <button className="bg-gray-900 text-[#FFCB00] text-xs mt-1 rounded-full mb-4 py-1 px-2 ml-2 hover:bg-gray-800 hover:text-[#FFCB00] transition-colors duration-300 disabled:bg-[#FFCB00] disabled:text-gray-500 disabled:border-2 disabled:border-white "
-                            onClick={() => setSubscriptionPlan("none")}
+                            onClick={() => handleNewSubscription()}
+                        >Sauvegarder l'Abonnement</button>
+                    }
+                    {(subscriptionPlan && subscriptionPlan !== "aucune") &&
+                        <button className="bg-gray-900 text-[#FFCB00] text-xs mt-1 rounded-full mb-4 py-1 px-2 ml-2 hover:bg-gray-800 hover:text-[#FFCB00] transition-colors duration-300 disabled:bg-[#FFCB00] disabled:text-gray-500 disabled:border-2 disabled:border-white "
+                            onClick={() => handleDeleteSubscription()}
                         >Annuller l'Abonnement</button>}
+
                     {(subscriptionPlan === "trimestriel") &&
                         <div className="w-full mt-4 px-6 flex justify-between items-center">
                             <span className="mt-2 text-md font-cascadiaCode font-bold">Date de fin: </span>
@@ -169,7 +315,7 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
                         </div>
                     }
 
-                    {(studentFile.subscription?.plan === "carte" || studentFile.subscription?.pointsLeft > 0) &&
+                    {(subscriptionPlan === "carte") &&
                         <div className="w-full px-6 flex justify-between items-center">
                             <span className="mt-2 text-md font-cascadiaCode font-bold">Points restants: </span>
                             <input className="w-1/6  bg-yellow-100 rounded-md text-end pr-2"

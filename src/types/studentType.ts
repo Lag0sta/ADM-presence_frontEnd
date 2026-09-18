@@ -45,6 +45,11 @@ export interface updateSFData {
     };
 }
 
+export interface updateSFSData {
+    studentID: string;
+    token: string;
+}
+
 export interface loadStudentsData {
     dispatch: AppDispatch,
 }

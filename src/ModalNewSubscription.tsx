@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
-import {  NewSubscriptionRequest } from "./api/studentRequest";
+import { NewSubscriptionRequest } from "./api/studentRequest";
 import { loadStudents } from "./utils/studentAction"
 import type { handleModalAction, handleMsgModalAction } from "./types/Types";
 
@@ -11,9 +11,9 @@ interface props {
   setStudentSubscription: (value: any) => void;
 }
 
-function ModalNewSubscription({handleModalAction, handleMsgModalAction, setStudentSubscription, studentSubscription, } : props) {
+function ModalNewSubscription({ handleModalAction, handleMsgModalAction, setStudentSubscription, studentSubscription, }: props) {
   const user = useAppSelector((state) => state.auth.value);
-  
+
   const [subscription, setSubscription] = useState("");
   const [payed, setPayed] = useState("");
   const [amount2Pay, setAmount2Pay] = useState(0);
@@ -25,22 +25,22 @@ function ModalNewSubscription({handleModalAction, handleMsgModalAction, setStude
 
     try {
       if (payed === "oui") setAmount2Pay(0)
-      
-      const newSubData = { studentID : studentSubscription._id, token : user.token, subscription, amount2Pay }
+
+      const newSubData = { studentID: studentSubscription._id, token: user.token, subscription, amount2Pay }
 
       const response = await NewSubscriptionRequest(newSubData);
 
-      if (!response.result){
-        handleMsgModalAction.setMsgModalContent({result: response.result , message:response.message});
+      if (!response.result) {
+        handleMsgModalAction.setMsgModalContent({ result: response.result, message: response.message });
         handleMsgModalAction.setIsMsgModalOpen(true);
         return
       }
 
-      loadStudents({dispatch})
+      loadStudents({ dispatch })
 
-      setStudentSubscription({}) 
+      setStudentSubscription({})
       handleModalAction.setModalComponent("");
-      handleModalAction.setIsModalOpen(false);     
+      handleModalAction.setIsModalOpen(false);
 
     } catch (error) {
       console.error("Error during adding new registrant:", error);
@@ -49,42 +49,50 @@ function ModalNewSubscription({handleModalAction, handleMsgModalAction, setStude
 
   console.log("subscription", subscription)
   return (
-    <div className="w-full h-full flex flex-col justify-evenly items-center my-2">
+    <div className="xxs:landscape:max-h-45 md:landscape:max-h-68 max-h-130 flex flex-col justify-evenly items-center mx-2 my-2 overflow-y-auto">
       <h3 className="text-3xl text-center text-white mb-1">
-        Ajouter un nouvel abonnement
+        Nouvel abonnement
       </h3>
-      <fieldset className="flex flex-col justify-between items-center">
+      <fieldset className="flex flex-col justify-between items-center w-full max-h-100 overflow-y-auto">
         <div className="flex flex-col">
           <input className="disabled:bg-gray-800 disabled:text-[#FFCB00] rounded-md pl-2 py-1 my-2"
-          placeholder="Apellido"
-          disabled
-                 value={apellido}
+            placeholder="Apellido"
+            disabled
+            value={apellido}
           />
         </div>
         <div className="flex flex-col">
-          <input 
-          className="disabled:bg-gray-800 disabled:text-[#FFCB00] border-2 border-black bg-white rounded-md pl-2 py-1 my-2"
-          placeholder="Nom"
-          disabled
-                 value={name}
+          <input
+            className="disabled:bg-gray-800 disabled:text-[#FFCB00] border-2 border-black bg-white rounded-md pl-2 py-1 my-2"
+            placeholder="Nom"
+            disabled
+            value={name}
           />
 
         </div>
-        
+
         <div className="flex flex-col">
           <label className="mt-2  text-lg font-semibold"
             htmlFor="Abonnement"
           >
             Type d'abonnement :
           </label>
-            <label>
-              <input type="radio"
-                name="subscription"
-                value="trimestriel"
-                checked={subscription === "trimestriel"}
-                onChange={(e) => setSubscription(e.target.value)} />
-              Abonnement Trimestriel
-            </label>
+          <label>
+            <input type="radio"
+              name="subscription"
+              value="journalier"
+              checked={subscription === "journalier"}
+              onChange={(e) => setSubscription(e.target.value)} />
+            Journalier
+          </label>
+          <label>
+            <input type="radio"
+              name="subscription"
+              value="trimestriel"
+              checked={subscription === "trimestriel"}
+              onChange={(e) => setSubscription(e.target.value)} />
+            Abonnement Trimestriel
+          </label>
 
           <label>
             <input type="radio"
@@ -94,6 +102,7 @@ function ModalNewSubscription({handleModalAction, handleMsgModalAction, setStude
               onChange={(e) => setSubscription(e.target.value)} />
             Carte de 10
           </label>
+
           {subscription &&
             <div className="flex flex-col my-2">
               <div className="flex flex-col">

@@ -61,9 +61,9 @@ function ModalAddStudent({ handleModalAction, handleMsgModalAction }: props) {
 
   console.log("ageGroupe", ageGroupe);
   return (
-    <div className=" max-h-130 flex flex-col justify-evenly items-center my-2 overflow-y-auto ">
+    <div className="xxs:landscape:max-h-45 md:landscape:max-h-68 max-h-130 flex flex-col justify-evenly items-center mx-15 my-2 overflow-y-auto ">
       <h3 className="text-3xl text-center text-white mb-1">
-        Ajouter un nouvel inscrit
+        Nouvel inscrit
       </h3>
       <div className="w-full max-h-100 overflow-y-auto" >
         <fieldset className="flex flex-col justify-between items-center">
@@ -124,7 +124,7 @@ function ModalAddStudent({ handleModalAction, handleMsgModalAction }: props) {
                   value="annuel"
                   checked={subscription === "annuel"}
                   onChange={(e) => setSubscription(e.target.value)} />
-                Abonnement annuel
+                annuel
               </div>
 
             </div>
@@ -138,10 +138,18 @@ function ModalAddStudent({ handleModalAction, handleMsgModalAction }: props) {
               <div>
                 <input type="radio"
                   name="subscription"
+                  value="journalier"
+                  checked={subscription === "journalier"}
+                  onChange={(e) => setSubscription(e.target.value)} />
+                Journalier
+              </div>
+              <div>
+                <input type="radio"
+                  name="subscription"
                   value="trimestriel"
                   checked={subscription === "trimestriel"}
                   onChange={(e) => setSubscription(e.target.value)} />
-                Abonnement Trimestriel
+                Trimestriel
               </div>
 
               <div>

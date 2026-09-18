@@ -1,4 +1,4 @@
-import type { newSData, newSubData, updateSFData } from "../types/studentType";
+import type { newSData, newSubData, updateSFData, updateSFSData } from "../types/studentType";
 const API_URL =
   (import.meta.env.VITE_API_URL ?? 'http://localhost:4000')
     .replace(/\/$/, "");
@@ -70,6 +70,26 @@ export async function UpdateStudentFileRequest( updateSFData : updateSFData) {
                 token: token,
                 studentId: studentID,
                 updateData: updateData
+            })
+        })
+        const response = await newRegistrant.json()
+
+        return response
+
+    } catch (error) {
+        return error
+    }
+}
+
+export async function DeleteStudentFileSubscriptionRequest( updateSFSData : updateSFSData) {
+    const { studentID, token } = updateSFSData
+    try {
+        const newRegistrant = await fetch(`${API_URL}/students/deleteSubscription`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                token: token,
+                studentId: studentID,
             })
         })
         const response = await newRegistrant.json()
