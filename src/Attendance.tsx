@@ -14,7 +14,6 @@ function Attendance({ handleMsgModalAction }: props) {
   const isXXS = useXXS();
   const isXS = useXS();
   const isSM = useSM();
-  const isMD = useMD();
   const [toggleState, setToggleState] = useState("option1");
   const { isPortrait, } = useOrientation();
 
