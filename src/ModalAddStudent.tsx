@@ -61,11 +61,11 @@ function ModalAddStudent({ handleModalAction, handleMsgModalAction }: props) {
 
   console.log("ageGroupe", ageGroupe);
   return (
-    <div className="xxs:landscape:max-h-45 md:landscape:max-h-68 max-h-130 flex flex-col justify-evenly items-center mx-15 my-2 overflow-y-auto ">
+    <div className="xxs:landscape:max-h-45 md:landscape:max-h-68 lg:landscape:max-h-[1000px] flex flex-col justify-evenly items-center mx-15 overflow-y-auto ">
       <h3 className="text-3xl text-center text-white mb-1">
         Nouvel inscrit
       </h3>
-      <div className="w-full max-h-100 overflow-y-auto" >
+      <div className="w-full overflow-y-auto" >
         <fieldset className="flex flex-col justify-between items-center">
           <div className="flex flex-col">
             <input className="border-2 border-black bg-white rounded-md pl-2 py-1 my-2"

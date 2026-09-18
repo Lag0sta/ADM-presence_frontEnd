@@ -16,10 +16,8 @@ function ModalStudentFile({ handleModalAction, handleMsgModalAction, studentFile
     return (
         <div className="portrait:xxxs:h-[22rem] portrait:xxxs:w-[18rem]
         portrait:xxs:h-[30rem] portrait:xxs:w-[18rem]
-        landscape:sm:h-[15.5rem]
-        landscape:md:h-[19.5rem]
-        landscape:lg:h-[22rem]
-        landscape:xs:h-[11.5rem] landscape:xs:w-[25rem]  flex flex-col justify-evenly items-center ">
+        xxs:landscape:max-h-45 md:landscape:max-h-68 lg:landscape:max-h-[1000px]
+          flex flex-col justify-evenly items-center ">
             <h3 className="w-full mb-5 py-2 bg-black text-4xl text-center text-white font-edoSZ">
                 {studentFile?.apellido}
             </h3>
