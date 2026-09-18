@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import CheckAttendance from "./CheckAttendance";
 import AttendanceHistory from "./AttendanceHistory";
-import { useXXXS, useXXS, useXS, useSM, useMD } from "./hooks/breakPoints";
+import { useXXXS, useXXS, useXS, useSM } from "./hooks/breakPoints";
 import type { handleMsgModalAction } from "./types/Types";
 import { useOrientation } from "./hooks/orientation";
 
